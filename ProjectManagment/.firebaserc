@@ -1,0 +1,11 @@
+{
+  "targets": {
+    "employee-managment-f5252": {
+      "hosting": {
+        "app": [
+          "employee-managment-f5252"
+        ]
+      }
+    }
+  }
+}

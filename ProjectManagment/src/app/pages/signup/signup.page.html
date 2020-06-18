@@ -1,0 +1,52 @@
+<ion-header>
+    <ion-toolbar>
+        <ion-title>Sign Up</ion-title>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content class = 'ion-padding ion-text-center'>
+    <h3>Welcome to New User Registration!</h3>
+    <ion-item lines = 'none' style = 'margin-top: 10%'
+              class = 'ion-item-border'>
+        <ion-label position = 'floating'>User Name</ion-label>
+        <ion-input type = 'text' [(ngModel)] = 'userName' required
+                   placeholder = 'Username' autocomplete = 'false'>
+        </ion-input>
+        <ion-icon name = "person-outline" slot = 'end'></ion-icon>
+    </ion-item>
+    <ion-item lines = 'none' class = 'ion-item-border'>
+        <ion-label position = 'floating'>Email</ion-label>
+        <ion-input type = 'email' [(ngModel)] = 'userEmail' required email
+                   placeholder = 'Email' autocomplete = 'false'>
+        </ion-input>
+        <ion-icon name = "mail-outline" slot = 'end'></ion-icon>
+    </ion-item>
+    <ion-item lines = 'none' class = 'ion-item-border'>
+        <ion-label position = 'floating'>Password</ion-label>
+        <ion-input type = 'password' [(ngModel)] = 'userPassword'
+                   minlength = '6'
+                   required placeholder = '******' autocomplete = 'false'
+                   (keypress) = '$event.key === "Enter" ? signUp() : ""'>
+        </ion-input>
+        <ion-icon name = "key-outline" slot = 'end'></ion-icon>
+    </ion-item>
+    <ion-card-subtitle>
+        <b>Note: </b>Password must contain atleast 6 characters!
+    </ion-card-subtitle>
+
+    <ion-fab vertical = 'bottom' horizontal = 'start'>
+        <ion-fab-button routerLink = '/login' routerDirection = 'back'
+                        color = 'light'>
+            <ion-icon name = "chevron-back-outline"></ion-icon>
+        </ion-fab-button>
+    </ion-fab>
+
+    <ion-fab vertical = 'bottom' horizontal = 'end'>
+        <ion-fab-button (click) = 'signUp()' *ngIf =
+                '!(!userEmail || !userName || !userPassword ||
+                userPassword.length < 6)'>
+            <ion-icon name = "person-add-outline"></ion-icon>
+        </ion-fab-button>
+    </ion-fab>
+
+</ion-content>
