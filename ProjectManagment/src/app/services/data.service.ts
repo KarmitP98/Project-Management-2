@@ -1,6 +1,6 @@
 import { Injectable } from "@angular/core";
 import { AngularFirestore } from "@angular/fire/firestore";
-import { ClientModel, UserModel } from "../shared/models";
+import { ClientModel, ProjectModel, UserModel } from "../shared/models";
 import { ToastController } from "@ionic/angular";
 import { AngularFireAuth } from "@angular/fire/auth";
 import { Router } from "@angular/router";
@@ -57,10 +57,14 @@ export class DataService {
         } ).catch();
     }
 
-    fetchUsers( child, condition, value ) {
-        return this.afs
-                   .collection<UserModel>( "users", ref => ref.where( child, condition, value ) )
-                   .valueChanges();
+    fetchUsers( child?, condition?, value? ) {
+        if ( child ) {
+            return this.afs
+                       .collection<UserModel>( "users", ref => ref.where( child, condition, value ) )
+                       .valueChanges();
+        } else {
+            return this.afs.collection<UserModel>( "users" ).valueChanges();
+        }
     }
 
     addNewUser( user: UserModel ) {
@@ -91,14 +95,29 @@ export class DataService {
             .set( client );
     }
 
-    fetchClients( child, condition, value ) {
-        return this.afs.collection<ClientModel>( "clients", ref => ref.where( child, condition, value ) );
+    fetchClients( child?, condition?, value? ) {
+        if ( child ) {
+            return this.afs.collection<ClientModel>( "clients", ref => ref.where( child, condition, value ) )
+                       .valueChanges();
+        } else {
+            return this.afs.collection<ClientModel>( "clients" ).valueChanges();
+        }
     }
 
     updateClient( client: ClientModel ) {
         this.afs.collection<ClientModel>( "clients" )
             .doc( client.cId )
             .update( client );
+    }
+
+    fetchProjects( child?, condition?, value? ) {
+        if ( child ) {
+            return this.afs
+                       .collection<ProjectModel>( "projects", ref => ref.where( child, condition, value ) )
+                       .valueChanges();
+        } else {
+            return this.afs.collection<ProjectModel>( "projects" ).valueChanges();
+        }
     }
 
     async showToast( message, time?, color? ) {

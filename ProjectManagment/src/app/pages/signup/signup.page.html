@@ -6,27 +6,30 @@
 
 <ion-content class = 'ion-padding ion-text-center'>
     <h3>Welcome to New User Registration!</h3>
-    <ion-item lines = 'none' style = 'margin-top: 10%'
-              class = 'ion-item-border'>
+    <ion-item class = 'ion-item-border' lines = 'none'
+              style = 'margin-top: 10%'>
         <ion-label position = 'floating'>User Name</ion-label>
-        <ion-input type = 'text' [(ngModel)] = 'userName' required
-                   placeholder = 'Username' autocomplete = 'false'>
+        <ion-input [(ngModel)] = 'userName' autocomplete = 'false'
+                   placeholder = 'Username'
+                   required type = 'text'>
         </ion-input>
         <ion-icon name = "person-outline" slot = 'end'></ion-icon>
     </ion-item>
-    <ion-item lines = 'none' class = 'ion-item-border'>
+    <ion-item class = 'ion-item-border' lines = 'none'>
         <ion-label position = 'floating'>Email</ion-label>
-        <ion-input type = 'email' [(ngModel)] = 'userEmail' required email
-                   placeholder = 'Email' autocomplete = 'false'>
+        <ion-input [(ngModel)] = 'userEmail' autocomplete = 'false' email
+                   placeholder = 'Email'
+                   required type = 'email'>
         </ion-input>
         <ion-icon name = "mail-outline" slot = 'end'></ion-icon>
     </ion-item>
-    <ion-item lines = 'none' class = 'ion-item-border'>
+    <ion-item class = 'ion-item-border' lines = 'none'>
         <ion-label position = 'floating'>Password</ion-label>
-        <ion-input type = 'password' [(ngModel)] = 'userPassword'
-                   minlength = '6'
-                   required placeholder = '******' autocomplete = 'false'
-                   (keypress) = '$event.key === "Enter" ? signUp() : ""'>
+        <ion-input (keypress) = '$event.key === "Enter" ? signUp() : ""'
+                   [(ngModel)] = 'userPassword'
+                   autocomplete = 'false'
+                   minlength = '6' placeholder = '******' required
+                   type = 'password'>
         </ion-input>
         <ion-icon name = "key-outline" slot = 'end'></ion-icon>
     </ion-item>
@@ -34,14 +37,14 @@
         <b>Note: </b>Password must contain atleast 6 characters!
     </ion-card-subtitle>
 
-    <ion-fab vertical = 'bottom' horizontal = 'start'>
-        <ion-fab-button routerLink = '/login' routerDirection = 'back'
-                        color = 'light'>
+    <ion-fab horizontal = 'start' vertical = 'bottom'>
+        <ion-fab-button color = 'light' routerDirection = 'back'
+                        routerLink = '/login'>
             <ion-icon name = "chevron-back-outline"></ion-icon>
         </ion-fab-button>
     </ion-fab>
 
-    <ion-fab vertical = 'bottom' horizontal = 'end'>
+    <ion-fab horizontal = 'end' vertical = 'bottom'>
         <ion-fab-button (click) = 'signUp()' *ngIf =
                 '!(!userEmail || !userName || !userPassword ||
                 userPassword.length < 6)'>

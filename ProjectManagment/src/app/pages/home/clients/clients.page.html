@@ -1,0 +1,79 @@
+<ion-header>
+    <ion-toolbar>
+        <ion-item lines = 'none'>
+            <ion-menu-button slot = 'start'></ion-menu-button>
+            <ion-title>List of Clients</ion-title>
+        </ion-item>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content id = 'main'>
+    <div *ngIf = 'clients'>
+        <ion-card *ngFor = 'let client of clients'>
+            <ion-card-header>
+                <ion-card-title>{{client.cName}}</ion-card-title>
+                <ion-card-subtitle>{{client.cCompany}}
+                    , {{client.cCountry}}</ion-card-subtitle>
+            </ion-card-header>
+            <ion-content>
+                <ion-list *ngIf = 'client.pIds.length > 0' lines = 'none'>
+                    <ion-list-header>Projects
+                                     by {{client.cName}}</ion-list-header>
+                    <ion-item
+                            *ngFor = 'let project of ds.fetchProjects("cId","==",client.cId)| async'>
+                        {{project.pName}}
+                        <ion-card-subtitle>{{project.pDesc}}</ion-card-subtitle>
+                    </ion-item>
+                </ion-list>
+            </ion-content>
+        </ion-card>
+    </div>
+
+
+    <ion-menu contentId = "main" menuId = 'sideMenu' side = "start">
+        <ion-content>
+            <ion-list lines = 'full'>
+                <ion-menu-toggle>
+                    <ion-button [routerLink] =
+                                        '["/"+route.snapshot.params["uId"],"dashboard"]'
+                                color = 'dark' expand = 'block'
+                                fill = 'clear'
+                                routerDirection = 'forward'>
+                        Dashboard
+                    </ion-button>
+                </ion-menu-toggle>
+                <ion-menu-toggle>
+                    <ion-button
+                            [routerLink] = '["/"+route.snapshot.params["uId"],"clients"]'
+                            color = 'dark' expand = 'block'
+                            fill = 'clear'
+                            routerDirection = 'forward'>
+                        Clients
+                    </ion-button>
+                </ion-menu-toggle>
+                <ion-menu-toggle>
+                    <ion-button color = 'dark' expand = 'block' fill = 'clear'>
+                        Projects
+                    </ion-button>
+                </ion-menu-toggle>
+                <ion-menu-toggle>
+                    <ion-button color = 'dark' expand = 'block' fill = 'clear'>
+                        Settings
+                    </ion-button>
+                </ion-menu-toggle>
+                <ion-menu-toggle>
+                    <ion-button color = 'dark' expand = 'block' fill = 'clear'>
+                        Profile
+                    </ion-button>
+                </ion-menu-toggle>
+                <ion-menu-toggle>
+                    <ion-button (click) = 'ds.logOut()' color = 'dark'
+                                expand = 'block'
+                                fill = 'clear'>
+                        Log Out
+                    </ion-button>
+                </ion-menu-toggle>
+            </ion-list>
+        </ion-content>
+    </ion-menu>
+</ion-content>

@@ -1,9 +1,36 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-title>home</ion-title>
-  </ion-toolbar>
-</ion-header>
+<ion-menu contentId = "main" menuId = 'sideMenu' side = "start">
+    <ion-content>
+        <ion-list lines = 'full'>
+            <ion-button [routerLink] =
+                                '["/"+route.snapshot.params["uId"],"dashboard"]'
+                        color = 'dark' expand = 'block'
+                        fill = 'clear'
+                        routerDirection = 'forward'>
+                Dashboard
+            </ion-button>
+            <ion-button
+                    [routerLink] = '["/"+route.snapshot.params["uId"],"clients"]'
+                    color = 'dark' expand = 'block'
+                    fill = 'clear'
+                    routerDirection = 'forward'>
+                Clients
+            </ion-button>
+            <ion-button color = 'dark' expand = 'block' fill = 'clear'>
+                Projects
+            </ion-button>
+            <ion-button color = 'dark' expand = 'block' fill = 'clear'>
+                Settings
+            </ion-button>
+            <ion-button color = 'dark' expand = 'block' fill = 'clear'>
+                Profile
+            </ion-button>
+            <ion-button (click) = 'ds.logOut()' color = 'dark'
+                        expand = 'block'
+                        fill = 'clear'>
+                Log Out
+            </ion-button>
+        </ion-list>
+    </ion-content>
+</ion-menu>
 
-<ion-content>
-
-</ion-content>
+<ion-router-outlet id = 'main'></ion-router-outlet>

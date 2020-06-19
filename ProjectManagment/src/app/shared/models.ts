@@ -14,11 +14,11 @@ export class ClientModel {
         public cName: string,
         public cCountry: string,
         public pIds: string[],
-        public cCompany?: string,
+        public cCompany?: string
     ) {}
 }
 
-export class ProjectModel{
+export class ProjectModel {
     constructor(
         public pId: string,
         public cId: string,

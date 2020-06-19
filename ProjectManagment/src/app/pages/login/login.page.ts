@@ -16,7 +16,7 @@ export class LoginPage implements OnInit {
 
     ngOnInit() {
         this.afa.signOut();
-        localStorage.removeItem( "userData" )
+        localStorage.removeItem( "userData" );
     }
 
     login(): void {
