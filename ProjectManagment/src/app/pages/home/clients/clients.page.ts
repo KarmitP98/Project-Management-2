@@ -1,10 +1,11 @@
 import { Component, OnDestroy, OnInit } from "@angular/core";
-import { ClientModel } from "../../../shared/models";
+import { ClientModel, ProjectModel } from "../../../shared/models";
 import { DataService } from "../../../services/data.service";
 import { ActivatedRoute } from "@angular/router";
 import { TopDropDownComponent } from "../../../components/top-drop-down/top-drop-down.component";
 import { ModalController, PopoverController } from "@ionic/angular";
 import { AddClientComponent } from "../../../components/add-client/add-client.component";
+import { Subscription } from "rxjs";
 
 @Component( {
                 selector: "app-clients",
@@ -12,8 +13,11 @@ import { AddClientComponent } from "../../../components/add-client/add-client.co
                 styleUrls: [ "./clients.page.scss" ]
             } )
 export class ClientsPage implements OnInit, OnDestroy {
-    clients: ClientModel[];
+    clients: ClientModel[] = [];
+    projects: ProjectModel[] = [];
     uId: "";
+    clientSub: Subscription;
+    projectSub: Subscription;
 
     constructor( public ds: DataService,
                  public route: ActivatedRoute,
@@ -24,15 +28,18 @@ export class ClientsPage implements OnInit, OnDestroy {
 
         this.uId = this.route.snapshot.params["uId"];
 
-        this.ds.fetchClients()
-            .subscribe( clients => {
-                if ( clients ) {
-                    this.clients = clients;
-                }
-            } );
+        this.clientSub = this.ds.fetchClients()
+                             .subscribe( clients => {
+                                 if ( clients ) {
+                                     console.log( clients );
+                                     this.clients = clients;
+                                 }
+                             } );
+
     }
 
     ngOnDestroy(): void {
+        this.clientSub.unsubscribe();
     }
 
     async openDropDown( $event: MouseEvent ) {
