@@ -29,7 +29,8 @@ export class ProjectModel {
         public pDeadline: Date,
         public pBillingType: string,
         public pBudget: number,
-        public pMembers: MemberModel[]
+        public pMembers: MemberModel[],
+        public pMemberIds: string[]
     ) {}
 }
 
@@ -37,9 +38,10 @@ export class MemberModel {
     constructor(
         public mId: string,
         public mUId: string,
+        public mName: string,
         public mType: string,
         public mRole: string,
         public mBillingType: string,
-        public mRate: string
+        public mRate: number
     ) {}
 }

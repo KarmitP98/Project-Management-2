@@ -110,6 +110,12 @@ export class DataService {
             .update( client );
     }
 
+    addNewProject( project: ProjectModel ) {
+        this.afs.collection( "projects" )
+            .doc( project.pId )
+            .set( project );
+    }
+
     fetchProjects( child?, condition?, value? ) {
         if ( child ) {
             return this.afs
@@ -118,6 +124,12 @@ export class DataService {
         } else {
             return this.afs.collection<ProjectModel>( "projects" ).valueChanges();
         }
+    }
+
+    updateProjects( project: ProjectModel ) {
+        this.afs.collection<ProjectModel>( "projects" )
+            .doc( project.pId )
+            .update( project );
     }
 
     async showToast( message, time?, color? ) {

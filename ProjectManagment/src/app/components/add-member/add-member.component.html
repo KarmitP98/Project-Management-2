@@ -1,0 +1,80 @@
+<ion-header>
+    <ion-toolbar>
+        <ion-item lines = 'none'>
+            <ion-buttons slot = 'start'>
+                <ion-button (click) = 'dismiss(false)' color = 'primary'
+                            fill = 'clear'
+                            shape = 'round'>
+                    <ion-icon name = "arrow-back-outline"></ion-icon>
+                </ion-button>
+            </ion-buttons>
+            <ion-label><h1>Add a Member to the Project</h1></ion-label>
+        </ion-item>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content *ngIf = "available">
+
+    <ion-item class = 'ion-item-border' lines = 'none'>
+        <ion-label>Members</ion-label>
+        <ion-select [(ngModel)] = 'pUser' interface = 'popover'
+                    mode = 'md' placeholder = 'Available Members'>
+            <ion-select-option *ngFor = 'let user of available'
+                               [value] = 'user'>
+                {{user.uName}}
+            </ion-select-option>
+        </ion-select>
+    </ion-item>
+
+    <div *ngIf = 'pUser'>
+        <ion-item class = 'ion-item-border' lines = 'none'>
+            <ion-label>Billing Type</ion-label>
+            <ion-select [(ngModel)] = 'mBillingType' interface = 'popover'
+                        mode = 'md' placeholder = 'Billing Type'>
+                <ion-select-option value = 'One Time'>One Time
+                </ion-select-option>
+                <ion-select-option value = 'Hourly'>Hourly</ion-select-option>
+            </ion-select>
+        </ion-item>
+
+        <ion-item *ngIf = 'mBillingType' class = 'ion-item-border'
+                  lines = 'none'>
+            <ion-label>{{mBillingType === 'One Time' ?
+                'Price : ' : 'Hourly Rate : '}}
+            </ion-label>
+            <ion-input [(ngModel)] = 'mRate' min = '0' placeholder = '21.72'
+                       required type = 'number'>$&nbsp;
+            </ion-input>
+        </ion-item>
+
+        <ion-item class = 'ion-item-border' lines = 'none'>
+            <ion-label>Member Type</ion-label>
+            <ion-select [(ngModel)] = 'mType' interface = 'popover'
+                        mode = 'md' placeholder = 'Member Type'>
+                <ion-select-option value = 'Host'>Host
+                </ion-select-option>
+                <ion-select-option value = 'Member'>Member</ion-select-option>
+            </ion-select>
+        </ion-item>
+
+        <ion-item class = 'ion-item-border' lines = 'none'>
+            <ion-label>Role</ion-label>
+            <ion-select [(ngModel)] = 'mRole' interface = 'popover'
+                        mode = 'md' placeholder = 'mRole'>
+                <ion-select-option value = 'Developer'>Developer
+                </ion-select-option>
+                <ion-select-option value = 'Designer'>Designer
+                </ion-select-option>
+                <ion-select-option value = 'Intern'>Free Labourer
+                </ion-select-option>
+            </ion-select>
+        </ion-item>
+    </div>
+
+    <ion-fab horizontal = 'end' vertical = 'bottom'>
+        <ion-fab-button (click) = 'dismiss(true)' color = 'warning'>
+            <ion-icon name = "add-outline"></ion-icon>
+        </ion-fab-button>
+    </ion-fab>
+
+</ion-content>

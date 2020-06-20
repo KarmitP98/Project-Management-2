@@ -1,11 +1,21 @@
 <ion-header *ngIf = 'user'>
     <ion-toolbar>
         <ion-item lines = 'none'>
-            <ion-menu-button slot = 'start'></ion-menu-button>
+            <ion-buttons slot = 'start'>
+                <ion-button (click) = 'openDropDown($event)' color = 'primary'
+                            fill = 'clear'
+                            shape = "round">
+                    <ion-icon name = "chevron-down-outline"></ion-icon>
+                </ion-button>
+            </ion-buttons>
             <ion-title>{{user.uName}}</ion-title>
-            <ion-icon (click) = 'ds.logOut()' button color = 'danger'
-                      name = "log-out-outline" slot = 'end'>
-            </ion-icon>
+            <ion-buttons slot = 'end'>
+                <ion-button (click) = 'ds.logOut()' color = 'danger'
+                            fill = 'solid'
+                            shape = 'round'>
+                    <ion-icon name = "log-out-outline"></ion-icon>
+                </ion-button>
+            </ion-buttons>
         </ion-item>
     </ion-toolbar>
 </ion-header>
@@ -18,111 +28,122 @@
         </ion-fab-button>
         <ion-fab-list side = 'top'>
             <ion-fab-button (click) = 'addNewClient()'>
-                <ion-icon color = 'primary' name = "people-outline"></ion-icon>
+                <ion-icon color = 'primary'
+                          name = "person-add-outline"></ion-icon>
             </ion-fab-button>
-            <ion-fab-button>
+            <ion-fab-button (click) = 'addNewProject()'>
                 <ion-icon color = 'primary'
                           name = "duplicate-outline"></ion-icon>
             </ion-fab-button>
         </ion-fab-list>
     </ion-fab>
 
-    <h3>Current Projects</h3>
-    <ion-card *ngFor = 'let card of currentSampleCards' class =
-            'ion-text-left'>
-        <ion-card-header>
-            <ion-item lines = 'full'>
-                <ion-card-title
-                        class = 'ion-text-center'>{{card.pName}}</ion-card-title>
-                <ion-icon [color] = 'card.pStatus ? "warning": "success"'
-                          [name] = "card.pStatus ? 'folder-open-outline' :
+    <div *ngIf = 'sample'>
+        <h3>Current Projects</h3>
+        <ion-card *ngFor = 'let card of currentSampleCards' class =
+                'ion-text-left'>
+            <ion-card-header>
+                <ion-item lines = 'full'>
+                    <ion-card-title
+                            class = 'ion-text-center'>{{card.pName}}</ion-card-title>
+                    <ion-icon [color] = 'card.pStatus ? "warning": "success"'
+                              [name] = "card.pStatus ? 'folder-open-outline' :
                 'folder-outline'"
-                          slot = 'end'></ion-icon>
-            </ion-item>
-            <ion-card-subtitle>Start Date:
-                <b>{{card.pStartDate | date}}</b></ion-card-subtitle>
-            <ion-card-subtitle>Deadline:
-                <b>{{card.pDeadline | date}}</b></ion-card-subtitle>
-        </ion-card-header>
-        <ion-card-content>
-            <p>
-                {{card.pDesc}}
-            <p>
-            <p>Number of Members: <b>{{card.pTotalMembers}}</b></p>
-        </ion-card-content>
-    </ion-card>
+                              slot = 'end'></ion-icon>
+                </ion-item>
+                <ion-card-subtitle>Start Date:
+                    <b>{{card.pStartDate | date}}</b></ion-card-subtitle>
+                <ion-card-subtitle>Deadline:
+                    <b>{{card.pDeadline | date}}</b></ion-card-subtitle>
+            </ion-card-header>
+            <ion-card-content>
+                <p>
+                    {{card.pDesc}}
+                <p>
+                <p>Number of Members: <b>{{card.pTotalMembers}}</b></p>
+            </ion-card-content>
+        </ion-card>
+    </div>
+    <div *ngIf = '!sample'>
+        <h3 *ngIf = 'currentP?.length > 0'>Current Projects</h3>
+        <ion-card *ngFor = 'let project of currentP' class = 'ion-text-left'>
+            <ion-card-header>
+                <ion-item lines = 'full'>
+                    <ion-card-title class = 'ion-text-center'>
+                        {{project.pName}}
+                    </ion-card-title>
+                    <ion-icon
+                            [color] = 'project.pStatus === "active" ? "warning": "success"'
+                            [name] = "project.pStatus === 'active' ?
+                              'folder-open-outline' : 'folder-outline'"
+                            slot = 'end'></ion-icon>
+                </ion-item>
+                <ion-card-subtitle>Start Date:
+                    <b>{{project.pStartDate | date}}</b></ion-card-subtitle>
+                <ion-card-subtitle>Deadline:
+                    <b>{{project.pDeadline | date}}</b></ion-card-subtitle>
+            </ion-card-header>
+            <ion-card-content>
+                <p>
+                    {{project.pDesc}}
+                <p>
+                <p>Number of Members: <b>{{project.pMemberIds.length}}</b></p>
+            </ion-card-content>
+        </ion-card>
+    </div>
     <br>
-
-    <h3>Past Projects</h3>
-    <ion-card *ngFor = 'let card of finishedSampleCards'
-              class = 'ion-text-left'>
-        <ion-card-header>
-            <ion-item lines = 'full'>
-                <ion-card-title
-                        class = 'ion-text-center'>{{card.pName}}</ion-card-title>
-                <ion-icon [color] = 'card.pStatus ? "warning": "success"'
-                          [name] = "card.pStatus ? 'folder-open-outline' :
+    <div *ngIf = 'sample'>
+        <h3>Past Projects</h3>
+        <ion-card *ngFor = 'let card of finishedSampleCards'
+                  class = 'ion-text-left'>
+            <ion-card-header>
+                <ion-item lines = 'full'>
+                    <ion-card-title
+                            class = 'ion-text-center'>{{card.pName}}</ion-card-title>
+                    <ion-icon [color] = 'card.pStatus ? "warning": "success"'
+                              [name] = "card.pStatus ? 'folder-open-outline' :
                 'folder-outline'"
-                          slot = 'end'></ion-icon>
-            </ion-item>
-            <ion-card-subtitle>Start Date:
-                <b>{{card.pStartDate | date}}</b></ion-card-subtitle>
-            <ion-card-subtitle>Deadline:
-                <b>{{card.pDeadline | date}}</b></ion-card-subtitle>
-        </ion-card-header>
-        <ion-card-content>
-            <p>
-                {{card.pDesc}}
-            <p>
-            <p>Number of Members: <b>{{card.pTotalMembers}}</b></p>
-        </ion-card-content>
-    </ion-card>
-
-    <ion-menu contentId = "main" menuId = 'sideMenu' side = "start">
-        <ion-content>
-            <ion-list lines = 'full'>
-                <ion-menu-toggle>
-                    <ion-button [routerLink] =
-                                        '["/"+route.snapshot.params["uId"],"dashboard"]'
-                                color = 'dark' expand = 'block'
-                                fill = 'clear'
-                                routerDirection = 'forward'>
-                        Dashboard
-                    </ion-button>
-                </ion-menu-toggle>
-                <ion-menu-toggle>
-                    <ion-button
-                            [routerLink] = '["/"+route.snapshot.params["uId"],"clients"]'
-                            color = 'dark' expand = 'block'
-                            fill = 'clear'
-                            routerDirection = 'forward'>
-                        Clients
-                    </ion-button>
-                </ion-menu-toggle>
-                <ion-menu-toggle>
-                    <ion-button color = 'dark' expand = 'block' fill = 'clear'>
-                        Projects
-                    </ion-button>
-                </ion-menu-toggle>
-                <ion-menu-toggle>
-                    <ion-button color = 'dark' expand = 'block' fill = 'clear'>
-                        Settings
-                    </ion-button>
-                </ion-menu-toggle>
-                <ion-menu-toggle>
-                    <ion-button color = 'dark' expand = 'block' fill = 'clear'>
-                        Profile
-                    </ion-button>
-                </ion-menu-toggle>
-                <ion-menu-toggle>
-                    <ion-button (click) = 'ds.logOut()' color = 'dark'
-                                expand = 'block'
-                                fill = 'clear'>
-                        Log Out
-                    </ion-button>
-                </ion-menu-toggle>
-            </ion-list>
-        </ion-content>
-    </ion-menu>
+                              slot = 'end'></ion-icon>
+                </ion-item>
+                <ion-card-subtitle>Start Date:
+                    <b>{{card.pStartDate | date}}</b></ion-card-subtitle>
+                <ion-card-subtitle>Deadline:
+                    <b>{{card.pDeadline | date}}</b></ion-card-subtitle>
+            </ion-card-header>
+            <ion-card-content>
+                <p>
+                    {{card.pDesc}}
+                <p>
+                <p>Number of Members: <b>{{card.pTotalMembers}}</b></p>
+            </ion-card-content>
+        </ion-card>
+    </div>
+    <div *ngIf = '!sample'>
+        <h3 *ngIf = 'pastP?.length > 0'>Past Projects</h3>
+        <ion-card *ngFor = 'let project of pastP' class = 'ion-text-left'>
+            <ion-card-header>
+                <ion-item lines = 'full'>
+                    <ion-card-title class = 'ion-text-center'>
+                        {{project.pName}}
+                    </ion-card-title>
+                    <ion-icon
+                            [color] = 'project.pStatus === "active" ? "warning": "success"'
+                            [name] = "project.pStatus === 'active' ?
+                              'folder-open-outline' : 'folder-outline'"
+                            slot = 'end'></ion-icon>
+                </ion-item>
+                <ion-card-subtitle>Start Date:
+                    <b>{{project.pStartDate | date}}</b></ion-card-subtitle>
+                <ion-card-subtitle>Deadline:
+                    <b>{{project.pDeadline | date}}</b></ion-card-subtitle>
+            </ion-card-header>
+            <ion-card-content>
+                <p>
+                    {{project.pDesc}}
+                <p>
+                <p>Number of Members: <b>{{project.pMemberIds.length}}</b></p>
+            </ion-card-content>
+        </ion-card>
+    </div>
 </ion-content>
 

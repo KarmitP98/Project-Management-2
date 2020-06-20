@@ -1,11 +1,13 @@
 <ion-header>
     <ion-toolbar>
         <ion-item lines = 'none'>
-            <ion-icon (click) = 'dismiss(false)' color = 'dark'
-                      name = "arrow-back-outline"
-                      slot = 'start'>
-                <ion-ripple-effect type = 'ios'></ion-ripple-effect>
-            </ion-icon>
+            <ion-buttons slot = 'start'>
+                <ion-button (click) = 'dismiss(false)' color = 'primary'
+                            fill = 'clear'
+                            shape = 'round'>
+                    <ion-icon name = "arrow-back-outline"></ion-icon>
+                </ion-button>
+            </ion-buttons>
             <ion-label><h1>Add a new Client</h1></ion-label>
         </ion-item>
     </ion-toolbar>
@@ -24,7 +26,8 @@
     <ion-item class = 'ion-item-border' lines = 'none'>
         <ion-label>Client Country</ion-label>
         <ion-select [(ngModel)] = 'cCountry' [selectedText] = 'cCountry'
-                    cancelText = "Cancel" mode = 'md' okText =
+                    cancelText = "Cancel" interface = 'popover' mode = 'md'
+                    okText =
                             "Select"
                     placeholder = 'India'>
             <ion-select-option *ngFor = 'let country of countries'
