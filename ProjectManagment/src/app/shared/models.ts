@@ -42,6 +42,7 @@ export class MemberModel {
         public mType: string,
         public mRole: string,
         public mBillingType: string,
-        public mRate: number
+        public mRate: number,
+        public mRequests?: { to: string, from: string, content: string, seen: boolean, accepted: boolean }
     ) {}
 }

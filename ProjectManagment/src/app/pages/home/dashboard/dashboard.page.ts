@@ -60,6 +60,8 @@ export class DashboardPage implements OnInit, OnDestroy {
         this.projectSub = this.ds.fetchProjects( "pMemberIds", "array-contains", uId )
                               .subscribe( projects => {
                                   if ( projects ) {
+                                      this.currentP = [];
+                                      this.pastP = [];
                                       projects.forEach( project => {
                                           if ( project.pStatus === "active" ) {
                                               this.currentP.push( project );

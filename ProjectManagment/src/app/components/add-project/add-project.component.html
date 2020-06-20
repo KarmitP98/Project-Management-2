@@ -129,15 +129,13 @@
                 </ion-item>
 
                 <ion-card *ngFor = 'let member of pMembers'>
-                    <ion-item lines = 'none'>
-                        <ion-icon (click) = 'removeMember(member)'
-                                  color = 'danger'
-                                  name = "remove-circle-outline"
-                                  slot = 'end'>
-                        </ion-icon>
-                    </ion-item>
                     <ion-card-header>
                         <ion-card-title class = 'ion-text-center'>
+                            <ion-icon (click) = 'removeMember(member)'
+                                      class = 'ion-float-right'
+                                      color = 'danger'
+                                      name = "remove-circle-outline">
+                            </ion-icon>
                             {{member.mName}}
                         </ion-card-title>
                         <ion-card-subtitle>{{member.mRole}}</ion-card-subtitle>

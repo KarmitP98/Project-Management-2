@@ -129,7 +129,7 @@ export class AddProjectComponent implements OnInit, OnDestroy {
                                          } );
         await modal.present();
         const { data } = await modal.onWillDismiss();
-        if ( data.member ) {
+        if ( data?.member ) {
             this.pMembers.push( data.member );
             this.available = this.available.filter( value => value.uId !== data.member.mUId );
             this.pMemberIds.push( data.member.mUId );
