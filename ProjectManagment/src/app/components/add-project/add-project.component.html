@@ -103,18 +103,19 @@
 
         <ion-slide>
             <ion-list style = 'height: 100%; width: 100%;'>
-                <div *ngIf = 'pBillingType === "Hourly"'>
-                    <ion-item lines = 'inherit'>
-                        <h3>Your Rate</h3>
-                    </ion-item>
-                    <ion-item lines = 'none'>
-                        <ion-label>Hourly Rate :</ion-label>
-                        <ion-input [(ngModel)] = 'hRate' required
-                                   type = 'number'>
-                            $&nbsp;
-                        </ion-input>
-                    </ion-item>
-                </div>
+                <ion-item lines = 'inherit'>
+                    <h3>Host Information</h3>
+                </ion-item>
+                <ion-item>
+
+                </ion-item>
+                <ion-item lines = 'none'>
+                    <ion-label>{{hBillingType}} :</ion-label>
+                    <ion-input [(ngModel)] = 'hRate' required
+                               type = 'number'>
+                        $&nbsp;
+                    </ion-input>
+                </ion-item>
                 <ion-item *ngIf = 'members' lines = 'inherit'>
                     <h3>Members</h3>
                     <ion-buttons slot = 'end'>

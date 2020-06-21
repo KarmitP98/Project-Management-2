@@ -20,3 +20,8 @@ export enum PROJECT_PRIORITY {
     normal,
     urgent
 }
+
+export enum BILLING_TYPE {
+    one_time = "One Time",
+    hourly = "Hourly"
+}

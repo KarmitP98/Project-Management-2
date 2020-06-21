@@ -7,6 +7,7 @@ import { Subscription } from "rxjs";
 import { AddClientComponent } from "../add-client/add-client.component";
 import { AddMemberComponent } from "../add-member/add-member.component";
 import { pushTrigger } from "../../shared/animations";
+import { BILLING_TYPE } from "../../shared/constants";
 
 @Component( {
                 selector: "app-add-project",
@@ -35,33 +36,22 @@ export class AddProjectComponent implements OnInit, OnDestroy {
     userSub: Subscription;
     clientSub: Subscription;
 
+    hBillingType: string = BILLING_TYPE.one_time;
+    hRate: number;
+
+    BT = BILLING_TYPE;
+
     @ViewChild( "slide" ) slides: IonSlides;
 
     customPopoverOptions: any = {
         header: "List of Clients"
     };
-    hRate: number;
 
     constructor( private mc: ModalController,
                  private ds: DataService,
                  private afs: AngularFirestore ) { }
 
     ngOnInit() {
-
-        // this.userSub = this.afs.collection<UserModel>( "users", ref =>
-        //     ref.where( "uId", ">", this.uId )
-        //        .where( "uId", "<", this.uId ) )
-        //                    .valueChanges()
-        //                    .subscribe( users => {
-        //                        if ( users ) {
-        //                            this.members = users;
-        //                            // this.available = users.filter( value => {
-        //                            //     return value.uId !== this.uId;
-        //                            // } );
-        //                            this.available = users;
-        //                        }
-        //                    } );
-
         this.userSub = this.ds.fetchUsers()
                            .subscribe( users => {
                                if ( users ) {

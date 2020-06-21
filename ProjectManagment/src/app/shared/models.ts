@@ -1,49 +1,71 @@
 export class UserModel {
-    constructor(
-        public uId: string,
-        public uName: string,
-        public uEmail: string,
-        public uPassword: string
-    ) {}
+    public uId: string;
+    public uName: string;
+    public uEmail: string;
+    public uPassword: string;
 }
 
 export class ClientModel {
-
-    constructor(
-        public cId: string,
-        public cName: string,
-        public cCountry: string,
-        public pIds: string[],
-        public cEmail: string,
-        public cCompany?: string
-    ) {}
+    public cId: string;
+    public cName: string;
+    public cCountry: string;
+    public pIds: string[];
+    public cEmail: string;
+    public cCompany?: string;
 }
 
 export class ProjectModel {
-    constructor(
-        public pId: string,
-        public cId: string,
-        public pName: string,
-        public pDesc: string,
-        public pStatus: string,
-        public pStartDate: Date,
-        public pDeadline: Date,
-        public pBillingType: string,
-        public pBudget: number,
-        public pMembers: MemberModel[],
-        public pMemberIds: string[]
-    ) {}
+    public pId: string;
+    public cId: string;
+    public pName: string;
+    public pDesc: string;
+    public pStatus: string;
+    public pStartDate: Date;
+    public pDeadline: Date;
+    public pBillingType: string;
+    public pBudget: number;
+    public pMembers: MemberModel[];
+    public pMemberIds: string[];
 }
 
 export class MemberModel {
-    constructor(
-        public mId: string,
-        public mUId: string,
-        public mName: string,
-        public mType: string,
-        public mRole: string,
-        public mBillingType: string,
-        public mRate: number,
-        public mRequests?: { to: string, from: string, content: string, seen: boolean, accepted: boolean }
-    ) {}
+    public mId: string;
+    public mUId: string;
+    public mName: string;
+    public mType: string;
+    public mRole: string;
+    public mBillingType: string;
+    public mRate: number;
+    public mRequests?: RequestModel[];
+}
+
+export class WeeklyWorkLog {
+    public wId: string;
+    public mId: string;
+    public mUid: string;
+    public dailyLog: DailyWorkLog[];
+    public approved: boolean;
+    public billed: boolean;
+
+}
+
+export class DailyWorkLog {
+    public date: Date;
+    public works: WorkModel[];
+    public dailyHours: number;
+}
+
+export class WorkModel {
+    public startTime: Date;
+    public endTime: Date;
+    public hours: number;
+    public work: string;
+}
+
+export class RequestModel {
+    public to: string;
+    public from: string;
+    public mBillingType: string;
+    public mRate: number;
+    public requestText: string;
 }
