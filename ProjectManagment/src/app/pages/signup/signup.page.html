@@ -39,7 +39,7 @@
 
     <ion-fab horizontal = 'start' vertical = 'bottom'>
         <ion-fab-button color = 'light' routerDirection = 'back'
-                        routerLink = '/login'>
+                        [@push] routerLink = '/login'>
             <ion-icon name = "chevron-back-outline"></ion-icon>
         </ion-fab-button>
     </ion-fab>
@@ -47,7 +47,7 @@
     <ion-fab horizontal = 'end' vertical = 'bottom'>
         <ion-fab-button (click) = 'signUp()' *ngIf =
                 '!(!userEmail || !userName || !userPassword ||
-                userPassword.length < 6)'>
+                userPassword.length < 6)' [@push]>
             <ion-icon name = "person-add-outline"></ion-icon>
         </ion-fab-button>
     </ion-fab>

@@ -1,11 +1,13 @@
 import { Component, Input, OnInit } from "@angular/core";
 import { ModalController } from "@ionic/angular";
 import { MemberModel, UserModel } from "../../shared/models";
+import { pushTrigger } from "../../shared/animations";
 
 @Component( {
                 selector: "app-add-member",
                 templateUrl: "./add-member.component.html",
-                styleUrls: [ "./add-member.component.scss" ]
+                styleUrls: [ "./add-member.component.scss" ],
+                animations: [ pushTrigger ]
             } )
 export class AddMemberComponent implements OnInit {
 

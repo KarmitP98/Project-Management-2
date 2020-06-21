@@ -3,16 +3,20 @@ import { DataService } from "../../services/data.service";
 import { ModalController } from "@ionic/angular";
 import { HttpClient } from "@angular/common/http";
 import { ClientModel } from "../../shared/models";
+import { pushTrigger } from "../../shared/animations";
 
 @Component( {
                 selector: "app-add-client",
                 templateUrl: "./add-client.component.html",
-                styleUrls: [ "./add-client.component.scss" ]
+                styleUrls: [ "./add-client.component.scss" ],
+                animations: [ pushTrigger ]
             } )
 export class AddClientComponent implements OnInit, OnDestroy {
+
     cName: string;
     cCountry: string = "India";
     cCompany: string = "Default";
+    cEmail: string;
     countries: string[];
 
     constructor( private ds: DataService,
@@ -31,12 +35,20 @@ export class AddClientComponent implements OnInit, OnDestroy {
 
     dismiss( add: boolean ): void {
         if ( add ) {
-            const client: ClientModel = { cId: "temp", cName: this.cName, cCountry: this.cCountry, cCompany: this.cCompany, pIds: [] };
+            const client: ClientModel = {
+                cId: "temp",
+                cName: this.cName,
+                cCountry: this.cCountry,
+                cCompany: this.cCompany,
+                cEmail: this.cEmail,
+                pIds: []
+            };
             this.ds.addNewClient( client );
         }
         this.cName = null;
         this.cCompany = null;
         this.cCountry = null;
+        this.cEmail = null;
         this.mc.dismiss();
     }
 }

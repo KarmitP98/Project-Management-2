@@ -1,4 +1,4 @@
-import { animate, AnimationTriggerMetadata, state, style, transition, trigger } from "@angular/animations";
+import { animate, AnimationTriggerMetadata, keyframes, state, style, transition, trigger } from "@angular/animations";
 
 export const leftLoadTrigger: AnimationTriggerMetadata =
     trigger( "loadLeft", [
@@ -18,3 +18,31 @@ export const opacityLoadTrigger: AnimationTriggerMetadata =
         ] )
     ] );
 
+export const pushTrigger: AnimationTriggerMetadata =
+    trigger( "push", [
+        state( "in", style( {
+                                transform: "scale(1)"
+                            } ) ),
+        transition( "void => *", [
+            animate( 300, keyframes( [
+                                         style( {
+                                                    transform: "scale(0)"
+                                                } ),
+                                         style( {
+                                                    transform: "scale(0.3)"
+                                                } ),
+                                         style( {
+                                                    transform: "scale(0.6)"
+                                                } ),
+                                         style( {
+                                                    transform: "scale(0.9)"
+                                                } ),
+                                         style( {
+                                                    transform: "scale(1.2)"
+                                                } ),
+                                         style( {
+                                                    transform: "scale(1)"
+                                                } )
+                                     ] ) )
+        ] )
+    ] );

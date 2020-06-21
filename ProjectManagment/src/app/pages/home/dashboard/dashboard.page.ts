@@ -5,7 +5,7 @@ import { ActivatedRoute, Router } from "@angular/router";
 import { Subscription } from "rxjs";
 import { ModalController, PopoverController } from "@ionic/angular";
 import { AddClientComponent } from "../../../components/add-client/add-client.component";
-import { leftLoadTrigger, opacityLoadTrigger } from "../../../shared/animations";
+import { leftLoadTrigger, opacityLoadTrigger, pushTrigger } from "../../../shared/animations";
 import { TopDropDownComponent } from "../../../components/top-drop-down/top-drop-down.component";
 import { AddProjectComponent } from "../../../components/add-project/add-project.component";
 import { AngularFirestore } from "@angular/fire/firestore";
@@ -23,7 +23,7 @@ interface sampleProject {
                 selector: "app-dashboard",
                 templateUrl: "./dashboard.page.html",
                 styleUrls: [ "./dashboard.page.scss" ],
-                animations: [ leftLoadTrigger, opacityLoadTrigger ]
+                animations: [ leftLoadTrigger, opacityLoadTrigger, pushTrigger ]
             } )
 export class DashboardPage implements OnInit, OnDestroy {
     user: UserModel;

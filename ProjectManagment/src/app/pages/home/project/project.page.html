@@ -1,7 +1,10 @@
 <ion-header *ngIf = 'project'>
     <ion-toolbar
-            [color] = 'project.pStatus === "active" ? "warning" : "success"'>
-        <ion-item lines = 'none'>
+            [color] = 'project.pStatus === "active" ? "warning" : "success"'
+    >
+        <ion-item
+                [color] = 'project.pStatus === "active" ? "warning" : "success"'
+                lines = 'none'>
             <ion-buttons slot = 'start'>
                 <ion-button (click) = 'backToDashboard()' fill = 'clear'
                             shape = 'round'>

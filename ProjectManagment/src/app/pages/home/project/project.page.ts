@@ -44,7 +44,7 @@ export class ProjectPage implements OnInit, OnDestroy {
 
         this.projectSub = this.ds.fetchProjects( "pId", "==", pId )
                               .subscribe( projects => {
-                                  if ( projects && this.users ) {
+                                  if ( projects && this.users?.length > 0 ) {
                                       this.project = projects[0];
                                       this.project.pMemberIds.forEach( mId => {
                                           this.available = this.available.filter( user => user.uId !== mId );

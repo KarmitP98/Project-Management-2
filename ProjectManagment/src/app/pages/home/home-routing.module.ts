@@ -19,6 +19,10 @@ const routes: Routes = [
         canActivate: [ AuthGuard ]
     },
     {
+        path: "settings",
+        loadChildren: () => import("./settings/settings.module").then( m => m.SettingsPageModule )
+    },
+    {
         path: ":pId",
         loadChildren: () => import("./project/project.module").then( m => m.ProjectPageModule )
     }

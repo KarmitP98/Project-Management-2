@@ -14,6 +14,7 @@ export class ClientModel {
         public cName: string,
         public cCountry: string,
         public pIds: string[],
+        public cEmail: string,
         public cCompany?: string
     ) {}
 }

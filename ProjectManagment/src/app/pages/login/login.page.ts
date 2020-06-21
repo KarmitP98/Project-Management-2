@@ -1,11 +1,13 @@
 import { Component, OnInit } from "@angular/core";
 import { DataService } from "../../services/data.service";
 import { AngularFireAuth } from "@angular/fire/auth";
+import { pushTrigger } from "../../shared/animations";
 
 @Component( {
                 selector: "app-login",
                 templateUrl: "./login.page.html",
-                styleUrls: [ "./login.page.scss" ]
+                styleUrls: [ "./login.page.scss" ],
+                animations: [ pushTrigger ]
             } )
 export class LoginPage implements OnInit {
     userEmail: string;

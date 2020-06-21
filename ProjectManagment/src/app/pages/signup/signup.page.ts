@@ -2,11 +2,13 @@ import { Component, OnInit } from "@angular/core";
 import { DataService } from "../../services/data.service";
 import { UserModel } from "../../shared/models";
 import { AngularFireAuth } from "@angular/fire/auth";
+import { pushTrigger } from "../../shared/animations";
 
 @Component( {
                 selector: "app-signup",
                 templateUrl: "./signup.page.html",
-                styleUrls: [ "./signup.page.scss" ]
+                styleUrls: [ "./signup.page.scss" ],
+                animations: [ pushTrigger ]
             } )
 export class SignupPage implements OnInit {
 

@@ -6,11 +6,13 @@ import { ClientModel, MemberModel, ProjectModel, UserModel } from "../../shared/
 import { Subscription } from "rxjs";
 import { AddClientComponent } from "../add-client/add-client.component";
 import { AddMemberComponent } from "../add-member/add-member.component";
+import { pushTrigger } from "../../shared/animations";
 
 @Component( {
                 selector: "app-add-project",
                 templateUrl: "./add-project.component.html",
-                styleUrls: [ "./add-project.component.scss" ]
+                styleUrls: [ "./add-project.component.scss" ],
+                animations: [ pushTrigger ]
             } )
 export class AddProjectComponent implements OnInit, OnDestroy {
 

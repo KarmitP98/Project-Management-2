@@ -7,5 +7,9 @@
     "clients" ]' button routerLinkActive = 'active'>
         Clients
     </ion-item>
+    <ion-item (click) = 'dismiss(false)' [routerLink] = '[ "/" + uId,
+    "settings" ]' button routerLinkActive = 'active'>
+        Settings
+    </ion-item>
     <ion-item (click) = 'dismiss(true)' button>Log Out</ion-item>
 </ion-list>

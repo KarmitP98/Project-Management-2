@@ -154,22 +154,9 @@
     <ion-fab *ngIf = 'pMembers.length >
     0 && pName && pDesc && pDeadline && pStartDate && pBillingType && pBudget
      && pClient' horizontal = 'end' vertical = 'bottom'>
-        <ion-fab-button (click) = 'dismiss(true)' color = 'success'>
+        <ion-fab-button (click) = 'dismiss(true)' [@push] color = 'success'>
             <ion-icon name = "folder-open-outline"></ion-icon>
         </ion-fab-button>
     </ion-fab>
-
-    <!--    <ion-fab horizontal = 'start' vertical = 'bottom' *ngIf =-->
-    <!--            'slide.isEnd() | async'>-->
-    <!--        <ion-fab-button (click) = 'slide.slideTo(0)' color = 'light'>-->
-    <!--            <ion-icon name="chevron-back-outline"></ion-icon>-->
-    <!--        </ion-fab-button>-->
-    <!--    </ion-fab>-->
-    <!--    <ion-fab horizontal = 'end' vertical = 'bottom' *ngIf = 'slide.isEnd() |-->
-    <!--     async'>-->
-    <!--        <ion-fab-button (click) = 'slide.slideTo(1)' color = 'light'>-->
-    <!--            <ion-icon name="chevron-forward-outline"></ion-icon>-->
-    <!--        </ion-fab-button>-->
-    <!--    </ion-fab>-->
 
 </ion-content>

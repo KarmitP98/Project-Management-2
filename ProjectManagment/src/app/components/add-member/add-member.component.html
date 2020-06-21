@@ -65,14 +65,14 @@
                 </ion-select-option>
                 <ion-select-option value = 'Designer'>Designer
                 </ion-select-option>
-                <ion-select-option value = 'Intern'>Free Labourer
+                <ion-select-option value = 'Q/A'>Q/A
                 </ion-select-option>
             </ion-select>
         </ion-item>
     </div>
 
     <ion-fab horizontal = 'end' vertical = 'bottom'>
-        <ion-fab-button (click) = 'dismiss(true)' color = 'warning'>
+        <ion-fab-button (click) = 'dismiss(true)' [@push] color = 'warning'>
             <ion-icon name = "add-outline"></ion-icon>
         </ion-fab-button>
     </ion-fab>

@@ -37,6 +37,14 @@
     </ion-item>
 
     <ion-item class = 'ion-item-border' lines = 'none'>
+        <ion-label position = 'floating'>Client Email</ion-label>
+        <ion-input [(ngModel)] = 'cEmail' email
+                   placeholder = 'Email' type = 'email'>
+        </ion-input>
+        <ion-icon name = "mail-outline" slot = 'end'></ion-icon>
+    </ion-item>
+
+    <ion-item class = 'ion-item-border' lines = 'none'>
         <ion-label position = 'floating'>Company Name</ion-label>
         <ion-input [(ngModel)] = 'cCompany' placeholder = 'Company Name'
                    type = 'text'>
@@ -45,7 +53,7 @@
     </ion-item>
 
     <ion-fab horizontal = 'end' vertical = 'bottom'>
-        <ion-fab-button (click) = 'dismiss(true)' color = 'success'>
+        <ion-fab-button (click) = 'dismiss(true)' [@push] color = 'success'>
             <ion-icon name = "save-outline"></ion-icon>
         </ion-fab-button>
     </ion-fab>
