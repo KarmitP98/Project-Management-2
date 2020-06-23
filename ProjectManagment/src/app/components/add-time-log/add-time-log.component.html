@@ -8,12 +8,30 @@
                     <ion-icon name = "arrow-back-outline"></ion-icon>
                 </ion-button>
             </ion-buttons>
-            <ion-label><h1>Add a new Project</h1></ion-label>
+            <ion-label><h1>Time Log</h1></ion-label>
         </ion-item>
     </ion-toolbar>
 </ion-header>
 
-<ion-content>
+<ion-content *ngIf = 'member' class = 'ion-text-center'>
 
+    <ion-item-group>
+        <ion-item class = 'ion-item-border' lines = 'none'>
+            <ion-label>Date</ion-label>
+            <ion-datetime [(ngModel)] = 'lDate'
+                          placeholder = 'Pick a Date'>
+            </ion-datetime>
+        </ion-item>
+
+        <ion-item class = 'ion-item-border' lines = 'none'>
+            <ion-label>Hours</ion-label>
+            <ion-input [(ngModel)] = 'lHours' placeholder = 'Hours worked'
+                       type = 'number'>
+            </ion-input>
+            Hrs
+        </ion-item>
+
+
+    </ion-item-group>
 
 </ion-content>

@@ -5,6 +5,7 @@ import { Subscription } from "rxjs";
 import { MemberModel, ProjectModel, UserModel } from "../../../shared/models";
 import { AddMemberComponent } from "../../../components/add-member/add-member.component";
 import { ModalController } from "@ionic/angular";
+import { AddTimeLogComponent } from "../../../components/add-time-log/add-time-log.component";
 
 @Component( {
                 selector: "app-project",
@@ -77,6 +78,19 @@ export class ProjectPage implements OnInit, OnDestroy {
             this.project.pMemberIds.push( data.member.mUId );
             this.ds.updateProjects( this.project );
         }
+    }
+
+    async viewTimeSheet( member: MemberModel ) {
+        const modal = await this.mc
+                                .create( {
+                                             component: AddTimeLogComponent,
+                                             mode: "ios",
+                                             swipeToClose: true,
+                                             animated: true,
+                                             backdropDismiss: true,
+                                             componentProps: { member: member }
+                                         } );
+        modal.present();
     }
 
     backToDashboard(): void {

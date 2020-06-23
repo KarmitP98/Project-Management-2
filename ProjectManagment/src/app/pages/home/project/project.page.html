@@ -1,9 +1,9 @@
 <ion-header *ngIf = 'project'>
     <ion-toolbar
-            [color] = 'project.pStatus === "active" ? "warning" : "success"'
+            [color] = 'project.pStatus === "Active" ? "warning" : "success"'
     >
         <ion-item
-                [color] = 'project.pStatus === "active" ? "warning" : "success"'
+                [color] = 'project.pStatus === "Active" ? "warning" : "success"'
                 lines = 'none'>
             <ion-buttons slot = 'start'>
                 <ion-button (click) = 'backToDashboard()' fill = 'clear'
@@ -50,9 +50,14 @@
                                   color = 'danger'
                                   name = "remove-circle-outline">
                         </ion-icon>
+                        <ion-icon (click) = 'viewTimeSheet(member)'
+                                  class = 'ion-float-right'
+                                  color = 'primary' name = "create-outline">
+                        </ion-icon>
                         {{member.mName}}
                     </ion-card-title>
-                    <ion-card-subtitle>{{member.mRole}}</ion-card-subtitle>
+                    <ion-card-subtitle
+                            class = 'ion-text-center'>{{member.mRole}}</ion-card-subtitle>
                 </ion-card-header>
                 <ion-card-content>
                     Billing Type&nbsp;:&nbsp;<b>{{member.mBillingType}}</b>

@@ -36,23 +36,26 @@ export class MemberModel {
     public mRole: string;
     public mBillingType: string;
     public mRate: number;
+    public mWorkLogIds?: string[];
     public mRequests?: RequestModel[];
 }
 
 export class WeeklyWorkLog {
-    public wId: string;
+    public weekNumber: number;
     public mId: string;
-    public mUid: string;
     public dailyLog: DailyWorkLog[];
     public approved: boolean;
     public billed: boolean;
-
+    public weeklyBilled: number;
+    public weeklyUnbilled: number;
 }
 
 export class DailyWorkLog {
     public date: Date;
     public works: WorkModel[];
     public dailyHours: number;
+    public billed: boolean;
+    public dailyBilled: number;
 }
 
 export class WorkModel {

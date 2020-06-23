@@ -73,8 +73,9 @@
                         {{project.pName}}
                     </ion-card-title>
                     <ion-icon
-                            [color] = 'project.pStatus === "active" ? "warning": "success"'
-                            [name] = "project.pStatus === 'active' ?
+                            [color] = 'project.pStatus === "Active" ?
+                            "warning": "success"'
+                            [name] = "project.pStatus === 'Active' ?
                               'folder-open-outline' : 'folder-outline'"
                             [routerLink] = '["/"+user.uId,project.pId]'
                             slot = 'end'>
@@ -130,8 +131,9 @@
                         {{project.pName}}
                     </ion-card-title>
                     <ion-icon
-                            [color] = 'project.pStatus === "active" ? "warning": "success"'
-                            [name] = "project.pStatus === 'active' ?
+                            [color] = 'project.pStatus === "Active" ?
+                            "warning": "success"'
+                            [name] = "project.pStatus === 'Active' ?
                               'folder-open-outline' : 'folder-outline'"
                             [routerLink] =
                                     '["/"+user.uId,project.pId]' slot = 'end'>
