@@ -9,6 +9,7 @@ import { leftLoadTrigger, opacityLoadTrigger, pushTrigger } from "../../../share
 import { TopDropDownComponent } from "../../../components/top-drop-down/top-drop-down.component";
 import { AddProjectComponent } from "../../../components/add-project/add-project.component";
 import { AngularFirestore } from "@angular/fire/firestore";
+import { PROJECT_STATUS } from "../../../shared/constants";
 
 interface sampleProject {
     pName: string,
@@ -63,8 +64,9 @@ export class DashboardPage implements OnInit, OnDestroy {
                                       this.currentP = [];
                                       this.pastP = [];
                                       projects.forEach( project => {
-                                          if ( project.pStatus === "active" ) {
+                                          if ( project.pStatus === PROJECT_STATUS.active ) {
                                               this.currentP.push( project );
+
                                           } else {
                                               this.pastP.push( project );
                                           }

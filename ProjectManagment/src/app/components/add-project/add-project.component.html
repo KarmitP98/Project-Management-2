@@ -8,7 +8,7 @@
                     <ion-icon name = "arrow-back-outline"></ion-icon>
                 </ion-button>
             </ion-buttons>
-            <ion-label><h1>Add a new Project</h1></ion-label>
+            <ion-label><h3>Add a new Project</h3></ion-label>
         </ion-item>
     </ion-toolbar>
 </ion-header>
@@ -78,7 +78,7 @@
                         'Hourly Rate : '}}
                     </ion-label>
                     <ion-input [(ngModel)] = 'pBudget' min = '0' required
-                               type = 'number'>$&nbsp;
+                               placeholder = '1000' type = 'number'>$&nbsp;
                     </ion-input>
                 </ion-item>
 
@@ -103,19 +103,50 @@
 
         <ion-slide>
             <ion-list style = 'height: 100%; width: 100%;'>
-                <ion-item lines = 'inherit'>
-                    <h3>Host Information</h3>
-                </ion-item>
-                <ion-item>
+                <div *ngIf = 'pMembers.length > 0'>
+                    <ion-item lines = 'inherit'>
+                        <h3>Host Information</h3>
+                    </ion-item>
 
-                </ion-item>
-                <ion-item lines = 'none'>
-                    <ion-label>{{hBillingType}} :</ion-label>
-                    <ion-input [(ngModel)] = 'hRate' required
-                               type = 'number'>
-                        $&nbsp;
-                    </ion-input>
-                </ion-item>
+                    <ion-item class = 'ion-item-border' lines = 'none'>
+                        <ion-label>Member Role :</ion-label>
+                        <ion-select [(ngModel)] = 'pMembers[0].mRole'
+                                    interface = 'popover' mode = 'md'>
+                            <ion-select-option
+                                    [value] = 'MR.designer'>{{MR.designer}}
+                            </ion-select-option>
+                            <ion-select-option
+                                    [value] = 'MR.developer'>{{MR.developer}}
+                            </ion-select-option>
+                            <ion-select-option [value] = 'MR.qa'>{{MR.qa}}
+                            </ion-select-option>
+
+                        </ion-select>
+                    </ion-item>
+
+                    <ion-item class = 'ion-item-border' lines = 'none'>
+                        <ion-label>{{hBillingType}} :</ion-label>
+                        <ion-select [(ngModel)] = 'pMembers[0].mBillingType'
+                                    interface = 'popover' mode = 'md'>
+                            <ion-select-option value = 'One Time'>One Time
+                            </ion-select-option>
+                            <ion-select-option value = 'Hourly'>Hourly
+                            </ion-select-option>
+                        </ion-select>
+                    </ion-item>
+
+                    <ion-item class = 'ion-item-border' lines = 'none'>
+                        <ion-label>{{hBillingType === BT.one_time ? "Price" :
+                            "Rate" }} :
+                        </ion-label>
+                        <ion-input [(ngModel)] = 'pMembers[0].mRate'
+                                   placeholder =
+                                           '1000'
+                                   type = 'number'>$&nbsp;
+                        </ion-input>
+                    </ion-item>
+                </div>
+
                 <ion-item *ngIf = 'members' lines = 'inherit'>
                     <h3>Members</h3>
                     <ion-buttons slot = 'end'>
@@ -128,7 +159,7 @@
                         </ion-button>
                     </ion-buttons>
                 </ion-item>
-
+                <br>
                 <ion-card *ngFor = 'let member of pMembers'>
                     <ion-card-header>
                         <ion-card-title class = 'ion-text-center'>

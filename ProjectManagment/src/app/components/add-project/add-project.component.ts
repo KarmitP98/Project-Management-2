@@ -7,7 +7,7 @@ import { Subscription } from "rxjs";
 import { AddClientComponent } from "../add-client/add-client.component";
 import { AddMemberComponent } from "../add-member/add-member.component";
 import { pushTrigger } from "../../shared/animations";
-import { BILLING_TYPE } from "../../shared/constants";
+import { BILLING_TYPE, MEMBER_ROLE, MEMBER_TYPE, PROJECT_STATUS } from "../../shared/constants";
 
 @Component( {
                 selector: "app-add-project",
@@ -38,8 +38,11 @@ export class AddProjectComponent implements OnInit, OnDestroy {
 
     hBillingType: string = BILLING_TYPE.one_time;
     hRate: number;
+    hRole: string;
 
     BT = BILLING_TYPE;
+    MT = MEMBER_TYPE;
+    MR = MEMBER_ROLE;
 
     @ViewChild( "slide" ) slides: IonSlides;
 
@@ -56,7 +59,20 @@ export class AddProjectComponent implements OnInit, OnDestroy {
                            .subscribe( users => {
                                if ( users ) {
                                    this.members = users;
-                                   this.available = users;
+                                   this.available = users.filter( user => user.uId !== this.uId );
+                                   const user = users.filter( user => user.uId === this.uId )[0];
+                                   this.pMemberIds.push( this.uId );
+                                   this.pMembers = [ {
+                                       mUId: this.uId,
+                                       mRequests: [],
+                                       mWeekLog: [],
+                                       mId: "temp",
+                                       mName: user.uName,
+                                       mBillingType: "",
+                                       mRate: 0,
+                                       mRole: "",
+                                       mType: this.MT.host
+                                   } ];
                                }
                            } );
 
@@ -81,7 +97,7 @@ export class AddProjectComponent implements OnInit, OnDestroy {
                 pName: this.pName,
                 pDesc: this.pDesc,
                 cId: this.pClient.cId,
-                pStatus: "active",
+                pStatus: PROJECT_STATUS.active,
                 pBillingType: this.pBillingType,
                 pBudget: this.pBudget,
                 pStartDate: this.pStartDate,

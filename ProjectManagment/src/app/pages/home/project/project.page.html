@@ -64,6 +64,17 @@
                     <br>
                     {{member.mBillingType === "One Time" ? "Price : $" :
                     "Rate : $"}}{{member.mRate}}
+                    <ion-item lines = 'none'>
+                        <ion-buttons slot = 'end'>
+                            <ion-button color = 'danger' fill = 'clear'>
+                                View Work Log
+                            </ion-button>
+                            <ion-button color = 'primary' fill = 'clear'>
+                                Raise Invoice
+                            </ion-button>
+
+                        </ion-buttons>
+                    </ion-item>
                 </ion-card-content>
             </ion-card>
         </ion-card-content>

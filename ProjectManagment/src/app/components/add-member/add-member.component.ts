@@ -2,6 +2,7 @@ import { Component, Input, OnInit } from "@angular/core";
 import { ModalController } from "@ionic/angular";
 import { MemberModel, UserModel } from "../../shared/models";
 import { pushTrigger } from "../../shared/animations";
+import { MEMBER_TYPE } from "../../shared/constants";
 
 @Component( {
                 selector: "app-add-member",
@@ -17,7 +18,7 @@ export class AddMemberComponent implements OnInit {
     pUser: UserModel;
 
     mBillingType: string;
-    mRate: number = 11.41;
+    mRate: number;
     mRole: string;
     mType: string;
 
@@ -35,7 +36,9 @@ export class AddMemberComponent implements OnInit {
                 mName: this.pUser.uName,
                 mRate: this.mRate,
                 mRole: this.mRole,
-                mType: this.mType
+                mType: MEMBER_TYPE.member,
+                mWeekLog: [],
+                mRequests: []
             };
             this.mc.dismiss( { member: member } );
         } else {

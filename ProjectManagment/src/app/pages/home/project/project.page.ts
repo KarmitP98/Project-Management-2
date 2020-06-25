@@ -90,7 +90,9 @@ export class ProjectPage implements OnInit, OnDestroy {
                                              backdropDismiss: true,
                                              componentProps: { member: member }
                                          } );
-        modal.present();
+        await modal.present();
+        const { data } = await modal.onWillDismiss();
+        console.log( data );
     }
 
     backToDashboard(): void {
