@@ -1,22 +1,13 @@
 <ion-header>
     <ion-toolbar>
-        <ion-item lines = 'none'>
-            <ion-buttons slot = 'start'>
-                <ion-button (click) = 'dismiss(false)' color = 'primary'
-                            fill = 'clear'
-                            shape = 'round'>
-                    <ion-icon name = "arrow-back-outline"></ion-icon>
-                </ion-button>
-            </ion-buttons>
-            <ion-label><h3>Add a new Project</h3></ion-label>
-        </ion-item>
+            <ion-title>Add a new Project</ion-title>
     </ion-toolbar>
 </ion-header>
 
 <ion-content>
-    <ion-slides #slide pager = 'true' style = 'height: 100%'>
+    <ion-slides #slide pager = 'false' style = 'height: 100%'>
         <ion-slide>
-            <ion-list style = 'width: 100%; height: 100%'>
+            <form #pForm = "ngForm" style = 'width: 100%; height: 100%;'>
                 <ion-item class = 'ion-item-border'
                           lines = 'none'>
                     <ion-label position = 'floating'>
@@ -24,7 +15,8 @@
                     </ion-label>
                     <ion-input [(ngModel)] = 'pName'
                                placeholder = 'Project Name'
-                               required type = 'text'>
+                               name = 'pName' required
+                               type = 'text'>
                     </ion-input>
                 </ion-item>
                 <ion-item class = 'ion-item-border'
@@ -34,7 +26,8 @@
                     </ion-label>
                     <ion-textarea [(ngModel)] = 'pDesc'
                                   placeholder = 'Project Description' required
-                                  rows = '5' type = 'text'>
+                                  name = 'pDesc' rows = '5'
+                                  type = 'text'>
                     </ion-textarea>
                 </ion-item>
 
@@ -44,17 +37,20 @@
                     <ion-select [(ngModel)] = 'pClient'
                                 [interfaceOptions] = 'customPopoverOptions'
                                 interface = 'popover' mode = 'md'
-                                placeholder = 'Clients'>
+                                name = 'pClient'
+                                placeholder = 'Clients'
+                                required>
                         <ion-select-option *ngFor = 'let c of clients'
                                            [value] = 'c'>
                             {{c.cName}}
                         </ion-select-option>
                     </ion-select>
                     <ion-buttons slot = 'end'>
-                        <ion-button (click) = 'addNewClient()' color = 'primary'
+                        <ion-button (click) = 'addNewClient()'
                                     fill = 'clear'
                                     shape = 'round'>
-                            <ion-icon name = "person-add-outline"></ion-icon>
+                            <ion-icon color = 'dark'
+                                      name = "person-add-outline"></ion-icon>
                         </ion-button>
                     </ion-buttons>
                 </ion-item>
@@ -63,7 +59,9 @@
                     <ion-label>Billing Type</ion-label>
                     <ion-select [(ngModel)] = 'pBillingType'
                                 interface = 'popover'
-                                mode = 'md' placeholder = 'Billing Type'>
+                                mode = 'md' name = 'pBillingType'
+                                placeholder = 'Billing Type'
+                                required>
                         <ion-select-option value = 'One Time'>One Time
                         </ion-select-option>
                         <ion-select-option value = 'Hourly'>Hourly
@@ -77,8 +75,12 @@
                         'Project Budget : ' :
                         'Hourly Rate : '}}
                     </ion-label>
-                    <ion-input [(ngModel)] = 'pBudget' min = '0' required
-                               placeholder = '1000' type = 'number'>$&nbsp;
+                    <ion-input [(ngModel)] = 'pBudget'
+                               min = '0'
+                               name = 'pBudget'
+                               placeholder = '1000'
+                               required
+                               type = 'number'>$&nbsp;
                     </ion-input>
                 </ion-item>
 
@@ -87,68 +89,95 @@
                         <ion-label>Start Date</ion-label>
                         <ion-datetime [(ngModel)] = 'pStartDate'
                                       displayFormat = "MMM DD, YYYY"
-                                      placeholder = "Select Date"></ion-datetime>
+                                      name = 'pStartDate'
+                                      placeholder = "Select Date"
+                                      required>
+                        </ion-datetime>
                     </ion-item>
 
                     <ion-item class = 'ion-item-border' lines = 'none'>
                         <ion-label>Deadline</ion-label>
                         <ion-datetime [(ngModel)] = 'pDeadline'
                                       displayFormat = "MMM DD, YYYY"
-                                      placeholder = "Select Date">
+                                      name = 'pDeadline'
+                                      placeholder = "Select Date"
+                                      required>
                         </ion-datetime>
                     </ion-item>
                 </ion-item-group>
-            </ion-list>
+            </form>
+
+            <ion-fab horizontal = 'end' vertical = 'bottom'>
+                <ion-fab-button (click) = 'slide?.slideNext(100)'
+                                color = 'light'>
+                    <ion-icon name = "chevron-forward-outline"></ion-icon>
+                </ion-fab-button>
+            </ion-fab>
+
+            <ion-fab horizontal = 'start' vertical = 'bottom'>
+                <ion-fab-button (click) = 'dismiss(false)'
+                                color = 'primary'>
+                    <ion-icon name = "close-outline"></ion-icon>
+                </ion-fab-button>
+            </ion-fab>
+
         </ion-slide>
 
         <ion-slide>
-            <ion-list style = 'height: 100%; width: 100%;'>
+            <ion-list style = 'width: 100%; height: 100%;'>
                 <div *ngIf = 'pMembers.length > 0'>
                     <ion-item lines = 'inherit'>
-                        <h3>Host Information</h3>
+                        <ion-title>Host Information</ion-title>
                     </ion-item>
+                    <form #hForm = "ngForm">
+                        <ion-item class = 'ion-item-border' lines = 'none'>
+                            <ion-label>Member Role :</ion-label>
+                            <ion-select [(ngModel)] = 'pMembers[0].mRole'
+                                        interface = 'popover' mode = 'md'
+                                        name = 'hRole'
+                                        required>
+                                <ion-select-option
+                                        [value] = 'MR.designer'>{{MR.designer}}
+                                </ion-select-option>
+                                <ion-select-option
+                                        [value] = 'MR.developer'>{{MR.developer}}
+                                </ion-select-option>
+                                <ion-select-option [value] = 'MR.qa'>{{MR.qa}}
+                                </ion-select-option>
 
-                    <ion-item class = 'ion-item-border' lines = 'none'>
-                        <ion-label>Member Role :</ion-label>
-                        <ion-select [(ngModel)] = 'pMembers[0].mRole'
-                                    interface = 'popover' mode = 'md'>
-                            <ion-select-option
-                                    [value] = 'MR.designer'>{{MR.designer}}
-                            </ion-select-option>
-                            <ion-select-option
-                                    [value] = 'MR.developer'>{{MR.developer}}
-                            </ion-select-option>
-                            <ion-select-option [value] = 'MR.qa'>{{MR.qa}}
-                            </ion-select-option>
+                            </ion-select>
+                        </ion-item>
 
-                        </ion-select>
-                    </ion-item>
+                        <ion-item class = 'ion-item-border' lines = 'none'>
+                            <ion-label>Billing Type :</ion-label>
+                            <ion-select [(ngModel)] = 'pMembers[0].mBillingType'
+                                        interface = 'popover' mode = 'md'
+                                        name = 'hBillingType'
+                                        required>
+                                <ion-select-option value = 'One Time'>One Time
+                                </ion-select-option>
+                                <ion-select-option value = 'Hourly'>Hourly
+                                </ion-select-option>
+                            </ion-select>
+                        </ion-item>
 
-                    <ion-item class = 'ion-item-border' lines = 'none'>
-                        <ion-label>{{hBillingType}} :</ion-label>
-                        <ion-select [(ngModel)] = 'pMembers[0].mBillingType'
-                                    interface = 'popover' mode = 'md'>
-                            <ion-select-option value = 'One Time'>One Time
-                            </ion-select-option>
-                            <ion-select-option value = 'Hourly'>Hourly
-                            </ion-select-option>
-                        </ion-select>
-                    </ion-item>
-
-                    <ion-item class = 'ion-item-border' lines = 'none'>
-                        <ion-label>{{hBillingType === BT.one_time ? "Price" :
-                            "Rate" }} :
-                        </ion-label>
-                        <ion-input [(ngModel)] = 'pMembers[0].mRate'
-                                   placeholder =
-                                           '1000'
-                                   type = 'number'>$&nbsp;
-                        </ion-input>
-                    </ion-item>
+                        <ion-item class = 'ion-item-border' lines = 'none'>
+                            <ion-label>{{pMembers[0].mBillingType ===
+                            BT.one_time ? "Price [$]" :
+                                "Rate [$/hr]" }} :
+                            </ion-label>
+                            <ion-input [(ngModel)] = 'pMembers[0].mRate'
+                                       name = 'hRate'
+                                       placeholder = '1000'
+                                       required
+                                       type = 'number'>
+                            </ion-input>
+                        </ion-item>
+                    </form>
                 </div>
 
                 <ion-item *ngIf = 'members' lines = 'inherit'>
-                    <h3>Members</h3>
+                    <ion-title>Members</ion-title>
                     <ion-buttons slot = 'end'>
                         <ion-button (click) = 'addMember()'
                                     [disabled] = 'available.length === 0'
@@ -180,15 +209,22 @@
                     </ion-card-content>
                 </ion-card>
             </ion-list>
+            <ion-fab *ngIf = 'pForm?.valid && hForm?.valid' horizontal = 'end'
+                     vertical =
+                             'bottom'>
+                <ion-fab-button (click) = 'dismiss(true)' [@push]
+                                color = 'success'>
+                    <ion-icon name = "folder-open-outline"></ion-icon>
+                </ion-fab-button>
+            </ion-fab>
+            <ion-fab horizontal = 'start' vertical = 'bottom'>
+                <ion-fab-button (click) = 'slide?.slidePrev(100)'
+                                color = 'light'>
+                    <ion-icon name = "chevron-back-outline"></ion-icon>
+                </ion-fab-button>
+            </ion-fab>
         </ion-slide>
     </ion-slides>
 
-    <ion-fab *ngIf = 'pMembers.length >
-    0 && pName && pDesc && pDeadline && pStartDate && pBillingType && pBudget
-     && pClient' horizontal = 'end' vertical = 'bottom'>
-        <ion-fab-button (click) = 'dismiss(true)' [@push] color = 'success'>
-            <ion-icon name = "folder-open-outline"></ion-icon>
-        </ion-fab-button>
-    </ion-fab>
 
 </ion-content>

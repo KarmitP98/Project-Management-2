@@ -16,6 +16,7 @@ import { FormsModule } from "@angular/forms";
 import { HttpClientModule } from "@angular/common/http";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { TopDropDownComponent } from "./components/top-drop-down/top-drop-down.component";
+import { MatNativeDateModule } from "@angular/material/core";
 
 @NgModule( {
                declarations: [ AppComponent,
@@ -28,7 +29,8 @@ import { TopDropDownComponent } from "./components/top-drop-down/top-drop-down.c
                           AppRoutingModule,
                           AngularFireModule.initializeApp( environment.firebaseConfig ),
                           FormsModule,
-                          HttpClientModule ],
+                          HttpClientModule,
+                          MatNativeDateModule ],
                providers: [
                    StatusBar,
                    SplashScreen,

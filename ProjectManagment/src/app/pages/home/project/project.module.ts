@@ -8,15 +8,23 @@ import { ProjectPageRoutingModule } from "./project-routing.module";
 
 import { ProjectPage } from "./project.page";
 import { AddTimeLogComponent } from "../../../components/add-time-log/add-time-log.component";
+import { MatTooltipModule } from "@angular/material/tooltip";
+import { AddInvoiceComponent } from "../../../components/add-invoice/add-invoice.component";
+import { MatDatepickerModule } from "@angular/material/datepicker";
+import { MatInputModule } from "@angular/material/input";
 
 @NgModule( {
                imports: [
                    CommonModule,
                    FormsModule,
                    IonicModule,
-                   ProjectPageRoutingModule
+                   ProjectPageRoutingModule,
+                   MatTooltipModule,
+                   MatDatepickerModule,
+                   MatInputModule
                ],
                declarations: [ ProjectPage,
-                               AddTimeLogComponent ]
+                               AddTimeLogComponent,
+                               AddInvoiceComponent ]
            } )
 export class ProjectPageModule {}

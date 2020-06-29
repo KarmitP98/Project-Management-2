@@ -19,10 +19,10 @@
 </ion-header>
 
 <ion-content *ngIf = 'clients.length > 0'>
-    <ion-item lines = 'full'>
-        <h1>Clients</h1>
-    </ion-item>
-
+    <br>
+    <!--    <ion-item lines = 'full'>-->
+    <!--        <h1>Clients</h1>-->
+    <!--    </ion-item>-->
     <ion-card *ngFor = 'let client of clients'>
         <ion-card-header>
             <ion-card-title>{{client.cName}}</ion-card-title>

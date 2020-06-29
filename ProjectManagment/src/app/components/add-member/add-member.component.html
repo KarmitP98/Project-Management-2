@@ -1,14 +1,7 @@
 <ion-header>
     <ion-toolbar>
         <ion-item lines = 'none'>
-            <ion-buttons slot = 'start'>
-                <ion-button (click) = 'dismiss(false)' color = 'primary'
-                            fill = 'clear'
-                            shape = 'round'>
-                    <ion-icon name = "arrow-back-outline"></ion-icon>
-                </ion-button>
-            </ion-buttons>
-            <ion-label><h1>Add a Member to the Project</h1></ion-label>
+            <ion-title>Add a Member to the Project</ion-title>
         </ion-item>
     </ion-toolbar>
 </ion-header>
@@ -40,20 +33,12 @@
         <ion-item *ngIf = 'mBillingType' class = 'ion-item-border'
                   lines = 'none'>
             <ion-label>{{mBillingType === 'One Time' ?
-                'Price : ' : 'Hourly Rate : '}}
+                'Price [$] : ' : 'Hourly Rate [$/hr]  : '}}
             </ion-label>
             <ion-input [(ngModel)] = 'mRate' min = '0' placeholder = '21.72'
-                       required type = 'number'>$&nbsp;
+                       required type = 'number'>
             </ion-input>
         </ion-item>
-
-        <!--        <ion-item class = 'ion-item-border' lines = 'none'>-->
-        <!--            <ion-label>Member Type</ion-label>-->
-        <!--            <ion-select [(ngModel)] = 'mType' interface = 'popover'-->
-        <!--                        mode = 'md' placeholder = 'Member Type'>-->
-        <!--                <ion-select-option value = 'Member'>Member</ion-select-option>-->
-        <!--            </ion-select>-->
-        <!--        </ion-item>-->
 
         <ion-item class = 'ion-item-border' lines = 'none'>
             <ion-label>Role</ion-label>
@@ -72,6 +57,13 @@
     <ion-fab horizontal = 'end' vertical = 'bottom'>
         <ion-fab-button (click) = 'dismiss(true)' [@push] color = 'warning'>
             <ion-icon name = "add-outline"></ion-icon>
+        </ion-fab-button>
+    </ion-fab>
+
+    <ion-fab horizontal = 'start' vertical = 'bottom'>
+        <ion-fab-button (click) = 'dismiss(false)' [@push]
+                        color = 'danger'>
+            <ion-icon name = "close-outline"></ion-icon>
         </ion-fab-button>
     </ion-fab>
 

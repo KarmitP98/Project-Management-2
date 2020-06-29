@@ -40,3 +40,28 @@ export function GETWEEKNUMBER( d: Date ): number {
     // Return array of year and week number
     return weekNo;
 }
+
+export function GETDATERANGEOFWEEK( weekNo: number ) {
+    const d1 = new Date();
+    const numOfdaysPastSinceLastMonday = d1.getDay() - 1;
+    d1.setDate( d1.getDate() - numOfdaysPastSinceLastMonday );
+    const weekNoToday = GETWEEKNUMBER( d1 );
+    const weeksInTheFuture = weekNo - weekNoToday;
+    d1.setDate( d1.getDate() + 7 * weeksInTheFuture );
+    const rangeIsFrom = (d1.getMonth() + 1) + "/" + d1.getDate() + "/" + d1.getFullYear();
+    const monday = new Date( d1.getFullYear(), d1.getMonth(), d1.getDate() );
+    const tuesday: Date = new Date( d1.getFullYear(), d1.getMonth(), d1.getDate() + 1 );
+    const wednesday: Date = new Date( d1.getFullYear(), d1.getMonth(), d1.getDate() + 2 );
+    const thursday: Date = new Date( d1.getFullYear(), d1.getMonth(), d1.getDate() + 3 );
+    const friday: Date = new Date( d1.getFullYear(), d1.getMonth(), d1.getDate() + 4 );
+    const saturday: Date = new Date( d1.getFullYear(), d1.getMonth(), d1.getDate() + 5 );
+    const sunday: Date = new Date( d1.getFullYear(), d1.getMonth(), d1.getDate() + 6 );
+
+    return [ monday,
+             tuesday,
+             wednesday,
+             thursday,
+             friday,
+             saturday,
+             sunday ];
+}

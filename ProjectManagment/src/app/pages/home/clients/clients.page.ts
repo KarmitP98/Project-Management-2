@@ -31,7 +31,6 @@ export class ClientsPage implements OnInit, OnDestroy {
         this.clientSub = this.ds.fetchClients()
                              .subscribe( clients => {
                                  if ( clients ) {
-                                     console.log( clients );
                                      this.clients = clients;
                                  }
                              } );

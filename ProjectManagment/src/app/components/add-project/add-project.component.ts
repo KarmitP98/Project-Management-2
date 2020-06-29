@@ -8,6 +8,8 @@ import { AddClientComponent } from "../add-client/add-client.component";
 import { AddMemberComponent } from "../add-member/add-member.component";
 import { pushTrigger } from "../../shared/animations";
 import { BILLING_TYPE, MEMBER_ROLE, MEMBER_TYPE, PROJECT_STATUS } from "../../shared/constants";
+import { NgForm } from "@angular/forms";
+import { take } from "rxjs/operators";
 
 @Component( {
                 selector: "app-add-project",
@@ -36,15 +38,14 @@ export class AddProjectComponent implements OnInit, OnDestroy {
     userSub: Subscription;
     clientSub: Subscription;
 
-    hBillingType: string = BILLING_TYPE.one_time;
-    hRate: number;
-    hRole: string;
-
     BT = BILLING_TYPE;
     MT = MEMBER_TYPE;
     MR = MEMBER_ROLE;
 
     @ViewChild( "slide" ) slides: IonSlides;
+
+    @ViewChild( "pForm", { static: false } ) pForm: NgForm;
+    @ViewChild( "hForm", { static: false } ) hForm: NgForm;
 
     customPopoverOptions: any = {
         header: "List of Clients"
@@ -56,12 +57,13 @@ export class AddProjectComponent implements OnInit, OnDestroy {
 
     ngOnInit() {
         this.userSub = this.ds.fetchUsers()
+                           .pipe( take( 1 ) )
                            .subscribe( users => {
                                if ( users ) {
                                    this.members = users;
                                    this.available = users.filter( user => user.uId !== this.uId );
                                    const user = users.filter( user => user.uId === this.uId )[0];
-                                   this.pMemberIds.push( this.uId );
+                                   this.pMemberIds = [ this.uId ];
                                    this.pMembers = [ {
                                        mUId: this.uId,
                                        mRequests: [],

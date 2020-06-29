@@ -1,8 +1,9 @@
 import { Component, Input, OnDestroy, OnInit } from "@angular/core";
-import { DailyWorkLog, MemberModel } from "../../shared/models";
+import { MemberModel } from "../../shared/models";
 import { DataService } from "../../services/data.service";
 import { ModalController } from "@ionic/angular";
-import { GETWEEKNUMBER } from "../../shared/constants";
+import { GETDATERANGEOFWEEK, GETWEEKNUMBER } from "../../shared/constants";
+import { MatDatepickerInputEvent } from "@angular/material/datepicker";
 
 @Component( {
                 selector: "app-add-time-log",
@@ -12,71 +13,114 @@ import { GETWEEKNUMBER } from "../../shared/constants";
 export class AddTimeLogComponent implements OnInit, OnDestroy {
 
     @Input() member: MemberModel;
-    lDate: Date;
-    lHours: number;
-    lWork: string;
+    today = new Date();
+    weekNum = GETWEEKNUMBER( this.today );
+    dateRange = GETDATERANGEOFWEEK( this.weekNum );
+    startDate = this.dateRange[0];
+    endDate = this.dateRange[6];
+
+    logDate: Date;
+    logWork: string;
+    logHours: number;
+
+    oldLogHours: number;
+
+    found: boolean = false;
 
     constructor( private ds: DataService,
                  private mc: ModalController ) { }
 
     ngOnInit() {
-        console.log( this.member );
-
 
     }
 
     ngOnDestroy(): void {}
 
+    myFilter = ( d: Date | null ): boolean => {
+        const day = (d || new Date());
+        return day >= this.startDate && day <= this.endDate;
+    };
+
     dismiss( save: boolean ) {
         if ( save ) {
-            const dailyWorkLog: DailyWorkLog = {
-                date: this.lDate,
-                dailyHours: this.lHours,
-                dailyBilledHours: 0,
-                work: this.lWork,
-                billed: false
-            };
-            const weekNum = GETWEEKNUMBER( new Date( this.lDate ) );
-            let added: boolean = false;             // Check whether week exists or not
 
-            if ( this.member.mWeekLog ) {
-                for ( let week of this.member.mWeekLog ) {
-                    if ( week.weekNumber === weekNum ) {
-                        week.dailyLog.push( dailyWorkLog );
-                        week.weeklyUnBilledHours += this.lHours;
-                        added = true;
-                        console.log( "Added" );
+
+            if ( this.found ) {
+                this.member.mWeekLog.forEach( week => {
+                    if ( week.weekNumber === this.weekNum ) {
+                        week.dailyLog.forEach( dailyLog => {
+                            if ( dailyLog.date.toString().split( "T" )[0] === this.logDate.toString().split( "T" )[0] ) {
+                                dailyLog.dailyHours = this.logHours;
+                                dailyLog.work = this.logWork;
+                                week.weeklyUnBilledHours -= this.oldLogHours;
+                                week.weeklyUnBilledHours += this.logHours;
+                            }
+                        } );
                     }
-                }
-                if ( !added ) {
-                    this.member.mWeekLog.push( {
-                                                   dailyLog: [ dailyWorkLog ],
-                                                   weekNumber: weekNum,
-                                                   approved: false,
-                                                   billed: false,
-                                                   mId: this.member.mId,
-                                                   weeklyBilledHours: 0,
-                                                   weeklyUnBilledHours: this.lHours
-                                               } );
-                    console.log( "Not Added :: Added" );
-                }
-            }
+                } );
+            } else {
+                let weekFound = false;
+                this.member.mWeekLog.forEach( week => {
+                    if ( week.weekNumber === this.weekNum ) {
+                        week.dailyLog.push(
+                            {
+                                date: this.logDate,
+                                work: this.logWork,
+                                dailyHours: this.logHours,
+                                billed: false,
+                                dailyBilledHours: 0
+                            } );
+                        week.weeklyUnBilledHours += this.logHours;
+                        weekFound = true;
+                    }
+                } );
 
-            if ( !this.member.mWeekLog ) {
-                this.member.mWeekLog = [ {
-                    dailyLog: [ dailyWorkLog ],
-                    weekNumber: weekNum,
-                    approved: false,
-                    billed: false,
-                    mId: this.member.mId,
-                    weeklyBilledHours: 0,
-                    weeklyUnBilledHours: this.lHours
-                } ];
-                console.log( "Work Log has been added!" );
+                if ( !weekFound ) {
+                    this.member.mWeekLog.push( {
+                                                   weekNumber: this.weekNum,
+                                                   mId: this.member.mId,
+                                                   billed: false,
+                                                   approved: false,
+                                                   weeklyBilledHours: 0,
+                                                   weeklyUnBilledHours: this.logHours,
+                                                   dailyLog: [ {
+                                                       dailyBilledHours: 0,
+                                                       billed: false,
+                                                       dailyHours: this.logHours,
+                                                       work: this.logWork,
+                                                       date: this.logDate
+                                                   } ]
+                                               } );
+                }
             }
-            // this.mc.dismiss( { member: this.member } );
+            this.mc.dismiss( { member: this.member } );
         } else {
             this.mc.dismiss();
         }
+    }
+
+    selectDate( $event: MatDatepickerInputEvent<Date> ): void {
+        let log;
+
+        this.found = false;
+        this.logHours = null;
+        this.logWork = null;
+        this.oldLogHours = null;
+
+        this.member.mWeekLog.forEach( week => {
+            if ( week.weekNumber === this.weekNum ) {
+                console.log( "Week Found" );
+                week.dailyLog.forEach( dailyLog => {
+                    if ( dailyLog.date.toString().split( "T" )[0] === this.logDate.toString().split( "T" )[0] ) {
+                        console.log( "Date Found" );
+                        this.logHours = dailyLog.dailyHours;
+                        this.oldLogHours = dailyLog.dailyHours;
+                        this.logWork = dailyLog.work;
+                        this.found = true;
+                    }
+                } );
+            }
+        } );
+
     }
 }

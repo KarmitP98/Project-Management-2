@@ -1,48 +1,52 @@
 <ion-header *ngIf = 'member'>
     <ion-toolbar>
-        <ion-item lines = 'none'>
-            <ion-buttons slot = 'start'>
-                <ion-button (click) = 'dismiss(false)' fill = 'clear'
-                            shape = 'round'>
-                    <ion-icon name = "arrow-back-outline"></ion-icon>
-                </ion-button>
-            </ion-buttons>
-            <ion-label><b>Log Work</b></ion-label>
-        </ion-item>
+        <ion-title>{{startDate | date}} to {{endDate | date}}</ion-title>
     </ion-toolbar>
 </ion-header>
 
 
 <ion-content *ngIf = 'member' class = 'ion-text-center'>
 
-    <ion-item-group style = 'margin-top: 10rem'>
-        <ion-item class = 'ion-item-border' lines = 'none'>
-            <ion-label>Date</ion-label>
-            <ion-datetime [(ngModel)] = 'lDate'
-                          placeholder = 'Pick a Date'>
-            </ion-datetime>
-        </ion-item>
+    <ion-item class = 'ion-item-border' lines = 'none'>
+        <ion-label>Pick a Date :</ion-label>
+        <ion-datetime (ionChange) = 'selectDate($event)'
+                      [(ngModel)] = 'logDate'
+                      displayFormat = "MMM DD, YYYY"
+                      placeholder = 'Pick a Date'
+                      required>
+        </ion-datetime>
+    </ion-item>
 
+    <div *ngIf = 'logDate'>
         <ion-item class = 'ion-item-border' lines = 'none'>
-            <ion-label position = 'floating'>Hours</ion-label>
-            <ion-input [(ngModel)] = 'lHours' placeholder = 'Hours worked'
+            <ion-label>Hours [Hrs] :</ion-label>
+            <ion-input [(ngModel)] = 'logHours'
+                       placeholder = 'Hours'
                        type = 'number'>
             </ion-input>
         </ion-item>
 
         <ion-item class = 'ion-item-border' lines = 'none'>
-            <ion-label position = 'floating'>Work</ion-label>
-            <ion-input [(ngModel)] = 'lWork' placeholder = 'Work' type = 'text'>
+            <ion-label>Work :</ion-label>
+            <ion-input [(ngModel)] = 'logWork'
+                       placeholder = 'Work'
+                       type = 'text'>
             </ion-input>
         </ion-item>
 
-    </ion-item-group>
+    </div>
 
-    <ion-fab horizontal = 'end' vertical = 'bottom'>
+    <ion-fab horizontal = 'end' slot = 'fixed' vertical = 'bottom'>
         <ion-fab-button (click) = 'dismiss(true)'
-                        [disabled] = '!lWork || !lHours || !lDate'
                         color = 'success'>
             <ion-icon name = "save-outline"></ion-icon>
+        </ion-fab-button>
+    </ion-fab>
+
+    <ion-fab horizontal = 'start' slot = 'fixed' vertical = 'bottom'>
+        <ion-fab-button (click) = 'dismiss(false)'
+                        color = 'danger'>
+            <ion-icon name = "close-outline"></ion-icon>
         </ion-fab-button>
     </ion-fab>
 

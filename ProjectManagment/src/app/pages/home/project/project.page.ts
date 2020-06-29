@@ -6,6 +6,8 @@ import { MemberModel, ProjectModel, UserModel } from "../../../shared/models";
 import { AddMemberComponent } from "../../../components/add-member/add-member.component";
 import { ModalController } from "@ionic/angular";
 import { AddTimeLogComponent } from "../../../components/add-time-log/add-time-log.component";
+import { MEMBER_TYPE } from "../../../shared/constants";
+import { AddInvoiceComponent } from "../../../components/add-invoice/add-invoice.component";
 
 @Component( {
                 selector: "app-project",
@@ -24,6 +26,10 @@ export class ProjectPage implements OnInit, OnDestroy {
 
     available: UserModel[];
 
+    MT = MEMBER_TYPE;
+
+    isUserHost: boolean = false;
+
     constructor( private route: ActivatedRoute,
                  private router: Router,
                  public ds: DataService,
@@ -38,8 +44,8 @@ export class ProjectPage implements OnInit, OnDestroy {
                            .subscribe( users => {
                                if ( users ) {
                                    this.users = users;
-                                   this.user = users.filter( user => user.uId === uId )[0];
                                    this.available = users;
+                                   this.user = users.filter( user => user.uId === uId )[0];
                                }
                            } );
 
@@ -49,6 +55,11 @@ export class ProjectPage implements OnInit, OnDestroy {
                                       this.project = projects[0];
                                       this.project.pMemberIds.forEach( mId => {
                                           this.available = this.available.filter( user => user.uId !== mId );
+                                      } );
+                                      this.project.pMembers.forEach( member => {
+                                          if ( member.mUId === uId && member.mType === this.MT.host ) {
+                                              this.isUserHost = true;
+                                          }
                                       } );
                                   }
                               } );
@@ -92,7 +103,17 @@ export class ProjectPage implements OnInit, OnDestroy {
                                          } );
         await modal.present();
         const { data } = await modal.onWillDismiss();
-        console.log( data );
+        const newMember = data?.member;
+
+        if ( newMember ) {
+            this.project.pMembers.forEach( member => {
+                if ( member.mUId === newMember.mUId ) {
+                    member = newMember;
+                }
+            } );
+
+            this.ds.updateProjects( this.project );
+        }
     }
 
     backToDashboard(): void {
@@ -105,5 +126,20 @@ export class ProjectPage implements OnInit, OnDestroy {
         this.project.pMemberIds.splice( this.project.pMemberIds.indexOf( member.mUId ), 1 );
 
         this.ds.updateProjects( this.project );
+    }
+
+    async addInvoice( member: MemberModel ) {
+        const modal = await this.mc
+                                .create( {
+                                             component: AddInvoiceComponent,
+                                             mode: "ios",
+                                             swipeToClose: true,
+                                             animated: true,
+                                             backdropDismiss: true,
+                                             componentProps: { member: member }
+                                         } );
+        await modal.present();
+        const { data } = await modal.onWillDismiss();
+        console.log( data );
     }
 }

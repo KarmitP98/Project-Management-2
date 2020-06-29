@@ -31,6 +31,7 @@
     "@ngneat/until-destroy": "^7.1.6",
     "cordova-android": "^8.1.0",
     "firebase": "^7.15.1",
+    "moment": "^2.27.0",
     "rxjs": "~6.5.1",
     "tslib": "^1.10.0",
     "zone.js": "~0.10.2"
