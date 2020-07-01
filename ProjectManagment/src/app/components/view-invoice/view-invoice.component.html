@@ -1,0 +1,23 @@
+<ion-header>
+    <ion-toolbar color = 'primary'>
+        <ion-title>Invoices</ion-title>
+    </ion-toolbar>
+</ion-header>
+
+
+<ion-content>
+
+    <ion-card *ngFor = ''
+
+    <ion-fab horizontal = 'start' vertical = 'bottom'>
+        <ion-fab-button (click) = 'dismiss()' color = 'primary'>
+            <ion-icon name = "chevron-back-outline"></ion-icon>
+        </ion-fab-button>
+    </ion-fab>
+
+    <ion-fab horizontal = 'end' vertical = 'bottom'>
+        <ion-fab-button (click) = 'raiseInvoice()' color = 'success'>
+            <ion-icon name = "cash-outline"></ion-icon>
+        </ion-fab-button>
+    </ion-fab>
+</ion-content>

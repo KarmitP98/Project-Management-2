@@ -7,11 +7,12 @@ import { IonicModule } from "@ionic/angular";
 import { ProjectPageRoutingModule } from "./project-routing.module";
 
 import { ProjectPage } from "./project.page";
-import { AddTimeLogComponent } from "../../../components/add-time-log/add-time-log.component";
 import { MatTooltipModule } from "@angular/material/tooltip";
-import { AddInvoiceComponent } from "../../../components/add-invoice/add-invoice.component";
 import { MatDatepickerModule } from "@angular/material/datepicker";
 import { MatInputModule } from "@angular/material/input";
+import { ViewWorkLogComponent } from "../../../components/view-work-log/view-work-log.component";
+import { MatTableModule } from "@angular/material/table";
+import { ViewInvoiceComponent } from "../../../components/view-invoice/view-invoice.component";
 
 @NgModule( {
                imports: [
@@ -21,10 +22,11 @@ import { MatInputModule } from "@angular/material/input";
                    ProjectPageRoutingModule,
                    MatTooltipModule,
                    MatDatepickerModule,
-                   MatInputModule
+                   MatInputModule,
+                   MatTableModule
                ],
                declarations: [ ProjectPage,
-                               AddTimeLogComponent,
-                               AddInvoiceComponent ]
+                               ViewWorkLogComponent,
+                               ViewInvoiceComponent ]
            } )
 export class ProjectPageModule {}

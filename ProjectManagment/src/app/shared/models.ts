@@ -54,8 +54,6 @@ export class DailyWorkLog {
     public date: Date;
     public work: string;
     public dailyHours: number;
-    public billed: boolean;
-    public dailyBilledHours: number;
 }
 
 export class WorkModel {
@@ -71,4 +69,10 @@ export class RequestModel {
     public mBillingType: string;
     public mRate: number;
     public requestText: string;
+}
+
+export class InvoiceModel {
+    public iWeek: number;
+    public iAmount: number;
+    public iApproved: boolean;
 }

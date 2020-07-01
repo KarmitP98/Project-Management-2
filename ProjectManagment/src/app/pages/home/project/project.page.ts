@@ -5,9 +5,9 @@ import { Subscription } from "rxjs";
 import { MemberModel, ProjectModel, UserModel } from "../../../shared/models";
 import { AddMemberComponent } from "../../../components/add-member/add-member.component";
 import { ModalController } from "@ionic/angular";
-import { AddTimeLogComponent } from "../../../components/add-time-log/add-time-log.component";
 import { MEMBER_TYPE } from "../../../shared/constants";
-import { AddInvoiceComponent } from "../../../components/add-invoice/add-invoice.component";
+import { ViewWorkLogComponent } from "../../../components/view-work-log/view-work-log.component";
+import { ViewInvoiceComponent } from "../../../components/view-invoice/view-invoice.component";
 
 @Component( {
                 selector: "app-project",
@@ -91,10 +91,11 @@ export class ProjectPage implements OnInit, OnDestroy {
         }
     }
 
+
     async viewTimeSheet( member: MemberModel ) {
         const modal = await this.mc
                                 .create( {
-                                             component: AddTimeLogComponent,
+                                             component: ViewWorkLogComponent,
                                              mode: "ios",
                                              swipeToClose: true,
                                              animated: true,
@@ -109,6 +110,7 @@ export class ProjectPage implements OnInit, OnDestroy {
             this.project.pMembers.forEach( member => {
                 if ( member.mUId === newMember.mUId ) {
                     member = newMember;
+                    console.log( "Member Updated!" );
                 }
             } );
 
@@ -131,7 +133,7 @@ export class ProjectPage implements OnInit, OnDestroy {
     async addInvoice( member: MemberModel ) {
         const modal = await this.mc
                                 .create( {
-                                             component: AddInvoiceComponent,
+                                             component: ViewInvoiceComponent,
                                              mode: "ios",
                                              swipeToClose: true,
                                              animated: true,
