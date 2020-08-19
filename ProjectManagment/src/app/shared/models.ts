@@ -26,6 +26,7 @@ export class ProjectModel {
     public pBudget: number;
     public pMembers: MemberModel[];
     public pMemberIds: string[];
+    public pHId: string;
 }
 
 export class MemberModel {
@@ -38,6 +39,9 @@ export class MemberModel {
     public mRate: number;
     public mWeekLog: WeeklyWorkLog[];
     public mRequests: RequestModel[];
+    public mInvoices: InvoiceModel[];
+    public mPaid: number;
+    public mEarned: number;
 }
 
 export class WeeklyWorkLog {

@@ -1,0 +1,45 @@
+<ion-toolbar>
+    <ion-title>
+        Add Log
+    </ion-title>
+</ion-toolbar>
+<form #workForm = 'ngForm' (ngSubmit) = 'addWork()' style = 'margin: 10px'>
+    <mat-form-field appearance = 'outline' color = 'accent'
+                    style = 'width: 100%'>
+        <mat-label>Date</mat-label>
+        <input [(ngModel)] = 'wDate' [matDatepicker] = 'picker' matInput
+               name = 'date'>
+        <mat-datepicker-toggle [for] = 'picker'
+                               matSuffix></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+    </mat-form-field>
+    <br>
+    <mat-form-field appearance = 'outline' color = 'accent'
+                    style = 'width: 100%'>
+        <mat-label>Description</mat-label>
+        <input [(ngModel)] = 'wDesc' matInput
+               name = 'desc'
+               required
+               type = 'text'>
+    </mat-form-field>
+    <br>
+    <mat-form-field appearance = 'outline' color = 'accent'
+                    style = 'width: 100%'>
+        <mat-label>Hours</mat-label>
+        <input [(ngModel)] = 'wHours' matInput
+               max = '12'
+               min = '0'
+               name = 'hours'
+               required
+               step = '0.5'
+               type = 'number'>
+    </mat-form-field>
+    <br>
+    <button (click) = 'cancel()' color = 'warn'
+            mat-raised-button type = 'button'>Cancel
+    </button>
+    &nbsp;
+    <button color = 'primary' mat-raised-button
+            type = 'submit'> Submit
+    </button>
+</form>

@@ -1,6 +1,6 @@
 <ion-header>
-    <ion-toolbar>
-            <ion-title>Add a new Project</ion-title>
+    <ion-toolbar color = 'danger'>
+        <ion-title>Add a new Project</ion-title>
     </ion-toolbar>
 </ion-header>
 
@@ -195,7 +195,8 @@
                             <ion-icon (click) = 'removeMember(member)'
                                       class = 'ion-float-right'
                                       color = 'danger'
-                                      name = "remove-circle-outline">
+                                      *ngIf = 'pMembers.length > 1'
+                                      name = 'remove-circle-outline'>
                             </ion-icon>
                             {{member.mName}}
                         </ion-card-title>

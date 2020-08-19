@@ -5,7 +5,7 @@
                 <ion-button (click) = 'dismiss(false)' color = 'primary'
                             fill = 'clear'
                             shape = 'round'>
-                    <ion-icon name = "arrow-back-outline"></ion-icon>
+                    <ion-icon name = 'arrow-back-outline'></ion-icon>
                 </ion-button>
             </ion-buttons>
             <ion-label><h1>Add a new Client</h1></ion-label>
@@ -20,15 +20,17 @@
         <ion-label position = 'floating'>Client Name</ion-label>
         <ion-input [(ngModel)] = 'cName' placeholder = 'Client Name'
                    required type = 'text'></ion-input>
-        <ion-icon name = "person-outline" slot = 'end'></ion-icon>
+        <ion-icon name = 'person-outline' slot = 'end'></ion-icon>
     </ion-item>
 
     <ion-item class = 'ion-item-border' lines = 'none'>
         <ion-label>Client Country</ion-label>
-        <ion-select [(ngModel)] = 'cCountry' [selectedText] = 'cCountry'
-                    cancelText = "Cancel" interface = 'popover' mode = 'md'
-                    okText =
-                            "Select"
+        <ion-select [(ngModel)] = 'cCountry'
+                    [selectedText] = 'cCountry'
+                    cancelText = 'Cancel'
+                    interface = 'popover'
+                    mode = 'md'
+                    okText = 'Select'
                     placeholder = 'India'>
             <ion-select-option *ngFor = 'let country of countries'
                                [value] = 'country'>{{country}}
@@ -38,10 +40,12 @@
 
     <ion-item class = 'ion-item-border' lines = 'none'>
         <ion-label position = 'floating'>Client Email</ion-label>
-        <ion-input [(ngModel)] = 'cEmail' email
-                   placeholder = 'Email' type = 'email'>
+        <ion-input [(ngModel)] = 'cEmail'
+                   email
+                   placeholder = 'Email'
+                   type = 'email'>
         </ion-input>
-        <ion-icon name = "mail-outline" slot = 'end'></ion-icon>
+        <ion-icon name = 'mail-outline' slot = 'end'></ion-icon>
     </ion-item>
 
     <ion-item class = 'ion-item-border' lines = 'none'>
@@ -49,12 +53,12 @@
         <ion-input [(ngModel)] = 'cCompany' placeholder = 'Company Name'
                    type = 'text'>
         </ion-input>
-        <ion-icon name = "business-outline" slot = 'end'></ion-icon>
+        <ion-icon name = 'business-outline' slot = 'end'></ion-icon>
     </ion-item>
 
     <ion-fab horizontal = 'end' vertical = 'bottom'>
         <ion-fab-button (click) = 'dismiss(true)' [@push] color = 'success'>
-            <ion-icon name = "save-outline"></ion-icon>
+            <ion-icon name = 'save-outline'></ion-icon>
         </ion-fab-button>
     </ion-fab>
 </ion-content>

@@ -7,13 +7,19 @@ import { IonicModule } from "@ionic/angular";
 import { SignupPageRoutingModule } from "./signup-routing.module";
 
 import { SignupPage } from "./signup.page";
+import { MatFormFieldModule } from "@angular/material/form-field";
+import { MatInputModule } from "@angular/material/input";
+import { MatIconModule } from "@angular/material/icon";
 
 @NgModule( {
                imports: [
                    CommonModule,
                    FormsModule,
                    IonicModule,
-                   SignupPageRoutingModule
+                   SignupPageRoutingModule,
+                   MatFormFieldModule,
+                   MatInputModule,
+                   MatIconModule
                ],
                declarations: [ SignupPage ]
            } )

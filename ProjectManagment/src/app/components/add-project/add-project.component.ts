@@ -73,7 +73,10 @@ export class AddProjectComponent implements OnInit, OnDestroy {
                                        mBillingType: "",
                                        mRate: 0,
                                        mRole: "",
-                                       mType: this.MT.host
+                                       mType: this.MT.host,
+                                       mEarned: 0,
+                                       mPaid: 0,
+                                       mInvoices: []
                                    } ];
                                }
                            } );
@@ -105,7 +108,8 @@ export class AddProjectComponent implements OnInit, OnDestroy {
                 pStartDate: this.pStartDate,
                 pDeadline: this.pDeadline,
                 pMembers: this.pMembers,
-                pMemberIds: this.pMemberIds
+                pMemberIds: this.pMemberIds,
+                pHId: this.pMemberIds[0]
             };
             project.pId = this.afs.createId();
             this.pClient.pIds.push( project.pId );

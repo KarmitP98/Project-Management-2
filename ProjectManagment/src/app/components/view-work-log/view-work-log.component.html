@@ -6,58 +6,70 @@
 
 <ion-content>
 
-    <ion-card *ngFor = 'let weekLog of member.mWeekLog'
-              [ngClass] = 'weekLog.approved ? "a-bkgnd" :
+    <div>
+        <ion-toolbar>
+            <ion-item lines = 'full'>
+                <ion-title>Pending Work logs</ion-title>
+            </ion-item>
+        </ion-toolbar>
+        <ion-card *ngFor = 'let weekLog of member.mWeekLog'
+                  [ngClass] = 'weekLog.approved ? "a-bkgnd" :
               "na-bkgnd"'>
-        <ion-card-header>
-            <ion-card-title>Week Number
-                            : {{weekLog.weekNumber}}</ion-card-title>
-            <ion-card-subtitle>
-                {{gdrw(weekLog.weekNumber)[0] | date}}
-                -
-                {{gdrw(weekLog.weekNumber)[6] | date}}
-            </ion-card-subtitle>
-        </ion-card-header>
-        <ion-card-content>
-            <table style = 'width: 100%'>
-                <thead>
-                <tr>
-                    <th class = 'ion-item-border ion-text-center' scope = "col">
-                        Date
-                    </th>
-                    <th class = 'ion-item-border ion-text-center' scope = "col">
-                        Work
-                    </th>
-                    <th class = 'ion-item-border ion-text-center' scope = "col">
-                        Hours
-                    </th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr *ngFor = 'let daily of weekLog.dailyLog'
-                    class = 'row row-cols-3'>
-                    <td class = 'ion-item-border ion-text-center'>{{daily.date}}</td>
-                    <td class = 'ion-item-border ion-text-center'>{{daily.work}}</td>
-                    <td class = 'ion-item-border ion-text-center'>{{daily.dailyHours}}</td>
-                </tr>
-                </tbody>
-            </table>
-            <hr>
-            Total Unbilled Hours: {{weekLog.weeklyUnBilledHours}} Hr/s
+            <ion-card-header>
+                <ion-card-title>Week Number
+                                : {{weekLog.weekNumber}}</ion-card-title>
+                <ion-card-subtitle>
+                    {{gdrw(weekLog.weekNumber)[0] | date}}
+                    -
+                    {{gdrw(weekLog.weekNumber)[6] | date}}
+                </ion-card-subtitle>
+            </ion-card-header>
+            <ion-card-content>
+                <table style = 'width: 100%'>
+                    <thead>
+                    <tr>
+                        <th class = 'ion-item-border ion-text-center'
+                            scope = 'col'>
+                            Date
+                        </th>
+                        <th class = 'ion-item-border ion-text-center'
+                            scope = 'col'>
+                            Work
+                        </th>
+                        <th class = 'ion-item-border ion-text-center'
+                            scope = 'col'>
+                            Hours
+                        </th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr *ngFor = 'let daily of weekLog.dailyLog'
+                        class = 'row row-cols-3'>
+                        <td
+                                class = 'ion-item-border ion-text-center'>{{daily.date | date}}</td>
+                        <td class = 'ion-item-border ion-text-center'>{{daily.work}}</td>
+                        <td class = 'ion-item-border ion-text-center'>{{daily.dailyHours}}</td>
+                    </tr>
+                    </tbody>
+                </table>
+                <hr>
+                Total Unbilled Hours: {{weekLog.weeklyUnBilledHours}} Hr/s
 
-        </ion-card-content>
+            </ion-card-content>
 
-    </ion-card>
+        </ion-card>
+    </div>
+
 
     <ion-fab horizontal = 'start' slot = 'fixed' vertical = 'bottom'>
         <ion-fab-button (click) = 'dismiss(false)' color = 'primary'>
-            <ion-icon name = "chevron-back-outline"></ion-icon>
+            <ion-icon name = 'chevron-back-outline'></ion-icon>
         </ion-fab-button>
     </ion-fab>
 
     <ion-fab horizontal = 'end' slot = 'fixed' vertical = 'bottom'>
         <ion-fab-button (click) = 'addWorkLog()' color = 'warning'>
-            <ion-icon name = "add-outline"></ion-icon>
+            <ion-icon name = 'add-outline'></ion-icon>
         </ion-fab-button>
     </ion-fab>
 

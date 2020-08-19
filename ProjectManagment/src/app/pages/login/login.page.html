@@ -1,39 +1,62 @@
 <ion-header>
-    <ion-toolbar>
+    <ion-toolbar color = 'tertiary'>
         <ion-title>Login</ion-title>
     </ion-toolbar>
 </ion-header>
 
 <ion-content class = 'ion-padding ion-text-center'>
-    <ion-item class = 'ion-item-border' lines = 'none'
-              style = 'margin-top: 5rem;'>
-        <ion-label position = "floating">Email</ion-label>
-        <ion-input [(ngModel)] = "userEmail" autocomplete = 'false' email
-                   placeholder = "Email"
-                   required type = "email">
-        </ion-input>
-        <ion-icon name = "mail-outline" slot = "end"></ion-icon>
-    </ion-item>
-    <ion-item class = 'ion-item-border' lines = 'none'>
-        <ion-label position = "floating">Password</ion-label>
-        <ion-input (keypress) = '$event.key === "Enter"
-                   ? login() : ""' [(ngModel)] = "userPassword"
+
+    <form #loginForm = 'ngForm' (ngSubmit) = 'login()'
+          style = 'margin-top: 5vh'>
+
+        <mat-form-field appearance = 'fill'>
+            <mat-label>Email</mat-label>
+            <input (keypress) = '$event.key === "Enter" ? login() : ""'
+                   [(ngModel)] = 'userEmail'
+                   email
+                   matInput
+                   name = 'email'
                    autocomplete = 'false'
-                   minlength = "6" placeholder = "******"
-                   required type = "password">
-        </ion-input>
-        <ion-icon name = "key-outline" slot = "end"></ion-icon>
-    </ion-item>
+                   placeholder = 'abc@def.com'
+                   required
+                   type = 'email'>
+            <mat-icon matSuffix>
+                <ion-icon name = 'mail'></ion-icon>
+            </mat-icon>
+        </mat-form-field>
+
+        <br>
+
+        <mat-form-field appearance = 'fill'>
+            <mat-label>Password</mat-label>
+            <input (keypress) = '$event.key === "Enter" ? login() : ""'
+                   [(ngModel)] = 'userPassword'
+                   autocomplete = 'false'
+                   matInput
+                   minlength = '6'
+                   name = 'password'
+                   placeholder = '******'
+                   required
+                   type = 'password'>
+            <mat-icon matSuffix>
+                <ion-icon name = 'key'></ion-icon>
+            </mat-icon>
+        </mat-form-field>
+
+
+        <ion-fab horizontal = 'end' vertical = 'bottom'>
+            <ion-fab-button *ngIf = 'loginForm.valid' [@push] type = 'submit'>
+                <ion-icon (click) = 'login()' name = 'log-in-outline'
+                          size = 'large'></ion-icon>
+            </ion-fab-button>
+        </ion-fab>
+    </form>
+
     <div>
-        <p>Don't have an account? Try <b routerLink = '/signup'>Sign up.</b></p>
+        <p>Don't have an account? Try
+            <b routerLink = '/signup'>Sign up.</b>
+        </p>
     </div>
-    <ion-fab horizontal = "end" vertical = "bottom">
-        <ion-fab-button *ngIf = 'userEmail && userPassword &&
-        userPassword.length >= 6' [@push]>
-            <ion-icon (click) = 'login()' name = "log-in-outline"
-                      size = 'large'></ion-icon>
-        </ion-fab-button>
-    </ion-fab>
 
     <ion-fab horizontal = 'center' vertical = 'center'>
         <ion-spinner *ngIf = 'ds.loadingSubject | async'

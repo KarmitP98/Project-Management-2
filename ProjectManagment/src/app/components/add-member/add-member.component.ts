@@ -38,7 +38,10 @@ export class AddMemberComponent implements OnInit {
                 mRole: this.mRole,
                 mType: MEMBER_TYPE.member,
                 mWeekLog: [],
-                mRequests: []
+                mRequests: [],
+                mPaid: 0,
+                mEarned: 0,
+                mInvoices: []
             };
             this.mc.dismiss( { member: member } );
         } else {

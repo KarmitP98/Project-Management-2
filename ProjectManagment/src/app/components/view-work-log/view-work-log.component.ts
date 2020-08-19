@@ -1,8 +1,9 @@
 import { Component, Input, OnInit } from "@angular/core";
 import { MemberModel, WeeklyWorkLog } from "../../shared/models";
 import { DataService } from "../../services/data.service";
-import { AlertController, ModalController } from "@ionic/angular";
+import { AlertController, ModalController, PopoverController } from "@ionic/angular";
 import { GETDATERANGEOFWEEK, GETWEEKNUMBER } from "../../shared/constants";
+import { WorkAdderComponent } from "../work-adder/work-adder.component";
 
 @Component( {
                 selector: "app-view-work-log",
@@ -19,92 +20,36 @@ export class ViewWorkLogComponent implements OnInit {
 
     constructor( private ds: DataService,
                  private mc: ModalController,
-                 private ac: AlertController ) { }
+                 private ac: AlertController,
+                 private pc: PopoverController ) { }
 
     ngOnInit() {
-
         this.weeklyLogs = this.member.mWeekLog;
-        console.log( GETWEEKNUMBER( new Date() ) );
     }
 
     dismiss( save: boolean ) {
-
         this.mc.dismiss( { member: this.member } );
     }
 
     async addWorkLog() {
+        const pop = await this.pc.create( {
+                                              component: WorkAdderComponent,
+                                              backdropDismiss: false,
+                                              showBackdrop: true
+                                          } );
+        await pop.present();
 
-        const alert = await this.ac
-                                .create( {
-                                             header: "Add Work Log",
-                                             mode: "md",
-                                             backdropDismiss: true,
-                                             animated: true,
+        const { data } = await pop.onDidDismiss();
 
-                                             inputs: [
-                                                 {
-                                                     name: "date",
-                                                     type: "date",
-                                                     placeholder: "Pick a Date",
-                                                     id: "date",
-                                                     label: "Date : ",
-                                                     cssClass: "ion-item-border",
-                                                     attributes: {
-                                                         required: true
-                                                     }
-                                                 },
-                                                 {
-                                                     name: "work",
-                                                     type: "text",
-                                                     id: "work",
-                                                     placeholder: "Work",
-                                                     label: "Work : ",
-                                                     cssClass: "ion-item-border",
-                                                     attributes: {
-                                                         required: true
-                                                     }
-                                                 },
-                                                 {
-                                                     name: "hours",
-                                                     id: "hours",
-                                                     type: "number",
-                                                     placeholder: "Hours",
-                                                     min: 0,
-                                                     label: "Hours : ",
-                                                     cssClass: "ion-item-border",
-                                                     attributes: {
-                                                         required: true
-                                                     }
-                                                 }
-                                             ],
-                                             buttons: [
-                                                 {
-                                                     text: "Cancel",
-                                                     role: "cancel",
-                                                     handler: () => {
-                                                         console.log( "Confirm Cancel" );
-                                                     }
-                                                 }, {
-                                                     text: "Ok",
-                                                     handler: () => {
-                                                         console.log( "Confirm Ok" );
-                                                     }
-                                                 }
-                                             ]
-                                         } );
+        if ( data?.wDate && data?.wDesc && data?.wHours ) {
+            this.addData( data.wDate, data.wDesc, data.wHours );
+        }
 
-        await alert.present();
-
-        alert.onWillDismiss().then( value => {
-
-            this.addData( value?.data?.values?.date, value.data.values.work, value.data.values.hours );
-        } );
     }
 
-    addData( date: Date, work: string, hours ) {
+    addData( date: Date, work: string, hours: number ) {
+
         if ( date && work && hours ) {
-            hours = parseInt( hours );
-            console.log( typeof hours );
             const weekNum = GETWEEKNUMBER( new Date( date ) );
             console.log( weekNum );
             let weekFound = false;
@@ -113,25 +58,25 @@ export class ViewWorkLogComponent implements OnInit {
                 weekLog.weekNumber === weekNum ? weekFound = true : "";
             } );
 
-            let dayfound = false;
+            let dayFound = false;
+
             if ( weekFound ) {
                 this.member.mWeekLog.forEach( weekLog => {
                     if ( weekLog.weekNumber === weekNum && !weekLog.approved ) {
                         weekLog.dailyLog.forEach( dailyLog => {
-                            if ( dailyLog.date === date ) {
+                            if ( dailyLog.date.getTime() === date.getTime() ) {
                                 weekLog.weeklyUnBilledHours = weekLog.weeklyUnBilledHours + (hours - dailyLog.dailyHours);
                                 dailyLog.dailyHours = hours;
                                 dailyLog.work = work;
-                                dayfound = true;
+                                dayFound = true;
                             }
                         } );
 
-                        if ( !dayfound ) {
+                        if ( !dayFound ) {
                             weekLog.dailyLog.push( {
                                                        dailyHours: hours, date: date, work: work
                                                    } );
                             weekLog.weeklyUnBilledHours = weekLog.weeklyUnBilledHours + hours;
-                            console.log( "New Day" + weekLog.weeklyUnBilledHours );
                         }
                     }
                 } );
