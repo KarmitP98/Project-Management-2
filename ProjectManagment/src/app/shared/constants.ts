@@ -23,7 +23,7 @@ export enum PROJECT_PRIORITY {
 
 export enum BILLING_TYPE {
     one_time = "One Time",
-    hourly = "Hourly"
+    hourly = "Hourly",
 }
 
 export function GETWEEKNUMBER( d: Date ): number {

@@ -2,7 +2,7 @@ import { Component, Input, OnInit } from "@angular/core";
 import { ModalController } from "@ionic/angular";
 import { MemberModel, UserModel } from "../../shared/models";
 import { pushTrigger } from "../../shared/animations";
-import { MEMBER_TYPE } from "../../shared/constants";
+import { BILLING_TYPE, MEMBER_ROLE, MEMBER_TYPE } from "../../shared/constants";
 
 @Component( {
                 selector: "app-add-member",
@@ -17,6 +17,8 @@ export class AddMemberComponent implements OnInit {
 
     pUser: UserModel;
 
+    bt = BILLING_TYPE;
+    mr = MEMBER_ROLE;
     mBillingType: string;
     mRate: number;
     mRole: string;

@@ -1,69 +1,87 @@
 <ion-header>
-    <ion-toolbar>
-        <ion-item lines = 'none'>
-            <ion-title>Add a Member to the Project</ion-title>
-        </ion-item>
+    <ion-toolbar color = 'orange'>
+        <ion-title>ADD A NEW MEMBER</ion-title>
     </ion-toolbar>
 </ion-header>
 
-<ion-content *ngIf = "available">
+<ion-content *ngIf = 'available' class = 'ion-padding ion-text-center'>
 
-    <ion-item class = 'ion-item-border' lines = 'none'>
-        <ion-label>Members</ion-label>
-        <ion-select [(ngModel)] = 'pUser' interface = 'popover'
-                    mode = 'md' placeholder = 'Available Members'>
-            <ion-select-option *ngFor = 'let user of available'
-                               [value] = 'user'>
-                {{user.uName}}
-            </ion-select-option>
-        </ion-select>
-    </ion-item>
+    <form #memForm = 'ngForm'
+          (ngSubmit) = 'dismiss(true)'
+          style = 'margin-top: 5vh;'>
 
-    <div *ngIf = 'pUser'>
-        <ion-item class = 'ion-item-border' lines = 'none'>
-            <ion-label>Billing Type</ion-label>
-            <ion-select [(ngModel)] = 'mBillingType' interface = 'popover'
-                        mode = 'md' placeholder = 'Billing Type'>
-                <ion-select-option value = 'One Time'>One Time
-                </ion-select-option>
-                <ion-select-option value = 'Hourly'>Hourly</ion-select-option>
-            </ion-select>
-        </ion-item>
+        <mat-form-field appearance = 'fill'>
+            <mat-label>Available Members</mat-label>
+            <mat-select [(ngModel)] = 'pUser' name = 'members'
+                        required>
+                <mat-option *ngFor = 'let user of available'
+                            [value] = 'user'>
+                    {{user.uName}}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
 
-        <ion-item *ngIf = 'mBillingType' class = 'ion-item-border'
-                  lines = 'none'>
-            <ion-label>{{mBillingType === 'One Time' ?
-                'Price [$] : ' : 'Hourly Rate [$/hr]  : '}}
-            </ion-label>
-            <ion-input [(ngModel)] = 'mRate' min = '0' placeholder = '21.72'
-                       required type = 'number'>
-            </ion-input>
-        </ion-item>
+        <br>
 
-        <ion-item class = 'ion-item-border' lines = 'none'>
-            <ion-label>Role</ion-label>
-            <ion-select [(ngModel)] = 'mRole' interface = 'popover'
-                        mode = 'md' placeholder = 'mRole'>
-                <ion-select-option value = 'Developer'>Developer
-                </ion-select-option>
-                <ion-select-option value = 'Designer'>Designer
-                </ion-select-option>
-                <ion-select-option value = 'Q/A'>Q/A
-                </ion-select-option>
-            </ion-select>
-        </ion-item>
-    </div>
+        <mat-form-field appearance = 'fill'>
+            <mat-label>Billing Type</mat-label>
+            <mat-select [(ngModel)] = 'mBillingType'
+                        name = 'billingType'
+                        required>
+                <mat-option [value] = 'bt.one_time'>{{bt.one_time}}
+                </mat-option>
+                <mat-option [value] = 'bt.hourly'>{{bt.hourly}}</mat-option>
+            </mat-select>
+        </mat-form-field>
 
-    <ion-fab horizontal = 'end' vertical = 'bottom'>
+        <br>
+
+        <mat-form-field appearance = 'fill'>
+            <mat-label>
+                {{mBillingType === bt.one_time ? "Price: [$]" : "Rate: [$/hr]"}}
+            </mat-label>
+            <input [(ngModel)] = 'mRate' [disabled] = '!mBillingType'
+                   matInput
+                   name = 'rate'
+                   placeholder = '$ 100'
+                   required
+                   type = 'number'>
+            <mat-icon matSuffix>
+                <ion-icon name = 'wallet'></ion-icon>
+            </mat-icon>
+        </mat-form-field>
+
+        <br>
+
+        <mat-form-field appearance = 'fill'>
+            <mat-label>
+                Member Role
+            </mat-label>
+            <mat-select [(ngModel)] = 'mRole' name = 'role'
+                        required>
+                <mat-option [value] = 'mr.developer'>
+                    {{mr.developer}}
+                </mat-option>
+                <mat-option [value] = 'mr.designer'>
+                    {{mr.designer}}
+                </mat-option>
+                <mat-option [value] = 'mr.qa'>
+                    {{mr.qa}}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+    </form>
+
+    <ion-fab *ngIf = 'memForm.valid' horizontal = 'end' vertical = 'bottom'>
         <ion-fab-button (click) = 'dismiss(true)' [@push] color = 'warning'>
-            <ion-icon name = "add-outline"></ion-icon>
+            <ion-icon name = 'add-outline'></ion-icon>
         </ion-fab-button>
     </ion-fab>
 
     <ion-fab horizontal = 'start' vertical = 'bottom'>
         <ion-fab-button (click) = 'dismiss(false)' [@push]
                         color = 'danger'>
-            <ion-icon name = "close-outline"></ion-icon>
+            <ion-icon name = 'close-outline'></ion-icon>
         </ion-fab-button>
     </ion-fab>
 

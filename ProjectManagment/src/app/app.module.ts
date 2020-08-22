@@ -17,6 +17,10 @@ import { HttpClientModule } from "@angular/common/http";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { TopDropDownComponent } from "./components/top-drop-down/top-drop-down.component";
 import { MatNativeDateModule } from "@angular/material/core";
+import { MatFormFieldModule } from "@angular/material/form-field";
+import { MatInputModule } from "@angular/material/input";
+import { MatIconModule } from "@angular/material/icon";
+import { MatSelectModule } from "@angular/material/select";
 
 @NgModule( {
                declarations: [ AppComponent,
@@ -30,7 +34,7 @@ import { MatNativeDateModule } from "@angular/material/core";
                           AngularFireModule.initializeApp( environment.firebaseConfig ),
                           FormsModule,
                           HttpClientModule,
-                          MatNativeDateModule ],
+                          MatNativeDateModule, MatFormFieldModule, MatInputModule, MatIconModule, MatSelectModule ],
                providers: [
                    StatusBar,
                    SplashScreen,

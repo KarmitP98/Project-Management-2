@@ -1,9 +1,10 @@
-import { Component, OnDestroy, OnInit } from "@angular/core";
+import { Component, OnDestroy, OnInit, ViewChild } from "@angular/core";
 import { DataService } from "../../services/data.service";
 import { ModalController } from "@ionic/angular";
 import { HttpClient } from "@angular/common/http";
 import { ClientModel } from "../../shared/models";
 import { pushTrigger } from "../../shared/animations";
+import { NgForm } from "@angular/forms";
 
 @Component( {
                 selector: "app-add-client",
@@ -18,6 +19,8 @@ export class AddClientComponent implements OnInit, OnDestroy {
     cCompany: string = "Default";
     cEmail: string;
     countries: string[];
+
+    @ViewChild( "clientForm", { static: false } ) clientForm: NgForm;
 
     constructor( private ds: DataService,
                  private mc: ModalController,
@@ -45,10 +48,7 @@ export class AddClientComponent implements OnInit, OnDestroy {
             };
             this.ds.addNewClient( client );
         }
-        this.cName = null;
-        this.cCompany = null;
-        this.cCountry = null;
-        this.cEmail = null;
+        this.clientForm.resetForm();
         this.mc.dismiss();
     }
 }
