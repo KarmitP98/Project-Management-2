@@ -4,10 +4,11 @@
     </ion-toolbar>
 </ion-header>
 
-<ion-content class = 'ion-padding ion-text-center'>
-    <ion-label><h3>Tell us something about your project!</h3></ion-label>
+<ion-content class = 'ion-text-center'>
     <br>
-    <br>
+    <ion-label>
+        <h3>Tell us something about your project!</h3>
+    </ion-label>
     <br>
     <form #nameForm = 'ngForm' (ngSubmit) = 'dismiss(true)'>
 
@@ -75,7 +76,7 @@
                 {{pBillingType === BT.one_time ? "Budget [$]" : "Rate [$/Hr]"}}
             </mat-label>
             <input [(ngModel)] = 'pBudget' [disabled] = '!pBillingType'
-                   [required] = 'pBillingType'
+                   [required] = '!!pBillingType'
                    matInput
                    name = 'budget'
                    type = 'number'>
@@ -83,257 +84,129 @@
 
         <br>
 
-        <mat-form-field appearance = 'fill'>
+        <mat-form-field appearance = 'fill' color = 'warn'>
             <mat-label>
                 Project Timeline
             </mat-label>
-            <mat-form-field appearance = 'fill'>
-                <mat-label>Enter a date range</mat-label>
-                <mat-date-range-input [rangePicker] = 'picker'>
-                    <input matStartDate placeholder = 'Start date'>
-                    <input matEndDate placeholder = 'End date'>
-                </mat-date-range-input>
-                <mat-datepicker-toggle [for] = 'picker'
-                                       matSuffix></mat-datepicker-toggle>
-                <mat-date-range-picker #picker></mat-date-range-picker>
-            </mat-form-field>
+            <mat-date-range-input [rangePicker] = 'picker'>
+                <input [(ngModel)] = 'pStartDate'
+                       matStartDate
+                       name = 'startDate'>
+                <input [(ngModel)] = 'pDeadline'
+                       matEndDate
+                       name = 'endDate'
+                       required>
+            </mat-date-range-input>
+            <mat-datepicker-toggle [for] = 'picker'
+                                   matSuffix></mat-datepicker-toggle>
+            <mat-date-range-picker #picker touchUi></mat-date-range-picker>
         </mat-form-field>
     </form>
 
-    <!--    <ion-slides #slide-->
-    <!--                pager = 'false'-->
-    <!--                style = 'height: 100vh;'>-->
+    <br>
 
-    <!--        <ion-slide>-->
-    <!--            -->
-    <!--        </ion-slide>-->
-    <!--    </ion-slides>-->
+    <ion-item lines = 'full'>
+        <ion-toolbar>
+            <ion-title>Members</ion-title>
+            <ion-buttons *ngIf = 'pMembers.length < members.length'
+                         slot = 'end'>
+                <ion-button (click) = 'addMember()'>
+                    <ion-icon name = 'add-circle'></ion-icon>
+                </ion-button>
+            </ion-buttons>
+        </ion-toolbar>
+    </ion-item>
 
+    <ion-card *ngFor = 'let pMember of pMembers; let i = index'>
+        <ion-card-header>
+            <ion-card-title>{{pMember.mName}}</ion-card-title>
+        </ion-card-header>
+        <ion-card-content>
+            <mat-form-field *ngIf = 'pMembers[i].mType !== MT.host &&
+                            pMember.mUId.length === 0'
+                            appearance = 'fill'>
+                <mat-label>Member</mat-label>
+                <mat-select (selectionChange) =
+                                    'selectMember(pMembers[i].mUId, i)'
+                            [(ngModel)] = 'pMembers[i].mUId'
+                            required>
+                    <mat-option *ngFor = 'let aMembers of available'
+                                [value] = 'aMembers.uId'>{{aMembers.uName}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
 
-    <!--    <ion-slides #slide pager = 'false' style = 'height: 100%'>-->
-    <!--        -->
-    <!--        <ion-slide>-->
-    <!--            -->
-    <!--            <form #pForm = "ngForm" style = 'width: 100%; height: 100%;'>-->
-    <!--                -->
-    <!--                <ion-item class = 'ion-item-border'-->
-    <!--                          lines = 'none'>-->
-    <!--                    <ion-label position = 'floating'>-->
-    <!--                        Project Name-->
-    <!--                    </ion-label>-->
-    <!--                    <ion-input [(ngModel)] = 'pName'-->
-    <!--                               placeholder = 'Project Name'-->
-    <!--                               name = 'pName' required-->
-    <!--                               type = 'text'>-->
-    <!--                    </ion-input>-->
-    <!--                </ion-item>-->
-    <!--                <ion-item class = 'ion-item-border'-->
-    <!--                          lines = 'none'>-->
-    <!--                    <ion-label position = 'floating'>-->
-    <!--                        Project Description-->
-    <!--                    </ion-label>-->
-    <!--                    <ion-textarea [(ngModel)] = 'pDesc'-->
-    <!--                                  placeholder = 'Project Description' required-->
-    <!--                                  name = 'pDesc' rows = '5'-->
-    <!--                                  type = 'text'>-->
-    <!--                    </ion-textarea>-->
-    <!--                </ion-item>-->
+            <br>
 
-    <!--                <ion-item *ngIf = 'clients' class = 'ion-item-border'-->
-    <!--                          lines = 'none'>-->
-    <!--                    <ion-label>Client</ion-label>-->
-    <!--                    <ion-select [(ngModel)] = 'pClient'-->
-    <!--                                [interfaceOptions] = 'customPopoverOptions'-->
-    <!--                                interface = 'popover' mode = 'md'-->
-    <!--                                name = 'pClient'-->
-    <!--                                placeholder = 'Clients'-->
-    <!--                                required>-->
-    <!--                        <ion-select-option *ngFor = 'let c of clients'-->
-    <!--                                           [value] = 'c'>-->
-    <!--                            {{c.cName}}-->
-    <!--                        </ion-select-option>-->
-    <!--                    </ion-select>-->
-    <!--                    <ion-buttons slot = 'end'>-->
-    <!--                        <ion-button (click) = 'addNewClient()'-->
-    <!--                                    fill = 'clear'-->
-    <!--                                    shape = 'round'>-->
-    <!--                            <ion-icon color = 'dark'-->
-    <!--                                      name = "person-add-outline"></ion-icon>-->
-    <!--                        </ion-button>-->
-    <!--                    </ion-buttons>-->
-    <!--                </ion-item>-->
+            <mat-form-field appearance = 'fill'>
+                <mat-label>
+                    Host Payment Type
+                </mat-label>
+                <mat-select [(ngModel)] = 'pMembers[i].mBillingType'
+                            [disabled] = '!pMembers[i].mUId'
+                            name = 'hostBT'
+                            required>
+                    <mat-option
+                            [value] = 'BT.one_time'>{{BT.one_time}}</mat-option>
+                    <mat-option [value] = 'BT.hourly'>{{BT.hourly}}</mat-option>
+                </mat-select>
+            </mat-form-field>
 
-    <!--                <ion-item class = 'ion-item-border' lines = 'none'>-->
-    <!--                    <ion-label>Billing Type</ion-label>-->
-    <!--                    <ion-select [(ngModel)] = 'pBillingType'-->
-    <!--                                interface = 'popover'-->
-    <!--                                mode = 'md' name = 'pBillingType'-->
-    <!--                                placeholder = 'Billing Type'-->
-    <!--                                required>-->
-    <!--                        <ion-select-option value = 'One Time'>One Time-->
-    <!--                        </ion-select-option>-->
-    <!--                        <ion-select-option value = 'Hourly'>Hourly-->
-    <!--                        </ion-select-option>-->
-    <!--                    </ion-select>-->
-    <!--                </ion-item>-->
+            <br>
 
-    <!--                <ion-item *ngIf = 'pBillingType' class = 'ion-item-border'-->
-    <!--                          lines = 'none'>-->
-    <!--                    <ion-label>{{pBillingType === 'One Time' ?-->
-    <!--                        'Project Budget : ' :-->
-    <!--                        'Hourly Rate : '}}-->
-    <!--                    </ion-label>-->
-    <!--                    <ion-input [(ngModel)] = 'pBudget'-->
-    <!--                               min = '0'-->
-    <!--                               name = 'pBudget'-->
-    <!--                               placeholder = '1000'-->
-    <!--                               required-->
-    <!--                               type = 'number'>$&nbsp;-->
-    <!--                    </ion-input>-->
-    <!--                </ion-item>-->
+            <mat-form-field appearance = 'fill'>
+                <mat-label>
+                    {{pMember.mBillingType === BT.one_time ? "Price [$]"
+                    : "Rate [$/Hr]"}}
+                </mat-label>
+                <input [(ngModel)] = 'pMembers[i].mRate' [disabled] = 'pMember.mUId.length === 0 ||
+                       pMembers[i].mBillingType.length === 0'
+                       matInput
+                       required
+                       type = 'number'>
+            </mat-form-field>
 
-    <!--                <ion-item-group>-->
-    <!--                    <ion-item class = 'ion-item-border' lines = 'none'>-->
-    <!--                        <ion-label>Start Date</ion-label>-->
-    <!--                        <ion-datetime [(ngModel)] = 'pStartDate'-->
-    <!--                                      displayFormat = "MMM DD, YYYY"-->
-    <!--                                      name = 'pStartDate'-->
-    <!--                                      placeholder = "Select Date"-->
-    <!--                                      required>-->
-    <!--                        </ion-datetime>-->
-    <!--                    </ion-item>-->
+            <br>
 
-    <!--                    <ion-item class = 'ion-item-border' lines = 'none'>-->
-    <!--                        <ion-label>Deadline</ion-label>-->
-    <!--                        <ion-datetime [(ngModel)] = 'pDeadline'-->
-    <!--                                      displayFormat = "MMM DD, YYYY"-->
-    <!--                                      name = 'pDeadline'-->
-    <!--                                      placeholder = "Select Date"-->
-    <!--                                      required>-->
-    <!--                        </ion-datetime>-->
-    <!--                    </ion-item>-->
-    <!--                </ion-item-group>-->
-    <!--            </form>-->
-
-    <!--            <ion-fab horizontal = 'end' vertical = 'bottom'>-->
-    <!--                <ion-fab-button (click) = 'slide?.slideNext(100)'-->
-    <!--                                color = 'light'>-->
-    <!--                    <ion-icon name = "chevron-forward-outline"></ion-icon>-->
-    <!--                </ion-fab-button>-->
-    <!--            </ion-fab>-->
-
-    <!--            <ion-fab horizontal = 'start' vertical = 'bottom'>-->
-    <!--                <ion-fab-button (click) = 'dismiss(false)'-->
-    <!--                                color = 'primary'>-->
-    <!--                    <ion-icon name = "close-outline"></ion-icon>-->
-    <!--                </ion-fab-button>-->
-    <!--            </ion-fab>-->
-
-    <!--        </ion-slide>-->
-
-    <!--        <ion-slide>-->
-    <!--            <ion-list style = 'width: 100%; height: 100%;'>-->
-    <!--                <div *ngIf = 'pMembers.length > 0'>-->
-    <!--                    <ion-item lines = 'inherit'>-->
-    <!--                        <ion-title>Host Information</ion-title>-->
-    <!--                    </ion-item>-->
-    <!--                    <form #hForm = "ngForm">-->
-    <!--                        <ion-item class = 'ion-item-border' lines = 'none'>-->
-    <!--                            <ion-label>Member Role :</ion-label>-->
-    <!--                            <ion-select [(ngModel)] = 'pMembers[0].mRole'-->
-    <!--                                        interface = 'popover' mode = 'md'-->
-    <!--                                        name = 'hRole'-->
-    <!--                                        required>-->
-    <!--                                <ion-select-option-->
-    <!--                                        [value] = 'MR.designer'>{{MR.designer}}-->
-    <!--                                </ion-select-option>-->
-    <!--                                <ion-select-option-->
-    <!--                                        [value] = 'MR.developer'>{{MR.developer}}-->
-    <!--                                </ion-select-option>-->
-    <!--                                <ion-select-option [value] = 'MR.qa'>{{MR.qa}}-->
-    <!--                                </ion-select-option>-->
-
-    <!--                            </ion-select>-->
-    <!--                        </ion-item>-->
-
-    <!--                        <ion-item class = 'ion-item-border' lines = 'none'>-->
-    <!--                            <ion-label>Billing Type :</ion-label>-->
-    <!--                            <ion-select [(ngModel)] = 'pMembers[0].mBillingType'-->
-    <!--                                        interface = 'popover' mode = 'md'-->
-    <!--                                        name = 'hBillingType'-->
-    <!--                                        required>-->
-    <!--                                <ion-select-option value = 'One Time'>One Time-->
-    <!--                                </ion-select-option>-->
-    <!--                                <ion-select-option value = 'Hourly'>Hourly-->
-    <!--                                </ion-select-option>-->
-    <!--                            </ion-select>-->
-    <!--                        </ion-item>-->
-
-    <!--                        <ion-item class = 'ion-item-border' lines = 'none'>-->
-    <!--                            <ion-label>{{pMembers[0].mBillingType ===-->
-    <!--                            BT.one_time ? "Price [$]" :-->
-    <!--                                "Rate [$/hr]" }} :-->
-    <!--                            </ion-label>-->
-    <!--                            <ion-input [(ngModel)] = 'pMembers[0].mRate'-->
-    <!--                                       name = 'hRate'-->
-    <!--                                       placeholder = '1000'-->
-    <!--                                       required-->
-    <!--                                       type = 'number'>-->
-    <!--                            </ion-input>-->
-    <!--                        </ion-item>-->
-    <!--                    </form>-->
-    <!--                </div>-->
-
-    <!--                <ion-item *ngIf = 'members' lines = 'inherit'>-->
-    <!--                    <ion-title>Members</ion-title>-->
-    <!--                    <ion-buttons slot = 'end'>-->
-    <!--                        <ion-button (click) = 'addMember()'-->
-    <!--                                    [disabled] = 'available.length === 0'-->
-    <!--                                    color = 'primary'-->
-    <!--                                    fill = 'clear'-->
-    <!--                                    shape = 'round'>-->
-    <!--                            <ion-icon name = "add-circle-outline"></ion-icon>-->
-    <!--                        </ion-button>-->
-    <!--                    </ion-buttons>-->
-    <!--                </ion-item>-->
-    <!--                <br>-->
-    <!--                <ion-card *ngFor = 'let member of pMembers'>-->
-    <!--                    <ion-card-header>-->
-    <!--                        <ion-card-title class = 'ion-text-center'>-->
-    <!--                            <ion-icon (click) = 'removeMember(member)'-->
-    <!--                                      class = 'ion-float-right'-->
-    <!--                                      color = 'danger'-->
-    <!--                                      *ngIf = 'pMembers.length > 1'-->
-    <!--                                      name = 'remove-circle-outline'>-->
-    <!--                            </ion-icon>-->
-    <!--                            {{member.mName}}-->
-    <!--                        </ion-card-title>-->
-    <!--                        <ion-card-subtitle>{{member.mRole}}</ion-card-subtitle>-->
-    <!--                    </ion-card-header>-->
-    <!--                    <ion-card-content>-->
-    <!--                        Billing Type&nbsp;:&nbsp;<b>{{member.mBillingType}}</b>-->
-    <!--                        <br>-->
-    <!--                        {{member.mBillingType === "One Time" ? "Price : $" :-->
-    <!--                        "Rate : $"}}{{member.mRate}}-->
-    <!--                    </ion-card-content>-->
-    <!--                </ion-card>-->
-    <!--            </ion-list>-->
-    <!--            <ion-fab *ngIf = 'pForm?.valid && hForm?.valid' horizontal = 'end'-->
-    <!--                     vertical =-->
-    <!--                             'bottom'>-->
-    <!--                <ion-fab-button (click) = 'dismiss(true)' [@push]-->
-    <!--                                color = 'success'>-->
-    <!--                    <ion-icon name = "folder-open-outline"></ion-icon>-->
-    <!--                </ion-fab-button>-->
-    <!--            </ion-fab>-->
-    <!--            <ion-fab horizontal = 'start' vertical = 'bottom'>-->
-    <!--                <ion-fab-button (click) = 'slide?.slidePrev(100)'-->
-    <!--                                color = 'light'>-->
-    <!--                    <ion-icon name = "chevron-back-outline"></ion-icon>-->
-    <!--                </ion-fab-button>-->
-    <!--            </ion-fab>-->
-    <!--        </ion-slide>-->
-    <!--    </ion-slides>-->
+            <mat-form-field appearance = 'fill'>
+                <mat-label>
+                    Role
+                </mat-label>
+                <mat-select [(ngModel)] = 'pMembers[i].mRole'
+                            [disabled] = '!pMembers[i].mUId'>
+                    <mat-option
+                            [value] = 'MR.developer'>{{MR.developer}}</mat-option>
+                    <mat-option
+                            [value] = 'MR.designer'>{{MR.designer}}</mat-option>
+                    <mat-option
+                            [value] = 'MR.qa'>{{MR.qa}}</mat-option>
+                </mat-select>
+            </mat-form-field>
 
 
+            <ion-button (click) = 'removeMember(pMember)'
+                        *ngIf = 'pMembers[i].mType !== MT.host'
+                        [disabled] = 'pMember.mUId.length === 0'
+                        color = 'danger'
+                        expand = 'block'
+                        fill = 'solid'>
+                Remove
+            </ion-button>
+        </ion-card-content>
+    </ion-card>
+
+    <ion-fab *ngIf = 'nameForm.valid &&
+     (pMembers.length + available.length) === members.length'
+             horizontal = 'end' slot = 'fixed' vertical = 'bottom'>
+        <ion-fab-button (click) = 'dismiss(true)' [@push]
+                        color = 'success'>
+            <ion-icon name = 'folder-open-outline'></ion-icon>
+        </ion-fab-button>
+    </ion-fab>
+
+    <ion-fab horizontal = 'start' slot = 'fixed' vertical = 'bottom'>
+        <ion-fab-button (click) = 'dismiss(false)' color = 'danger'>
+            <ion-icon name = 'close'></ion-icon>
+        </ion-fab-button>
+    </ion-fab>
 </ion-content>

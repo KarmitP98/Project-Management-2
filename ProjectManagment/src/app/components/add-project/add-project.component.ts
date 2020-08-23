@@ -5,11 +5,9 @@ import { AngularFirestore } from "@angular/fire/firestore";
 import { ClientModel, MemberModel, ProjectModel, UserModel } from "../../shared/models";
 import { Subscription } from "rxjs";
 import { AddClientComponent } from "../add-client/add-client.component";
-import { AddMemberComponent } from "../add-member/add-member.component";
 import { pushTrigger } from "../../shared/animations";
 import { BILLING_TYPE, MEMBER_ROLE, MEMBER_TYPE, PROJECT_STATUS } from "../../shared/constants";
 import { NgForm } from "@angular/forms";
-import { take } from "rxjs/operators";
 
 @Component( {
                 selector: "app-add-project",
@@ -31,6 +29,7 @@ export class AddProjectComponent implements OnInit, OnDestroy {
     pBudget: number;
     pStatus: string = "active";
     pMemberIds: string[] = [];
+    pHUId: string;
 
     pClient: ClientModel;
     available: UserModel[] = [];
@@ -57,12 +56,13 @@ export class AddProjectComponent implements OnInit, OnDestroy {
 
     ngOnInit() {
         this.userSub = this.ds.fetchUsers()
-                           .pipe( take( 1 ) )
+            // .pipe( take( 1 ) )
                            .subscribe( users => {
                                if ( users ) {
                                    this.members = users;
                                    this.available = users.filter( user => user.uId !== this.uId );
                                    const user = users.filter( user => user.uId === this.uId )[0];
+
                                    this.pMemberIds = [ this.uId ];
                                    this.pMembers = [ {
                                        mUId: this.uId,
@@ -70,9 +70,9 @@ export class AddProjectComponent implements OnInit, OnDestroy {
                                        mWeekLog: [],
                                        mId: "temp",
                                        mName: user.uName,
-                                       mBillingType: "",
-                                       mRate: 0,
-                                       mRole: "",
+                                       mBillingType: this.BT.hourly,
+                                       mRate: 10,
+                                       mRole: this.MR.developer,
                                        mType: this.MT.host,
                                        mEarned: 0,
                                        mPaid: 0,
@@ -111,6 +111,7 @@ export class AddProjectComponent implements OnInit, OnDestroy {
                 pMemberIds: this.pMemberIds,
                 pHId: this.pMemberIds[0]
             };
+            console.log( project );
             project.pId = this.afs.createId();
             this.pClient.pIds.push( project.pId );
             this.ds.addNewProject( project );
@@ -131,28 +132,43 @@ export class AddProjectComponent implements OnInit, OnDestroy {
         await modal.present();
     }
 
-    async addMember() {
-        const modal = await this.mc
-                                .create( {
-                                             component: AddMemberComponent,
-                                             mode: "ios",
-                                             swipeToClose: true,
-                                             animated: true,
-                                             backdropDismiss: true,
-                                             componentProps: { available: this.available }
-                                         } );
-        await modal.present();
-        const { data } = await modal.onWillDismiss();
-        if ( data?.member ) {
-            this.pMembers.push( data.member );
-            this.available = this.available.filter( value => value.uId !== data.member.mUId );
-            this.pMemberIds.push( data.member.mUId );
-        }
+    addMember() {
+
+        const tempMember: MemberModel = {
+            mUId: "",
+            mRequests: [],
+            mWeekLog: [],
+            mId: "temp",
+            mName: "",
+            mBillingType: this.BT.hourly,
+            mRate: 10,
+            mRole: this.MR.developer,
+            mType: this.MT.member,
+            mEarned: 0,
+            mPaid: 0,
+            mInvoices: []
+        };
+
+        this.pMembers.push( tempMember );
+
+    }
+
+    selectMember( mUId: string, i: number ) {
+        console.log( mUId );
+        this.available.splice( this.available.indexOf( this.members.filter( value => value.uId === mUId )[0] ) );
+
+        this.pMemberIds.push( mUId );
+
+        this.pMembers[i].mName = this.members.filter( value => value.uId === mUId )[0].uName;
+
     }
 
     removeMember( member: MemberModel ) {
-        this.pMembers.splice( this.pMembers.indexOf( member ), 1 );
-        this.available.push( this.members.filter( value => value.uId === member.mUId )[0] );
-        this.pMemberIds.splice( this.pMemberIds.indexOf( member.mUId ), 1 );
+        console.log( member );
+        if ( member.mUId.length > 0 ) {
+            this.pMembers.splice( this.pMembers.indexOf( member ), 1 );
+            this.available.push( this.members.filter( value => value.uId === member.mUId )[0] );
+            this.pMemberIds.splice( this.pMemberIds.indexOf( member.mUId ), 1 );
+        }
     }
 }
