@@ -1,28 +1,16 @@
 <ion-header>
-    <ion-toolbar>
-        <ion-item lines = 'none'>
-            <ion-buttons slot = 'start'>
-                <ion-button (click) = 'openDropDown($event)' color = 'primary'
-                            fill = 'clear' shape = "round">
-                    <ion-icon name = "chevron-down-outline"></ion-icon>
-                </ion-button>
-            </ion-buttons>
-            <ion-buttons (click) = 'addNewClient()' slot = 'end'>
-                <ion-button fill = 'clear' shape = 'round'>
-                    <ion-icon color = 'primary'
-                              name = "person-add-outline"></ion-icon>
-                </ion-button>
-            </ion-buttons>
-            <ion-title>List of Clients</ion-title>
-        </ion-item>
+    <ion-toolbar color = 'secondary'>
+        <ion-buttons slot = 'start'>
+            <ion-menu-button></ion-menu-button>
+        </ion-buttons>
+        <ion-title>List of Clients</ion-title>
     </ion-toolbar>
 </ion-header>
 
+<app-menu-comp [uId] = 'uId'></app-menu-comp>
+
 <ion-content *ngIf = 'clients.length > 0'>
     <br>
-    <!--    <ion-item lines = 'full'>-->
-    <!--        <h1>Clients</h1>-->
-    <!--    </ion-item>-->
     <ion-card *ngFor = 'let client of clients'>
         <ion-card-header>
             <ion-card-title>{{client.cName}}</ion-card-title>

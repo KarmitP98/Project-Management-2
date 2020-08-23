@@ -55,13 +55,18 @@ export class AddProjectComponent implements OnInit, OnDestroy {
                  private afs: AngularFirestore ) { }
 
     ngOnInit() {
+
+
         this.userSub = this.ds.fetchUsers()
-            // .pipe( take( 1 ) )
                            .subscribe( users => {
                                if ( users ) {
                                    this.members = users;
                                    this.available = users.filter( user => user.uId !== this.uId );
                                    const user = users.filter( user => user.uId === this.uId )[0];
+
+                                   // console.log("Init Called");
+                                   // console.log(this.members);
+                                   // console.log(this.available);
 
                                    this.pMemberIds = [ this.uId ];
                                    this.pMembers = [ {
@@ -154,17 +159,14 @@ export class AddProjectComponent implements OnInit, OnDestroy {
     }
 
     selectMember( mUId: string, i: number ) {
-        console.log( mUId );
-        this.available.splice( this.available.indexOf( this.members.filter( value => value.uId === mUId )[0] ) );
 
+        this.available.splice( this.available.indexOf( this.members.filter( value => value.uId === mUId )[0] ), 1 );
         this.pMemberIds.push( mUId );
-
         this.pMembers[i].mName = this.members.filter( value => value.uId === mUId )[0].uName;
 
     }
 
     removeMember( member: MemberModel ) {
-        console.log( member );
         if ( member.mUId.length > 0 ) {
             this.pMembers.splice( this.pMembers.indexOf( member ), 1 );
             this.available.push( this.members.filter( value => value.uId === member.mUId )[0] );
