@@ -15,6 +15,7 @@ import { MatTableModule } from "@angular/material/table";
 import { ViewInvoiceComponent } from "../../../components/view-invoice/view-invoice.component";
 import { WorkAdderComponent } from "../../../components/work-adder/work-adder.component";
 import { MatButtonModule } from "@angular/material/button";
+import { MemberPageModule } from "./member/member.module";
 
 @NgModule( {
                imports: [
@@ -26,7 +27,8 @@ import { MatButtonModule } from "@angular/material/button";
                    MatDatepickerModule,
                    MatInputModule,
                    MatTableModule,
-                   MatButtonModule
+                   MatButtonModule,
+                   MemberPageModule
                ],
                declarations: [ ProjectPage,
                                ViewWorkLogComponent,

@@ -1,21 +1,3 @@
-<!--<ion-header *ngIf = 'project'>-->
-<!--    <ion-toolbar-->
-<!--            [color] = 'project.pStatus === "Active" ? "warning" : "success"'-->
-<!--    >-->
-<!--        <ion-item-->
-<!--                [color] = 'project.pStatus === "Active" ? "warning" : "success"'-->
-<!--                lines = 'none'>-->
-<!--            <ion-buttons slot = 'start'>-->
-<!--                <ion-button (click) = 'backToDashboard()' fill = 'clear'-->
-<!--                            shape = 'round'>-->
-<!--                    <ion-icon name = 'arrow-back-outline'></ion-icon>-->
-<!--                </ion-button>-->
-<!--            </ion-buttons>-->
-<!--            <ion-title>{{project.pName}}</ion-title>-->
-<!--        </ion-item>-->
-<!--    </ion-toolbar>-->
-<!--</ion-header>-->
-
 <ion-content *ngIf = 'user && project' fullscreen>
 
     <ion-card [color] = 'project.pStatus ==="Active"?
@@ -66,16 +48,6 @@
             <ion-item-divider></ion-item-divider>
             <br>
             <div class = 'ion-float-right'>
-                <!--                <ion-icon (click) = 'viewTimeSheet(member)'-->
-                <!--                          color = 'secondary'-->
-                <!--                          name = 'calendar'-->
-                <!--                          size = 'large'></ion-icon>-->
-                <!--                &nbsp;-->
-                <!--                <ion-icon (click) = 'addInvoice(member)'-->
-                <!--                          color = 'success'-->
-                <!--                          name = 'cash'-->
-                <!--                          size = 'large'></ion-icon>-->
-                <!--                &nbsp;-->
                 <ion-icon (click) = 'expandView(member)'
                           color = 'dark'
                           name = 'information-circle'

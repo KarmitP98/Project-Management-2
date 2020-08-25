@@ -160,6 +160,6 @@ export class ProjectPage implements OnInit, OnDestroy {
     // }
 
     expandView( member: MemberModel ) {
-        this.router.navigate( [ member.mUId ] );
+        this.router.navigate( [ "./" + member.mUId ] );
     }
 }
