@@ -42,11 +42,11 @@
         <br>
         <mat-form-field appearance = 'fill'>
             <mat-label>Password</mat-label>
-            <input matInput minlength = '6'
-                   [(ngModel)] = 'userPassword'
+            <input [(ngModel)] = 'userPassword' autocomplete = 'false'
+                   matInput
+                   minlength = '6'
                    name = 'password'
                    placeholder = '******'
-                   autocomplete = 'false'
                    required
                    type = 'password'>
             <mat-icon matSuffix>
@@ -88,8 +88,8 @@
     </ion-card-subtitle>
 
     <ion-fab horizontal = 'start' vertical = 'bottom'>
-        <ion-fab-button color = 'warning' routerDirection = 'back'
-                        [@push] routerLink = '/login'>
+        <ion-fab-button [@push] color = 'warning'
+                        routerDirection = 'back' routerLink = '/login'>
             <ion-icon name = 'chevron-back'></ion-icon>
         </ion-fab-button>
     </ion-fab>

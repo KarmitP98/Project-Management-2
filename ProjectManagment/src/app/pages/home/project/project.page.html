@@ -1,24 +1,25 @@
-<ion-header *ngIf = 'project'>
-    <ion-toolbar
-            [color] = 'project.pStatus === "Active" ? "warning" : "success"'
-    >
-        <ion-item
-                [color] = 'project.pStatus === "Active" ? "warning" : "success"'
-                lines = 'none'>
-            <ion-buttons slot = 'start'>
-                <ion-button (click) = 'backToDashboard()' fill = 'clear'
-                            shape = 'round'>
-                    <ion-icon name = "arrow-back-outline"></ion-icon>
-                </ion-button>
-            </ion-buttons>
-            <ion-title>{{project.pName}}</ion-title>
-        </ion-item>
-    </ion-toolbar>
-</ion-header>
+<!--<ion-header *ngIf = 'project'>-->
+<!--    <ion-toolbar-->
+<!--            [color] = 'project.pStatus === "Active" ? "warning" : "success"'-->
+<!--    >-->
+<!--        <ion-item-->
+<!--                [color] = 'project.pStatus === "Active" ? "warning" : "success"'-->
+<!--                lines = 'none'>-->
+<!--            <ion-buttons slot = 'start'>-->
+<!--                <ion-button (click) = 'backToDashboard()' fill = 'clear'-->
+<!--                            shape = 'round'>-->
+<!--                    <ion-icon name = 'arrow-back-outline'></ion-icon>-->
+<!--                </ion-button>-->
+<!--            </ion-buttons>-->
+<!--            <ion-title>{{project.pName}}</ion-title>-->
+<!--        </ion-item>-->
+<!--    </ion-toolbar>-->
+<!--</ion-header>-->
 
-<ion-content *ngIf = 'user && project'>
+<ion-content *ngIf = 'user && project' fullscreen>
 
-    <ion-card class = 'ion-text-center'>
+    <ion-card [color] = 'project.pStatus ==="Active"?
+     "warning" : "success" ' class = 'ion-text-center'>
         <ion-card-header>
             <ion-card-title>{{project.pName}}</ion-card-title>
             <ion-card-subtitle>{{"Start Date : " +
@@ -39,7 +40,7 @@
                   class = 'ion-float-right'
                   color = 'primary'
                   matTooltip = 'Add Member'
-                  name = "person-add-outline">
+                  name = 'person-add'>
         </ion-icon>
     </ion-item>
 
@@ -56,26 +57,37 @@
             Billing Type&nbsp;:&nbsp;<b>{{member.mBillingType}}</b>
             <br>
             {{member.mBillingType === "One Time" ? "Price : $" :
-            "Rate : $"}}{{member.mRate}}
+            "Rate : $"}}<b>{{member.mRate}}</b>
+            <br>
+            Amount Earned: <b>$ {{member.mEarned}}</b>
+            <br>
+            Amount Paid: <b>$ {{member.mPaid}}</b>
 
             <ion-item-divider></ion-item-divider>
             <br>
             <div class = 'ion-float-right'>
-                <ion-icon (click) = 'viewTimeSheet(member)' color = 'secondary'
-                          name = "calendar-outline"
-                          size = 'large'></ion-icon>
-                &nbsp;
-                <ion-icon (click) = 'addInvoice(member)' color = 'success'
-                          name = "cash-outline"
-                          size = 'large'></ion-icon>
-                &nbsp;
-                <!--                <ion-icon (click) = 'removeMember(member)'-->
-                <!--                          *ngIf = 'member.mType !== MT.host && isUserHost'-->
-                <!--                          color = 'danger'-->
-                <!--                          name = "remove-circle-outline"-->
+                <!--                <ion-icon (click) = 'viewTimeSheet(member)'-->
+                <!--                          color = 'secondary'-->
+                <!--                          name = 'calendar'-->
                 <!--                          size = 'large'></ion-icon>-->
+                <!--                &nbsp;-->
+                <!--                <ion-icon (click) = 'addInvoice(member)'-->
+                <!--                          color = 'success'-->
+                <!--                          name = 'cash'-->
+                <!--                          size = 'large'></ion-icon>-->
+                <!--                &nbsp;-->
+                <ion-icon (click) = 'expandView(member)'
+                          color = 'dark'
+                          name = 'information-circle'
+                          size = 'large'></ion-icon>
             </div>
             <br>
         </ion-card-content>
     </ion-card>
+
+    <ion-fab horizontal = 'start' vertical = 'bottom'>
+        <ion-fab-button (click) = 'backToDashboard()' color = 'danger'>
+            <ion-icon name = 'close'></ion-icon>
+        </ion-fab-button>
+    </ion-fab>
 </ion-content>

@@ -82,37 +82,6 @@ export class DashboardPage implements OnInit, OnDestroy {
         this.projectSub.unsubscribe();
     }
 
-
-    private makeSampleCards(): void {
-
-        let i = 1;
-        for ( i = 1; i <= 6; i++ ) {
-            const status = Math.random() > 0.5;
-            if ( status ) {
-                this.currentSampleCards
-                    .push( {
-                               pName: "Project " + i,
-                               pStartDate: new Date(),
-                               pDesc: "This is the description of Project " + i,
-                               pDeadline: new Date(),
-                               pTotalMembers: Math.round( Math.random() * 6 + 1 ),
-                               pStatus: status
-                           } );
-            } else {
-                this.finishedSampleCards
-                    .push( {
-                               pName: "Project " + i,
-                               pStartDate: new Date(),
-                               pDesc: "This is the description of Project " + i,
-                               pDeadline: new Date(),
-                               pTotalMembers: Math.round( Math.random() * 6 + 1 ),
-                               pStatus: status
-                           } );
-            }
-        }
-    }
-
-
     async openDropDown( $event: MouseEvent ) {
         const pop = await this.pc.create( {
                                               component: TopDropDownComponent,
@@ -149,5 +118,48 @@ export class DashboardPage implements OnInit, OnDestroy {
                                          } );
         await modal.present();
 
+    }
+
+    moneyEarned( project: ProjectModel ): number {
+
+        let earned = 0, paid = 0;
+
+        project.pMembers.forEach( value => {
+            if ( value.mUId === this.user.uId ) {
+                earned = value.mEarned;
+                paid = value.mPaid;
+            }
+        } );
+
+        return earned - paid;
+    }
+
+    private makeSampleCards(): void {
+
+        let i = 1;
+        for ( i = 1; i <= 6; i++ ) {
+            const status = Math.random() > 0.5;
+            if ( status ) {
+                this.currentSampleCards
+                    .push( {
+                               pName: "Project " + i,
+                               pStartDate: new Date(),
+                               pDesc: "This is the description of Project " + i,
+                               pDeadline: new Date(),
+                               pTotalMembers: Math.round( Math.random() * 6 + 1 ),
+                               pStatus: status
+                           } );
+            } else {
+                this.finishedSampleCards
+                    .push( {
+                               pName: "Project " + i,
+                               pStartDate: new Date(),
+                               pDesc: "This is the description of Project " + i,
+                               pDeadline: new Date(),
+                               pTotalMembers: Math.round( Math.random() * 6 + 1 ),
+                               pStatus: status
+                           } );
+            }
+        }
     }
 }

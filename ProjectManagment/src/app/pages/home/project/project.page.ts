@@ -144,4 +144,22 @@ export class ProjectPage implements OnInit, OnDestroy {
         const { data } = await modal.onWillDismiss();
         console.log( data );
     }
+
+    // async expandView( member: MemberModel ) {
+    //     const modal = await this.mc
+    //                             .create( {
+    //                                          component: MemberViewComponent,
+    //                                          mode: "ios",
+    //                                          swipeToClose: true,
+    //                                          animated: true,
+    //                                          backdropDismiss: true,
+    //                                          componentProps: { member: member }
+    //                                      } );
+    //
+    //     await modal.present();
+    // }
+
+    expandView( member: MemberModel ) {
+        this.router.navigate( [ member.mUId ] );
+    }
 }

@@ -13,10 +13,10 @@
             <mat-label>Email</mat-label>
             <input (keypress) = '$event.key === "Enter" ? login() : ""'
                    [(ngModel)] = 'userEmail'
+                   autocomplete = 'false'
                    email
                    matInput
                    name = 'email'
-                   autocomplete = 'false'
                    placeholder = 'abc@def.com'
                    required
                    type = 'email'>

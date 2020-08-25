@@ -43,11 +43,14 @@
                 <b>{{project.pDeadline | date }}</b></ion-card-subtitle>
         </ion-card-header>
         <ion-card-content>
-            <p>
-                {{project.pDesc}}
-            <p>
-            <p>Number of Members: <b>{{project.pMemberIds.length}}</b>
-            </p>
+
+            {{project.pDesc}}
+            <br>Active Members:
+            <b>{{project.pMemberIds.length}}</b>
+            <br>
+            <b [style] = 'moneyEarned(project) >= 0 ?
+            "color: green" : "color: red"'> Money Earned:
+                                            $ {{moneyEarned(project)}}</b>
         </ion-card-content>
     </ion-card>
     <br>
