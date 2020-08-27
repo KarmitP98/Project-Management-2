@@ -1,0 +1,48 @@
+<ion-header>
+    <ion-toolbar>
+        <ion-title>
+            Member
+        </ion-title>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+    <ion-slides #slides style = 'height: 100%'>
+        <ion-slide>
+            <div style = 'width: 100%; height: 100%;'>
+                <h1>Slide 1</h1>
+
+                <ion-fab [@push] horizontal = 'end' slot = 'fixed'
+                         vertical = 'bottom'>
+                    <ion-fab-button (click) = 'slides.slideNext()'
+                                    color = 'success'>
+                        <ion-icon name = 'receipt'></ion-icon>
+                    </ion-fab-button>
+                </ion-fab>
+            </div>
+        </ion-slide>
+        <ion-slide>
+            <div style = 'width: 100%; height: 100%;'>
+                <h1>Slide 2</h1>
+
+                <ion-fab [@push] horizontal = 'end' slot = 'fixed'
+                         vertical = 'bottom'>
+                    <ion-fab-button (click) = 'slides.slidePrev()'
+                                    color = 'dark'>
+                        <ion-icon name = 'calendar'></ion-icon>
+                    </ion-fab-button>
+                </ion-fab>
+            </div>
+        </ion-slide>
+    </ion-slides>
+
+
+    <ion-fab [@push] horizontal = 'start' slot = 'fixed'
+             vertical = 'bottom'>
+        <ion-fab-button color = 'danger'>
+            <ion-icon (click) = 'close()' name = 'close'></ion-icon>
+        </ion-fab-button>
+    </ion-fab>
+
+</ion-content>

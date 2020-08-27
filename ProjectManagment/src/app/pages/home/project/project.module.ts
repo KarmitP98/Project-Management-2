@@ -10,12 +10,8 @@ import { ProjectPage } from "./project.page";
 import { MatTooltipModule } from "@angular/material/tooltip";
 import { MatDatepickerModule } from "@angular/material/datepicker";
 import { MatInputModule } from "@angular/material/input";
-import { ViewWorkLogComponent } from "../../../components/view-work-log/view-work-log.component";
 import { MatTableModule } from "@angular/material/table";
-import { ViewInvoiceComponent } from "../../../components/view-invoice/view-invoice.component";
-import { WorkAdderComponent } from "../../../components/work-adder/work-adder.component";
 import { MatButtonModule } from "@angular/material/button";
-import { MemberPageModule } from "./member/member.module";
 
 @NgModule( {
                imports: [
@@ -27,12 +23,8 @@ import { MemberPageModule } from "./member/member.module";
                    MatDatepickerModule,
                    MatInputModule,
                    MatTableModule,
-                   MatButtonModule,
-                   MemberPageModule
+                   MatButtonModule
                ],
-               declarations: [ ProjectPage,
-                               ViewWorkLogComponent,
-                               ViewInvoiceComponent,
-                               WorkAdderComponent ]
+               declarations: [ ProjectPage ]
            } )
 export class ProjectPageModule {}

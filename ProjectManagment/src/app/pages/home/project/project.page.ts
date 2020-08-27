@@ -6,13 +6,14 @@ import { MemberModel, ProjectModel, UserModel } from "../../../shared/models";
 import { AddMemberComponent } from "../../../components/add-member/add-member.component";
 import { ModalController } from "@ionic/angular";
 import { MEMBER_TYPE } from "../../../shared/constants";
-import { ViewWorkLogComponent } from "../../../components/view-work-log/view-work-log.component";
-import { ViewInvoiceComponent } from "../../../components/view-invoice/view-invoice.component";
+import { MemberComponent } from "../../../components/member/member.component";
+import { pushTrigger } from "../../../shared/animations";
 
 @Component( {
                 selector: "app-project",
                 templateUrl: "./project.page.html",
-                styleUrls: [ "./project.page.scss" ]
+                styleUrls: [ "./project.page.scss" ],
+                animations: [ pushTrigger ]
             } )
 export class ProjectPage implements OnInit, OnDestroy {
 
@@ -91,33 +92,6 @@ export class ProjectPage implements OnInit, OnDestroy {
         }
     }
 
-
-    async viewTimeSheet( member: MemberModel ) {
-        const modal = await this.mc
-                                .create( {
-                                             component: ViewWorkLogComponent,
-                                             mode: "ios",
-                                             swipeToClose: true,
-                                             animated: true,
-                                             backdropDismiss: true,
-                                             componentProps: { member: member }
-                                         } );
-        await modal.present();
-        const { data } = await modal.onWillDismiss();
-        const newMember = data?.member;
-
-        if ( newMember ) {
-            this.project.pMembers.forEach( member => {
-                if ( member.mUId === newMember.mUId ) {
-                    member = newMember;
-                    console.log( "Member Updated!" );
-                }
-            } );
-
-            this.ds.updateProjects( this.project );
-        }
-    }
-
     backToDashboard(): void {
         this.router.navigate( [ "/" + this.user.uId ] );
     }
@@ -130,10 +104,11 @@ export class ProjectPage implements OnInit, OnDestroy {
         this.ds.updateProjects( this.project );
     }
 
-    async addInvoice( member: MemberModel ) {
+
+    async expandView( member: MemberModel ) {
         const modal = await this.mc
                                 .create( {
-                                             component: ViewInvoiceComponent,
+                                             component: MemberComponent,
                                              mode: "ios",
                                              swipeToClose: true,
                                              animated: true,
@@ -141,25 +116,6 @@ export class ProjectPage implements OnInit, OnDestroy {
                                              componentProps: { member: member }
                                          } );
         await modal.present();
-        const { data } = await modal.onWillDismiss();
-        console.log( data );
     }
 
-    // async expandView( member: MemberModel ) {
-    //     const modal = await this.mc
-    //                             .create( {
-    //                                          component: MemberViewComponent,
-    //                                          mode: "ios",
-    //                                          swipeToClose: true,
-    //                                          animated: true,
-    //                                          backdropDismiss: true,
-    //                                          componentProps: { member: member }
-    //                                      } );
-    //
-    //     await modal.present();
-    // }
-
-    expandView( member: MemberModel ) {
-        this.router.navigate( [ "./" + member.mUId ] );
-    }
 }
