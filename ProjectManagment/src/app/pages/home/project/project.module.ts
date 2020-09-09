@@ -12,6 +12,10 @@ import { MatDatepickerModule } from "@angular/material/datepicker";
 import { MatInputModule } from "@angular/material/input";
 import { MatTableModule } from "@angular/material/table";
 import { MatButtonModule } from "@angular/material/button";
+import { MemberComponent } from "../../../components/member/member.component";
+import { WorkLogComponent } from "../../../components/member/work-log/work-log.component";
+import { InvoiceComponent } from "../../../components/member/invoice/invoice.component";
+import { MatExpansionModule } from "@angular/material/expansion";
 
 @NgModule( {
                imports: [
@@ -23,8 +27,12 @@ import { MatButtonModule } from "@angular/material/button";
                    MatDatepickerModule,
                    MatInputModule,
                    MatTableModule,
-                   MatButtonModule
+                   MatButtonModule,
+                   MatExpansionModule
                ],
-               declarations: [ ProjectPage ]
+               declarations: [ ProjectPage,
+                               MemberComponent,
+                               WorkLogComponent,
+                               InvoiceComponent ]
            } )
 export class ProjectPageModule {}

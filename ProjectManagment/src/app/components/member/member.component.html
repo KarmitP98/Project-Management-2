@@ -11,32 +11,119 @@
     <ion-slides #slides style = 'height: 100%'>
         <ion-slide>
             <div style = 'width: 100%; height: 100%;'>
-                <h1>Slide 1</h1>
 
-                <ion-fab [@push] horizontal = 'end' slot = 'fixed'
-                         vertical = 'bottom'>
-                    <ion-fab-button (click) = 'slides.slideNext()'
-                                    color = 'success'>
-                        <ion-icon name = 'receipt'></ion-icon>
-                    </ion-fab-button>
-                </ion-fab>
+                <form #logForm = 'ngForm' (ngSubmit) = 'logWork()'
+                      style = 'margin-top: 2rem;'>
+
+                    <mat-form-field appearance = 'fill'>
+                        <mat-label>Choose a Date</mat-label>
+                        <input [matDatepicker] = 'picker' matInput
+                               name = 'wDate'
+                               ngModel
+                               required>
+                        <mat-datepicker-toggle [for] = 'picker'
+                                               matSuffix></mat-datepicker-toggle>
+                        <mat-datepicker #picker touchUi></mat-datepicker>
+                    </mat-form-field>
+                    <mat-form-field appearance = 'fill'>
+                        <mat-label>Task</mat-label>
+                        <input matInput name = 'wWork'
+                               ngModel
+                               required
+                               type = 'text'>
+                    </mat-form-field>
+                    <mat-form-field appearance = 'fill'>
+                        <mat-label>Hours</mat-label>
+                        <input matInput name = 'wHours'
+                               ngModel
+                               required
+                               type = 'number'>
+                    </mat-form-field>
+                    <ion-button [disabled] = 'logForm.invalid'
+                                color = 'success'
+                                fill = 'solid'
+                                type = 'submit'>
+                        Log Work
+                    </ion-button>
+                </form>
+
+                <ion-item lines = 'full'></ion-item>
+
+                <mat-accordion class = 'ion-text-left'>
+                    <mat-expansion-panel
+                            *ngFor = 'let weeklog of member?.mWeekLog'>
+
+                        <mat-expansion-panel-header
+                                [ngClass] = 'weeklog.billed ?
+                                "approved-card": "pending-card"'>
+                            <mat-panel-title>
+                                Week number: {{weeklog.weekNumber}}
+                            </mat-panel-title>
+                            <mat-panel-description>
+                                Hours Worked: {{weeklog.weeklyUnBilledHours}}
+                            </mat-panel-description>
+                        </mat-expansion-panel-header>
+
+                        <div class = 'ion-float-right'>
+                            <ion-button color = 'success'
+                                        fill = 'clear'>
+                                Edit
+                            </ion-button>
+                            <ion-button (click) = 'deleteWorkLog(weeklog)'
+                                        color = 'danger'
+                                        fill = 'clear'>
+                                Delete
+                            </ion-button>
+                        </div>
+                    </mat-expansion-panel>
+                </mat-accordion>
             </div>
         </ion-slide>
+
+
         <ion-slide>
             <div style = 'width: 100%; height: 100%;'>
-                <h1>Slide 2</h1>
+                <mat-accordion class = 'ion-text-left'>
+                    <mat-expansion-panel *ngFor = 'let invoice of invoices'>
 
-                <ion-fab [@push] horizontal = 'end' slot = 'fixed'
-                         vertical = 'bottom'>
-                    <ion-fab-button (click) = 'slides.slidePrev()'
-                                    color = 'dark'>
-                        <ion-icon name = 'calendar'></ion-icon>
-                    </ion-fab-button>
-                </ion-fab>
+                        <mat-expansion-panel-header
+                                [ngClass] = 'invoice.iApproved ?
+                                "approved-card": "pending-card"'>
+                            <mat-panel-title>
+                                Week number: {{invoice.iWeek}}
+                            </mat-panel-title>
+                            <mat-panel-description>
+                                Amount: $ {{invoice.iAmount}}
+                            </mat-panel-description>
+                        </mat-expansion-panel-header>
+
+                        <div class = 'ion-float-right'>
+                            <ion-button (click) = 'approveInvoice(invoice)'
+                                        color = 'success'
+                                        fill = 'clear'>
+                                Approved
+                            </ion-button>
+                            <ion-button color = 'danger'
+                                        fill = 'clear'>
+                                Decline
+                            </ion-button>
+                        </div>
+                    </mat-expansion-panel>
+                </mat-accordion>
             </div>
         </ion-slide>
     </ion-slides>
 
+    <ion-fab [@push] horizontal = 'end' slot = 'fixed'
+             vertical = 'bottom'>
+        <ion-fab-button (click) = 'currentSlide === 0 ? slides.slideNext() :
+                                slides.slidePrev();
+                                currentSlide = currentSlide === 0 ? 1 : 0;'
+                        [color] = 'currentSlide === 0 ? "success":"warning"'>
+            <ion-icon [name] = 'currentSlide === 0 ? "cash": "calendar"'>
+            </ion-icon>
+        </ion-fab-button>
+    </ion-fab>
 
     <ion-fab [@push] horizontal = 'start' slot = 'fixed'
              vertical = 'bottom'>

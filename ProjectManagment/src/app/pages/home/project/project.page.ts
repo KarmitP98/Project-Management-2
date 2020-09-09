@@ -106,6 +106,7 @@ export class ProjectPage implements OnInit, OnDestroy {
 
 
     async expandView( member: MemberModel ) {
+        const inputData = { uId: this.user.uId, memberId: member.mUId, projectId: this.project.pId };
         const modal = await this.mc
                                 .create( {
                                              component: MemberComponent,
@@ -113,7 +114,7 @@ export class ProjectPage implements OnInit, OnDestroy {
                                              swipeToClose: true,
                                              animated: true,
                                              backdropDismiss: true,
-                                             componentProps: { member: member }
+                                             componentProps: { inputData: inputData }
                                          } );
         await modal.present();
     }
