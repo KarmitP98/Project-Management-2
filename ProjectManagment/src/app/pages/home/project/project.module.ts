@@ -13,9 +13,9 @@ import { MatInputModule } from "@angular/material/input";
 import { MatTableModule } from "@angular/material/table";
 import { MatButtonModule } from "@angular/material/button";
 import { MemberComponent } from "../../../components/member/member.component";
-import { WorkLogComponent } from "../../../components/member/work-log/work-log.component";
-import { InvoiceComponent } from "../../../components/member/invoice/invoice.component";
+import { WorkLogComponent } from "../../../components/work-log/work-log.component";
 import { MatExpansionModule } from "@angular/material/expansion";
+import { EditWorkLogComponent } from "../../../components/work-log/edit-work-log/edit-work-log.component";
 
 @NgModule( {
                imports: [
@@ -33,6 +33,6 @@ import { MatExpansionModule } from "@angular/material/expansion";
                declarations: [ ProjectPage,
                                MemberComponent,
                                WorkLogComponent,
-                               InvoiceComponent ]
+                               EditWorkLogComponent ]
            } )
 export class ProjectPageModule {}

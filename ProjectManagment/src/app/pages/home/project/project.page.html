@@ -35,7 +35,7 @@
                 {{member.mRole}}
             </ion-card-subtitle>
         </ion-card-header>
-        <ion-card-content>
+        <ion-card-content *ngIf = 'user.uId === project.pHId'>
             Billing Type&nbsp;:&nbsp;<b>{{member.mBillingType}}</b>
             <br>
             {{member.mBillingType === "One Time" ? "Price : $" :
@@ -48,10 +48,11 @@
             <ion-item-divider></ion-item-divider>
             <br>
             <div class = 'ion-float-right'>
-                <ion-icon (click) = 'expandView(member)'
-                          color = 'dark'
-                          name = 'information-circle'
-                          size = 'large'></ion-icon>
+                <ion-icon (click) = 'viewWorkLog(member)'
+                          color = 'primary'
+                          name = 'hourglass'
+                          size = 'large'>
+                </ion-icon>
             </div>
             <br>
         </ion-card-content>

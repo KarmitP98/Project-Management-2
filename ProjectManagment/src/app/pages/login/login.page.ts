@@ -20,12 +20,15 @@ export class LoginPage implements OnInit {
                  private afa: AngularFireAuth ) { }
 
     ngOnInit() {
-        this.afa.signOut();
-        localStorage.removeItem( "userData" );
     }
 
     login(): void {
-        this.ds.login( this.userEmail, this.userPassword );
+        this.ds.loginWithEmailandPassword( this.userEmail, this.userPassword );
+        this.loginForm.resetForm();
+    }
+
+    loginWithProvider( provider: string ) {
+        this.ds.loginWithProvider( provider );
         this.loginForm.resetForm();
     }
 }

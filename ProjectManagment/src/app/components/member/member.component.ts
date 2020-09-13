@@ -6,6 +6,7 @@ import { GETWEEKNUMBER } from "../../shared/constants";
 import { NgForm } from "@angular/forms";
 import { DataService } from "../../services/data.service";
 import { Subscription } from "rxjs";
+import { EditWorkLogComponent } from "../work-log/edit-work-log/edit-work-log.component";
 
 @Component( {
                 selector: "app-member",
@@ -64,7 +65,6 @@ export class MemberComponent implements OnInit, OnDestroy {
                                       } );
 
                                       this.invoices.push( ...this.member.mInvoices );
-
                                   }
                               } );
 
@@ -76,6 +76,7 @@ export class MemberComponent implements OnInit, OnDestroy {
     }
 
     close(): void {
+        this.ds.updateProjects( this.project );
         this.mc.dismiss();
     }
 
@@ -97,7 +98,7 @@ export class MemberComponent implements OnInit, OnDestroy {
             if ( week.weekNumber === weekNum ) {
                 //Check if this week already has a daily log with date = wDate
                 week.dailyLog.forEach( day => {
-                    if ( day.date.getDate() === values.wDate.getDate() ) {
+                    if ( day.date === values.wDate.getDate() ) {
                         day.work = values.wWork;
                         week.weeklyUnBilledHours = week.weeklyUnBilledHours + values.wHours - day.dailyHours;
                         day.dailyHours = values.wHours;
@@ -170,5 +171,27 @@ export class MemberComponent implements OnInit, OnDestroy {
         } );
 
         this.member.mInvoices.push( invoice );
+
     }
+
+    async editWorkLog( weeklog: WeeklyWorkLog ) {
+
+        const modal = await this.mc.create( {
+                                                component: EditWorkLogComponent,
+                                                backdropDismiss: true,
+                                                animated: true,
+                                                mode: "md",
+                                                swipeToClose: false,
+                                                componentProps: { worklog: weeklog }
+                                            } );
+
+        await modal.present();
+
+        const { data } = await modal.onWillDismiss();
+
+        data.dailyLog?.length === 0 ? this.deleteWorkLog( weeklog ) : "";
+
+    }
+
+
 }

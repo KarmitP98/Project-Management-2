@@ -19,9 +19,10 @@
 <ion-content *ngIf = 'user' class = 'ion-text-center ion-padding'>
 
 
-    <h3 *ngIf = 'currentP?.length > 0'>Current Projects</h3>
-    <ion-card *ngFor = 'let project of currentP'
-              class = 'ion-text-left'>
+    <h3 *ngIf = 'projects?.length > 0'>Projects</h3>
+    <hr>
+
+    <ion-card *ngFor = 'let project of projects' class = 'ion-text-left'>
         <ion-card-header>
             <ion-item lines = 'full'>
                 <ion-card-title class = 'ion-text-center'>
@@ -34,7 +35,6 @@
                               'folder-open' : 'folder'"
                         [routerLink] = '["/"+user.uId,project.pId]'
                         slot = 'end'>
-
                 </ion-icon>
             </ion-item>
             <ion-card-subtitle>Start Date:
@@ -55,37 +55,6 @@
     </ion-card>
     <br>
 
-    <h3 *ngIf = 'pastP?.length > 0'>Past Projects</h3>
-    <ion-card *ngFor = 'let project of pastP' class = 'ion-text-left'>
-        <ion-card-header>
-            <ion-item lines = 'full'>
-                <ion-card-title class = 'ion-text-center'>
-                    {{project.pName}}
-                </ion-card-title>
-                <ion-icon
-                        [color] = 'project.pStatus === "Active" ?
-                            "warning": "success"'
-                        [name] = "project.pStatus === 'Active' ?
-                              'folder-open' : 'folder'"
-                        [routerLink] =
-                                '["/"+user.uId,project.pId]'
-                        slot = 'end'>
-                </ion-icon>
-            </ion-item>
-            <ion-card-subtitle>Start Date:
-                <b>{{project.pStartDate | date}}</b></ion-card-subtitle>
-            <ion-card-subtitle>Deadline:
-                <b>{{project.pDeadline | date}}</b></ion-card-subtitle>
-        </ion-card-header>
-        <ion-card-content>
-            <p>
-                {{project.pDesc}}
-            <p>
-            <p>Number of Members: <b>{{project.pMemberIds.length}}</b>
-            </p>
-        </ion-card-content>
-    </ion-card>
-
     <ion-fab horizontal = 'end' slot = 'fixed' vertical = 'bottom'>
         <ion-fab-button [@push] color = 'primary'>
             <ion-icon name = 'albums'></ion-icon>
@@ -99,4 +68,5 @@
             </ion-fab-button>
         </ion-fab-list>
     </ion-fab>
+
 </ion-content>

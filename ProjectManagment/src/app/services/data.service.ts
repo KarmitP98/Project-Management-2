@@ -5,6 +5,7 @@ import { ToastController } from "@ionic/angular";
 import { AngularFireAuth } from "@angular/fire/auth";
 import { Router } from "@angular/router";
 import { BehaviorSubject } from "rxjs";
+import * as firebase from "firebase";
 
 @Injectable( {
                  providedIn: "root"
@@ -19,17 +20,15 @@ export class DataService {
                  private afa: AngularFireAuth,
                  private router: Router ) { }
 
-    login( email, password ) {
+
+    loginWithEmailandPassword( email, password ) {
         this.loadingSubject.next( true );
+
         this.afa.signInWithEmailAndPassword( email, password )
-            .then( () => {
-                let tempSub = this.fetchUsers( "uEmail", "==", email )
-                                  .subscribe( users => {
-                                      localStorage.setItem( "userData", JSON.stringify( users[0].uId ) );
-                                      this.router.navigate( [ "/" + users[0].uId ] );
-                                      this.loadingSubject.next( false );
-                                      tempSub.unsubscribe();
-                                  } );
+            .then( ( value ) => {
+                localStorage.setItem( "userData", JSON.stringify( value.user.uid ) );
+                this.router.navigate( [ "/" + value.user.uid ] );
+                this.loadingSubject.next( false );
             } )
             .catch( ( err ) => {
                 this.showToast( err.message, 3000, "danger" );
@@ -38,10 +37,51 @@ export class DataService {
 
     }
 
-    signUp( user: UserModel ) {
+    loginWithProvider( provider: string ) {
+        var pro: any;
+        switch ( provider ) {
+            case "google":
+                pro = new firebase.auth.GoogleAuthProvider();
+                break;
+            case "github":
+                pro = new firebase.auth.GithubAuthProvider();
+                break;
+            case "facebook":
+                pro = new firebase.auth.FacebookAuthProvider();
+                break;
+            default:
+                pro = new firebase.auth.EmailAuthProvider();
+        }
+
+        this.afa.signInWithPopup( pro )
+            .then( value => {
+
+                if ( value.additionalUserInfo.isNewUser ) {
+                    this.addNewUser(
+                        { uId: value.user.uid, uName: value.user.displayName, uEmail: value.user.email, uPassword: "protected" } );
+                }
+
+                localStorage.setItem( "userData", JSON.stringify( value.user.uid ) );
+                this.router.navigate( [ "/" + value.user.uid ] );
+                this.loadingSubject.next( false );
+
+            } )
+            .catch( reason => {
+                console.log( reason.errorCode );
+                console.log( reason.message );
+            } );
+
+
+    }
+
+    signUpWithEmail( user: UserModel ) {
         this.loadingSubject.next( true );
         this.afa.createUserWithEmailAndPassword( user.uEmail, user.uPassword )
-            .then( () => {
+            .then( ( value ) => {
+
+                value.user.updateProfile( { displayName: user.uName } );
+
+                user.uId = value.user.uid;
                 this.addNewUser( user );
             } )
             .catch( ( err ) => {
@@ -68,12 +108,10 @@ export class DataService {
     }
 
     addNewUser( user: UserModel ) {
-        user.uId = this.afs.createId();
         this.afs.collection<UserModel>( "users" )
             .doc( user.uId )
             .set( user )
             .then( () => {
-                localStorage.setItem( "userData", JSON.stringify( user.uId ) );
                 this.showToast( "New User Added!!!", 1000 );
                 this.loadingSubject.next( false );
                 this.router.navigate( [ "/" + user.uId ] );
@@ -107,13 +145,19 @@ export class DataService {
     updateClient( client: ClientModel ) {
         this.afs.collection<ClientModel>( "clients" )
             .doc( client.cId )
-            .update( client );
+            .update( client )
+            .catch( reason => {
+                this.showToast( reason.message );
+            } );
     }
 
     addNewProject( project: ProjectModel ) {
         this.afs.collection( "projects" )
             .doc( project.pId )
-            .set( project );
+            .set( JSON.parse( JSON.stringify( project ) ) )
+            .catch( reason => {
+                this.showToast( reason.message );
+            } );
     }
 
     fetchProjects( child?, condition?, value? ) {

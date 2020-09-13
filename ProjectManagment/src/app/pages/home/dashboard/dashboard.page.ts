@@ -9,7 +9,6 @@ import { leftLoadTrigger, opacityLoadTrigger, pushTrigger } from "../../../share
 import { TopDropDownComponent } from "../../../components/top-drop-down/top-drop-down.component";
 import { AddProjectComponent } from "../../../components/add-project/add-project.component";
 import { AngularFirestore } from "@angular/fire/firestore";
-import { PROJECT_STATUS } from "../../../shared/constants";
 
 interface sampleProject {
     pName: string,
@@ -27,15 +26,21 @@ interface sampleProject {
                 animations: [ leftLoadTrigger, opacityLoadTrigger, pushTrigger ]
             } )
 export class DashboardPage implements OnInit, OnDestroy {
+
     user: UserModel;
+
     userSub: Subscription;
     projectSub: Subscription;
+
     currentSampleCards: sampleProject[] = [];
     finishedSampleCards: sampleProject[] = [];
+
     sample: boolean = true;
+
     projects: ProjectModel[] = [];
     currentP: ProjectModel[] = [];
     pastP: ProjectModel[] = [];
+
 
     constructor( public ds: DataService,
                  public route: ActivatedRoute,
@@ -56,23 +61,27 @@ export class DashboardPage implements OnInit, OnDestroy {
                                }
                            } );
 
-        this.makeSampleCards();
+        // this.makeSampleCards();
 
         this.projectSub = this.ds.fetchProjects( "pMemberIds", "array-contains", uId )
                               .subscribe( projects => {
                                   if ( projects ) {
-                                      this.currentP = [];
-                                      this.pastP = [];
-                                      projects.forEach( project => {
-                                          if ( project.pStatus === PROJECT_STATUS.active ) {
-                                              this.currentP.push( project );
 
-                                          } else {
-                                              this.pastP.push( project );
-                                          }
-                                      } );
-                                      this.projects = projects;
                                       this.sample = false;
+                                      this.projects = projects;
+
+                                      // this.currentP = [];
+                                      // this.pastP = [];
+                                      // projects.forEach( project => {
+                                      //     if ( project.pStatus === PROJECT_STATUS.active ) {
+                                      //         this.currentP.push( project );
+                                      //
+                                      //     } else {
+                                      //         this.pastP.push( project );
+                                      //     }
+                                      // } );
+                                      // this.projects = projects;
+                                      // this.sample = false;
                                   }
                               } );
     }

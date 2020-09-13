@@ -20,16 +20,14 @@ export class AddProjectComponent implements OnInit, OnDestroy {
     @Input() uId: string;
     members: UserModel[] = [];
     clients: ClientModel[] = [];
-    pName: string;
-    pDesc: string;
-    pStartDate: Date;
-    pDeadline: Date;
+
     pMembers: MemberModel[] = [];
-    pBillingType: string;
-    pBudget: number;
+
     pStatus: string = "active";
     pMemberIds: string[] = [];
-    pHUId: string;
+
+
+    project = new ProjectModel();
 
     pClient: ClientModel;
     available: UserModel[] = [];
@@ -56,6 +54,7 @@ export class AddProjectComponent implements OnInit, OnDestroy {
 
     ngOnInit() {
 
+        this.project.pId = this.afs.createId();
 
         this.userSub = this.ds.fetchUsers()
                            .subscribe( users => {
@@ -64,16 +63,12 @@ export class AddProjectComponent implements OnInit, OnDestroy {
                                    this.available = users.filter( user => user.uId !== this.uId );
                                    const user = users.filter( user => user.uId === this.uId )[0];
 
-                                   // console.log("Init Called");
-                                   // console.log(this.members);
-                                   // console.log(this.available);
-
                                    this.pMemberIds = [ this.uId ];
                                    this.pMembers = [ {
                                        mUId: this.uId,
                                        mRequests: [],
                                        mWeekLog: [],
-                                       mId: "temp",
+                                       mId: this.project.pId + "-" + user.uId,
                                        mName: user.uName,
                                        mBillingType: this.BT.hourly,
                                        mRate: 10,
@@ -102,28 +97,20 @@ export class AddProjectComponent implements OnInit, OnDestroy {
 
     dismiss( add: boolean ) {
         if ( add ) {
-            const project: ProjectModel = {
-                pId: "temp",
-                pName: this.pName,
-                pDesc: this.pDesc,
-                cId: this.pClient.cId,
-                pStatus: PROJECT_STATUS.active,
-                pBillingType: this.pBillingType,
-                pBudget: this.pBudget,
-                pStartDate: this.pStartDate,
-                pDeadline: this.pDeadline,
-                pMembers: this.pMembers,
-                pMemberIds: this.pMemberIds,
-                pHId: this.pMemberIds[0]
-            };
-            console.log( project );
-            project.pId = this.afs.createId();
-            this.pClient.pIds.push( project.pId );
-            this.ds.addNewProject( project );
-            this.ds.updateClient( this.pClient );
+            this.project.pStatus = PROJECT_STATUS.active;
+            this.project.pMembers = this.pMembers;
+            this.project.pMemberIds = this.pMemberIds;
+            this.project.pHId = this.pMemberIds[0];
         }
+
+        this.pClient.pIds.push( this.project.pId );
+
+        this.ds.addNewProject( this.project );
+        this.ds.updateClient( this.pClient );
+
         this.mc.dismiss();
     }
+
 
     async addNewClient() {
         const modal = await this.mc
@@ -138,21 +125,21 @@ export class AddProjectComponent implements OnInit, OnDestroy {
     }
 
     addMember() {
-
-        const tempMember: MemberModel = {
-            mUId: "",
-            mRequests: [],
-            mWeekLog: [],
-            mId: "temp",
-            mName: "",
-            mBillingType: this.BT.hourly,
-            mRate: 10,
-            mRole: this.MR.developer,
-            mType: this.MT.member,
-            mEarned: 0,
-            mPaid: 0,
-            mInvoices: []
-        };
+        const
+            tempMember: MemberModel = {
+                mUId: "",
+                mRequests: [],
+                mWeekLog: [],
+                mId: this.project.pId + "-",
+                mName: "",
+                mBillingType: this.BT.hourly,
+                mRate: 10,
+                mRole: this.MR.developer,
+                mType: this.MT.member,
+                mEarned: 0,
+                mPaid: 0,
+                mInvoices: []
+            };
 
         this.pMembers.push( tempMember );
 
@@ -163,10 +150,12 @@ export class AddProjectComponent implements OnInit, OnDestroy {
         this.available.splice( this.available.indexOf( this.members.filter( value => value.uId === mUId )[0] ), 1 );
         this.pMemberIds.push( mUId );
         this.pMembers[i].mName = this.members.filter( value => value.uId === mUId )[0].uName;
+        this.pMembers[i].mId = this.pMembers[i].mId + mUId;
 
     }
 
-    removeMember( member: MemberModel ) {
+    removeMember( member: MemberModel
+    ) {
         if ( member.mUId.length > 0 ) {
             this.pMembers.splice( this.pMembers.indexOf( member ), 1 );
             this.available.push( this.members.filter( value => value.uId === member.mUId )[0] );

@@ -8,6 +8,7 @@ import { ModalController } from "@ionic/angular";
 import { MEMBER_TYPE } from "../../../shared/constants";
 import { MemberComponent } from "../../../components/member/member.component";
 import { pushTrigger } from "../../../shared/animations";
+import { WorkLogComponent } from "../../../components/work-log/work-log.component";
 
 @Component( {
                 selector: "app-project",
@@ -110,6 +111,20 @@ export class ProjectPage implements OnInit, OnDestroy {
         const modal = await this.mc
                                 .create( {
                                              component: MemberComponent,
+                                             mode: "ios",
+                                             swipeToClose: true,
+                                             animated: true,
+                                             backdropDismiss: true,
+                                             componentProps: { inputData: inputData }
+                                         } );
+        await modal.present();
+    }
+
+    async viewWorkLog( member: MemberModel ) {
+        const inputData = { pId: this.project.pId, isHost: this.user.uId === this.project.pHId, mUId: member.mUId };
+        const modal = await this.mc
+                                .create( {
+                                             component: WorkLogComponent,
                                              mode: "ios",
                                              swipeToClose: true,
                                              animated: true,

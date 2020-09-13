@@ -52,3 +52,7 @@
 mat-form-field {
   width: 90%;
 }
+
+.primary-light-background {
+  background-color: rgba(var(--ion-color-primary-rgb), 0.3);
+}

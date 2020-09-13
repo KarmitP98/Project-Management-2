@@ -29,7 +29,7 @@ export class SignupPage implements OnInit {
 
     signUp(): void {
         const user: UserModel = { uId: "temp", uEmail: this.userEmail, uName: this.userName, uPassword: this.userPassword };
-        this.ds.signUp( user );
+        this.ds.signUpWithEmail( user );
         this.signForm.resetForm();
     }
 }

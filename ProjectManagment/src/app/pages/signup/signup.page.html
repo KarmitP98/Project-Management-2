@@ -1,5 +1,5 @@
 <ion-header>
-    <ion-toolbar color = 'secondary'>
+    <ion-toolbar color = 'primary'>
         <ion-title>Sign Up</ion-title>
     </ion-toolbar>
 </ion-header>
@@ -12,6 +12,8 @@
         <mat-form-field appearance = 'fill'>
             <mat-label>User Name</mat-label>
             <input [(ngModel)] = 'userName' autocomplete = 'false'
+                   (keypress) = '$event.key === "Enter" && signForm.valid ?
+                   signUp() : ""'
                    matInput
                    minlength = '3'
                    name = 'userName'
@@ -28,6 +30,8 @@
         <mat-form-field appearance = 'fill'>
             <mat-label>User Email</mat-label>
             <input [(ngModel)] = 'userEmail' autocomplete = 'false'
+                   (keypress) = '$event.key === "Enter" && signForm.valid ?
+                   signUp() : ""'
                    email
                    matInput
                    name = 'userEmail'
@@ -43,6 +47,8 @@
         <mat-form-field appearance = 'fill'>
             <mat-label>Password</mat-label>
             <input [(ngModel)] = 'userPassword' autocomplete = 'false'
+                   (keypress) = '$event.key === "Enter" && signForm.valid ?
+                   signUp() : ""'
                    matInput
                    minlength = '6'
                    name = 'password'

@@ -21,10 +21,10 @@ export const opacityLoadTrigger: AnimationTriggerMetadata =
 export const pushTrigger: AnimationTriggerMetadata =
     trigger( "push", [
         state( "in", style( {
-                                transform: "scale(1)"
+                                transform: "scale(0)"
                             } ) ),
         transition( "void => *", [
-            animate( 300, keyframes( [
+            animate( 200, keyframes( [
                                          style( {
                                                     transform: "scale(0)"
                                                 } ),
@@ -42,6 +42,31 @@ export const pushTrigger: AnimationTriggerMetadata =
                                                 } ),
                                          style( {
                                                     transform: "scale(1)"
+                                                } )
+                                     ] ) )
+        ] ),
+        state( "out", style( {
+                                 transform: "scale(1)"
+                             } ) ),
+        transition( "* => void", [
+            animate( 300, keyframes( [
+                                         style( {
+                                                    transform: "scale(1)"
+                                                } ),
+                                         style( {
+                                                    transform: "scale(1.2)"
+                                                } ),
+                                         style( {
+                                                    transform: "scale(0.9)"
+                                                } ),
+                                         style( {
+                                                    transform: "scale(0.6)"
+                                                } ),
+                                         style( {
+                                                    transform: "scale(0.3)"
+                                                } ),
+                                         style( {
+                                                    transform: "scale(0)"
                                                 } )
                                      ] ) )
         ] )

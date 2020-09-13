@@ -1,5 +1,5 @@
 <ion-header>
-    <ion-toolbar color = 'tertiary'>
+    <ion-toolbar color = 'primary'>
         <ion-title>Login</ion-title>
     </ion-toolbar>
 </ion-header>
@@ -42,24 +42,44 @@
                 <ion-icon name = 'key'></ion-icon>
             </mat-icon>
         </mat-form-field>
-
+        <p style = 'font-weight: bold;'>
+            OR
+        </p>
+        <ion-button (click) = 'loginWithProvider("google")'
+                    color = 'danger'>
+            <ion-icon name = 'logo-google'></ion-icon>
+        </ion-button>
+        &nbsp;
+        <ion-button (click) = 'loginWithProvider("github")'
+                    color = 'dark'
+                    disabled>
+            <ion-icon name = 'logo-github'></ion-icon>
+        </ion-button>
+        &nbsp;
+        <ion-button (click) = 'loginWithProvider("facebook")'
+                    color = 'primary'
+                    disabled>
+            <ion-icon name = 'logo-facebook'></ion-icon>
+        </ion-button>
+        &nbsp;
 
         <ion-fab horizontal = 'end' vertical = 'bottom'>
-            <ion-fab-button *ngIf = 'loginForm.valid' [@push] type = 'submit'>
+            <ion-fab-button *ngIf = 'loginForm.valid' [@push]
+                            type = 'submit'>
                 <ion-icon (click) = 'login()' name = 'log-in-outline'
                           size = 'large'></ion-icon>
             </ion-fab-button>
         </ion-fab>
     </form>
-
-    <div>
-        <p>Don't have an account? Try
-            <b routerLink = '/signup'>Sign up.</b>
-        </p>
-    </div>
+    <br>
+    <p>Don't have an account? Try
+        <b routerLink = '/signup'
+           style = 'color: var(--ion-color-primary)'>Sign up.</b>
+    </p>
 
     <ion-fab horizontal = 'center' vertical = 'center'>
         <ion-spinner *ngIf = 'ds.loadingSubject | async'
                      color = 'warning'></ion-spinner>
     </ion-fab>
+
 </ion-content>

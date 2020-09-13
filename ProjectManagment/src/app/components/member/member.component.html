@@ -23,7 +23,8 @@
                                required>
                         <mat-datepicker-toggle [for] = 'picker'
                                                matSuffix></mat-datepicker-toggle>
-                        <mat-datepicker #picker touchUi></mat-datepicker>
+                        <mat-datepicker #picker
+                                        color = 'primary'></mat-datepicker>
                     </mat-form-field>
                     <mat-form-field appearance = 'fill'>
                         <mat-label>Task</mat-label>
@@ -41,7 +42,6 @@
                     </mat-form-field>
                     <ion-button [disabled] = 'logForm.invalid'
                                 color = 'success'
-                                fill = 'solid'
                                 type = 'submit'>
                         Log Work
                     </ion-button>
@@ -49,29 +49,59 @@
 
                 <ion-item lines = 'full'></ion-item>
 
+                <!--                <ion-card *ngFor = 'let weeklog of member?.mWeekLog'-->
+                <!--                          [ngClass] = 'weeklog.billed ? "approved-card":-->
+                <!--                          "pending-card" '-->
+                <!--                          [@push]>-->
+                <!--                    <ion-card-header>-->
+                <!--                        <ion-card-title>-->
+                <!--                            Week {{weeklog.weekNumber}}</ion-card-title>-->
+                <!--                        <ion-card-subtitle>Hours Worked:-->
+                <!--                            {{weeklog.billed ? weeklog.weeklyBilledHours :-->
+                <!--                                weeklog.weeklyUnBilledHours}} Hr/s-->
+                <!--                        </ion-card-subtitle>-->
+                <!--                    </ion-card-header>-->
+                <!--                    <ion-card-content *ngIf='!weeklog.billed'>-->
+                <!--                        <ion-button color = 'success'-->
+                <!--                                    (click) = 'editWorkLog(weeklog)'-->
+                <!--                                    expand = 'block'>-->
+                <!--                            Edit-->
+                <!--                        </ion-button>-->
+                <!--                        <ion-button (click) = 'deleteWorkLog(weeklog)'-->
+                <!--                                    color = 'danger'-->
+                <!--                                    expand = 'block'>-->
+                <!--                            Delete-->
+                <!--                        </ion-button>-->
+                <!--                    </ion-card-content>-->
+                <!--                </ion-card>-->
+
                 <mat-accordion class = 'ion-text-left'>
                     <mat-expansion-panel
-                            *ngFor = 'let weeklog of member?.mWeekLog'>
+                            *ngFor = 'let weeklog of member?.mWeekLog'
+                            [hideToggle] = 'weeklog.billed || weeklog.approved'
+                            [ngClass] = 'weeklog.billed ?
+                                                "approved-card": "pending-card"'>
 
-                        <mat-expansion-panel-header
-                                [ngClass] = 'weeklog.billed ?
-                                "approved-card": "pending-card"'>
+                        <mat-expansion-panel-header>
                             <mat-panel-title>
                                 Week number: {{weeklog.weekNumber}}
                             </mat-panel-title>
-                            <mat-panel-description>
-                                Hours Worked: {{weeklog.weeklyUnBilledHours}}
+                            <mat-panel-description style = 'font-weight: bold;'>
+                                Hours Worked: {{weeklog.billed ?
+                                weeklog.weeklyBilledHours : weeklog.weeklyUnBilledHours}}
                             </mat-panel-description>
                         </mat-expansion-panel-header>
 
-                        <div class = 'ion-float-right'>
-                            <ion-button color = 'success'
-                                        fill = 'clear'>
+                        <div *ngIf = '!weeklog.billed'
+                             class = 'ion-text-center'>
+                            <ion-button (click) = 'editWorkLog(weeklog)'
+                                        color = 'success'
+                                        expand = 'block'>
                                 Edit
                             </ion-button>
                             <ion-button (click) = 'deleteWorkLog(weeklog)'
                                         color = 'danger'
-                                        fill = 'clear'>
+                                        expand = 'block'>
                                 Delete
                             </ion-button>
                         </div>
@@ -83,29 +113,36 @@
 
         <ion-slide>
             <div style = 'width: 100%; height: 100%;'>
+
+                <ion-title>Invoices</ion-title>
+
                 <mat-accordion class = 'ion-text-left'>
                     <mat-expansion-panel *ngFor = 'let invoice of invoices'>
 
                         <mat-expansion-panel-header
                                 [ngClass] = 'invoice.iApproved ?
-                                "approved-card": "pending-card"'>
+                                                   "approved-card": "pending-card"'>
                             <mat-panel-title>
                                 Week number: {{invoice.iWeek}}
                             </mat-panel-title>
-                            <mat-panel-description>
+                            <mat-panel-description style = 'font-weight: bold;'>
                                 Amount: $ {{invoice.iAmount}}
                             </mat-panel-description>
                         </mat-expansion-panel-header>
 
-                        <div class = 'ion-float-right'>
+                        <div *ngIf = '!invoice.iApproved'
+                             class = 'ion-text-center'>
+
+                            <mat-form-field appearance = 'fill'>
+                                <mat-label>Amount [$]</mat-label>
+                                <input [(ngModel)] = 'invoice.iAmount' matInput
+                                       type = 'number'>
+                            </mat-form-field>
+
                             <ion-button (click) = 'approveInvoice(invoice)'
                                         color = 'success'
-                                        fill = 'clear'>
+                                        expand = 'block'>
                                 Approved
-                            </ion-button>
-                            <ion-button color = 'danger'
-                                        fill = 'clear'>
-                                Decline
                             </ion-button>
                         </div>
                     </mat-expansion-panel>
@@ -128,7 +165,7 @@
     <ion-fab [@push] horizontal = 'start' slot = 'fixed'
              vertical = 'bottom'>
         <ion-fab-button color = 'danger'>
-            <ion-icon (click) = 'close()' name = 'close'></ion-icon>
+            <ion-icon (click) = 'close()' name = 'chevron-back'></ion-icon>
         </ion-fab-button>
     </ion-fab>
 
