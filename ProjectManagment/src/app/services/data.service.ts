@@ -91,10 +91,21 @@ export class DataService {
     }
 
     logOut() {
-        this.afa.signOut().then( value => {
-            localStorage.removeItem( "userData" );  // Clear local storage
-            this.router.navigate( [ "/login" ] ).then( () => console.log( "User has been logged out!" ) );
-        } ).catch();
+
+        this.router.navigate( [ "/login" ] )
+            .then( () => {
+                localStorage.removeItem( "userData" );
+                this.afa.signOut()
+                    .then( value => {
+                    } )
+                    .catch( err => {
+                    } );
+            } );
+
+        // this.afa.signOut().then( value => {
+        //     localStorage.removeItem( "userData" );  // Clear local storage
+        //     this.router.navigate( [ "/login" ] ).then( () => console.log( "User has been logged out!" ) );
+        // } ).catch();
     }
 
     fetchUsers( child?, condition?, value? ) {
@@ -170,7 +181,7 @@ export class DataService {
         }
     }
 
-    updateProjects( project: ProjectModel ) {
+    updateProject( project: ProjectModel ) {
         this.afs.collection<ProjectModel>( "projects" )
             .doc( project.pId )
             .update( project );

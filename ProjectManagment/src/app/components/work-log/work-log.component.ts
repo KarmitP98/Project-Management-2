@@ -6,6 +6,7 @@ import { pushTrigger } from "../../shared/animations";
 import { GETWEEKNUMBER } from "../../shared/constants";
 import { NgForm } from "@angular/forms";
 import { EditWorkLogComponent } from "./edit-work-log/edit-work-log.component";
+import { Subscription } from "rxjs";
 
 @Component( {
                 selector: "app-work-log",
@@ -21,21 +22,24 @@ export class WorkLogComponent implements OnInit, OnDestroy {
     member: MemberModel;
     project: ProjectModel;
 
+    pSub: Subscription;
+
     constructor( private ds: DataService,
                  private mc: ModalController ) { }
 
     ngOnInit() {
-        this.ds.fetchProjects( "pId", "==", this.inputData.pId )
-            .subscribe( value => {
-                if ( value ) {
-                    this.project = value[0];
-                    console.log( this.project );
-                    this.member = this.project.pMembers.filter( value1 => value1.mUId === this.inputData.mUId )[0];
-                }
-            } );
+        this.pSub = this.ds.fetchProjects( "pId", "==", this.inputData.pId )
+                        .subscribe( value => {
+                            if ( value ) {
+                                this.project = value[0];
+                                this.member = this.project.pMembers.filter( value1 => value1.mUId === this.inputData.mUId )[0];
+                            }
+                        } );
     }
 
-    ngOnDestroy(): void {}
+    ngOnDestroy(): void {
+        this.pSub.unsubscribe();
+    }
 
     deleteWorkLog( weeklog: any ): void {
 
@@ -51,6 +55,14 @@ export class WorkLogComponent implements OnInit, OnDestroy {
                                          } );
 
         await modal.present();
+    }
+
+    getTotalHoursWorked( week: WeeklyWorkLog ): number {
+        return week.weeklyUnBilledHours + week.weeklyBilledHours;
+    }
+
+    getUnbilledHours( week: WeeklyWorkLog ): number {
+        return week.weeklyUnBilledHours;
     }
 
     logWork(): void {
@@ -103,6 +115,7 @@ export class WorkLogComponent implements OnInit, OnDestroy {
             this.member.mWeekLog.push( tempWeekLog );
         }
 
+        this.ds.updateProject( this.project );
         this.logForm.resetForm();
 
     }

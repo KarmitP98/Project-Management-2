@@ -1,0 +1,40 @@
+<ion-header>
+    <ion-toolbar>
+        <ion-title>Invoice</ion-title>
+    </ion-toolbar>
+</ion-header>
+
+<div class = 'ion-text-center ion-padding' style = 'height: auto;width: auto;'>
+    <div *ngIf = 'member.mBillingType === BT.one_time'>
+        <mat-form-field appearance = 'fill'>
+            <mat-label>Amount</mat-label>
+            <input [(ngModel)] = 'amount' matInput
+                   type = 'number'>
+        </mat-form-field>
+        <br>
+        Amount: $ {{amount}}
+    </div>
+    <div *ngIf = 'member.mBillingType === BT.hourly'>
+        <mat-form-field appearance = 'fill'>
+            <mat-label>Hours</mat-label>
+            <input [(ngModel)] = 'hours' matInput
+                   type = 'number'>
+        </mat-form-field>
+        <br>
+        Amount: $ {{hours * member.mRate}}
+    </div>
+</div>
+
+<ion-tab-bar slot = 'end'>
+    <ion-tab-button (click) = 'dismiss(0)'>
+        <ion-icon color = 'danger'
+                  name = 'close'>
+        </ion-icon>
+    </ion-tab-button>
+    <ion-tab-button (click) = 'dismiss(member.mBillingType === BT.one_time ?
+    1 : 2)'>
+        <ion-icon color = 'success'
+                  name = 'save'>
+        </ion-icon>
+    </ion-tab-button>
+</ion-tab-bar>

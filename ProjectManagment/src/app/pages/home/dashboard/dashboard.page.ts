@@ -61,7 +61,6 @@ export class DashboardPage implements OnInit, OnDestroy {
                                }
                            } );
 
-        // this.makeSampleCards();
 
         this.projectSub = this.ds.fetchProjects( "pMemberIds", "array-contains", uId )
                               .subscribe( projects => {
@@ -69,19 +68,6 @@ export class DashboardPage implements OnInit, OnDestroy {
 
                                       this.sample = false;
                                       this.projects = projects;
-
-                                      // this.currentP = [];
-                                      // this.pastP = [];
-                                      // projects.forEach( project => {
-                                      //     if ( project.pStatus === PROJECT_STATUS.active ) {
-                                      //         this.currentP.push( project );
-                                      //
-                                      //     } else {
-                                      //         this.pastP.push( project );
-                                      //     }
-                                      // } );
-                                      // this.projects = projects;
-                                      // this.sample = false;
                                   }
                               } );
     }

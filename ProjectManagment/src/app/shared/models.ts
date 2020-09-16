@@ -76,7 +76,7 @@ export class RequestModel {
 }
 
 export class InvoiceModel {
-    public iWeek: number;
+    public iId: string;
     public iAmount: number;
-    public iApproved: boolean;
+    public iHours?: number;
 }

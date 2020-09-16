@@ -20,15 +20,15 @@ export class EditWorkLogComponent implements OnInit {
 
 
     dismiss( save: boolean ) {
-        if ( save ) {
-            let sum = 0;
-
-            this.worklog.dailyLog.forEach( value => {
-                sum += value.dailyHours;
-            } );
-            this.worklog.weeklyUnBilledHours = sum;
-            this.mc.dismiss( this.worklog );
-        }
+        // if ( save ) {
+        //     let sum = 0;
+        //
+        //     this.worklog.dailyLog.forEach( value => {
+        //         sum += value.dailyHours;
+        //     } );
+        //     this.worklog.weeklyUnBilledHours = sum;
+        //     this.mc.dismiss( this.worklog );
+        // }
         this.mc.dismiss();
     }
 

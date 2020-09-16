@@ -11,9 +11,9 @@
           style = 'margin-top: 5vh'>
         <mat-form-field appearance = 'fill'>
             <mat-label>User Name</mat-label>
-            <input [(ngModel)] = 'userName' autocomplete = 'false'
-                   (keypress) = '$event.key === "Enter" && signForm.valid ?
-                   signUp() : ""'
+            <input (keypress) = '$event.key === "Enter" && signForm.valid ?
+                   signUp() : ""' [(ngModel)] = 'userName'
+                   autocomplete = 'false'
                    matInput
                    minlength = '3'
                    name = 'userName'
@@ -29,9 +29,9 @@
 
         <mat-form-field appearance = 'fill'>
             <mat-label>User Email</mat-label>
-            <input [(ngModel)] = 'userEmail' autocomplete = 'false'
-                   (keypress) = '$event.key === "Enter" && signForm.valid ?
-                   signUp() : ""'
+            <input (keypress) = '$event.key === "Enter" && signForm.valid ?
+                   signUp() : ""' [(ngModel)] = 'userEmail'
+                   autocomplete = 'false'
                    email
                    matInput
                    name = 'userEmail'
@@ -46,9 +46,9 @@
         <br>
         <mat-form-field appearance = 'fill'>
             <mat-label>Password</mat-label>
-            <input [(ngModel)] = 'userPassword' autocomplete = 'false'
-                   (keypress) = '$event.key === "Enter" && signForm.valid ?
-                   signUp() : ""'
+            <input (keypress) = '$event.key === "Enter" && signForm.valid ?
+                   signUp() : ""' [(ngModel)] = 'userPassword'
+                   autocomplete = 'false'
                    matInput
                    minlength = '6'
                    name = 'password'

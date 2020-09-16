@@ -35,7 +35,8 @@
                 {{member.mRole}}
             </ion-card-subtitle>
         </ion-card-header>
-        <ion-card-content *ngIf = 'user.uId === project.pHId'>
+        <ion-card-content *ngIf = 'user.uId === project.pHId || member.mUId
+        === user.uId'>
             Billing Type&nbsp;:&nbsp;<b>{{member.mBillingType}}</b>
             <br>
             {{member.mBillingType === "One Time" ? "Price : $" :
@@ -43,16 +44,20 @@
             <br>
             Amount Earned: <b>$ {{member.mEarned}}</b>
             <br>
-            Amount Paid: <b>$ {{member.mPaid}}</b>
-
-            <ion-item-divider></ion-item-divider>
-            <br>
+            Total Hours Worked: <b>{{getTotalHoursWorked(member)}} Hrs</b>
+            <!--            Amount Paid: <b>$ {{member.mPaid}}</b>-->
             <div class = 'ion-float-right'>
-                <ion-icon (click) = 'viewWorkLog(member)'
-                          color = 'primary'
-                          name = 'hourglass'
+                <ion-icon (click) = 'raiseInvoice(member)'
+                          *ngIf = 'getUnbilledHours(member)'
+                          color = 'success'
+                          name = 'cash'
                           size = 'large'>
                 </ion-icon>
+                &nbsp;&nbsp;<ion-icon (click) = 'viewWorkLog(member)'
+                                      color = 'primary'
+                                      name = 'calendar'
+                                      size = 'large'>
+            </ion-icon>
             </div>
             <br>
         </ion-card-content>

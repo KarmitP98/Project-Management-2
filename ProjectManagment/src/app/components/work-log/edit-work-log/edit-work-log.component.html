@@ -9,29 +9,31 @@
     <ion-card *ngFor = 'let log of worklog.dailyLog' [@push]>
         <ion-card-header>
             <ion-card-title>Date: {{log.date | date}}</ion-card-title>
-            <ion-card-subtitle>Hours
-                               Worked: {{log.dailyHours}}</ion-card-subtitle>
+            <ion-card-subtitle>
+                Hours Worked:&nbsp;<b>{{log.dailyHours}}</b>
+                <br>
+                Task:&nbsp;<b>{{log.work}}</b>
+            </ion-card-subtitle>
         </ion-card-header>
-        <ion-card-content>
-
-            <mat-form-field appearance = 'fill' class = 'w100'>
-                <mat-label>Work</mat-label>
-                <input [(ngModel)] = 'log.work' matInput
-                       type = 'text'>
-            </mat-form-field>
-            <br>
-            <mat-form-field appearance = 'fill' class = 'w100'>
-                <mat-label>Hours</mat-label>
-                <input [(ngModel)] = 'log.dailyHours' matInput
-                       type = 'number'>
-            </mat-form-field>
-            <!--            <br>-->
-            <!--            <ion-button (click) = 'deleteLog(log)'-->
-            <!--                        color = 'danger'-->
-            <!--                        expand = 'block'>-->
-            <!--                Delete-->
-            <!--            </ion-button>-->
-        </ion-card-content>
+        <!--        <ion-card-content>-->
+        <!--            <mat-form-field appearance = 'fill' class = 'w100'>-->
+        <!--                <mat-label>Work</mat-label>-->
+        <!--                <input [(ngModel)] = 'log.work' matInput-->
+        <!--                       type = 'text'>-->
+        <!--            </mat-form-field>-->
+        <!--            <br>-->
+        <!--            <mat-form-field appearance = 'fill' class = 'w100'>-->
+        <!--                <mat-label>Hours</mat-label>-->
+        <!--                <input [(ngModel)] = 'log.dailyHours' matInput-->
+        <!--                       type = 'number'>-->
+        <!--            </mat-form-field>-->
+        <!--            <br>-->
+        <!--            <ion-button (click) = 'deleteLog(log)'-->
+        <!--                        color = 'danger'-->
+        <!--                        expand = 'block'>-->
+        <!--                Delete-->
+        <!--            </ion-button>-->
+        <!--        </ion-card-content>-->
     </ion-card>
 
 
@@ -43,8 +45,8 @@
     <!--    </ion-fab>-->
 
     <ion-fab [@push] horizontal = 'end' vertical = 'bottom'>
-        <ion-fab-button (click) = 'dismiss(true)' color = 'success'>
-            <ion-icon name = 'save'></ion-icon>
+        <ion-fab-button (click) = 'dismiss(true)' color = 'primary'>
+            <ion-icon name = 'chevron-down'></ion-icon>
         </ion-fab-button>
     </ion-fab>
 

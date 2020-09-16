@@ -16,6 +16,7 @@ import { MemberComponent } from "../../../components/member/member.component";
 import { WorkLogComponent } from "../../../components/work-log/work-log.component";
 import { MatExpansionModule } from "@angular/material/expansion";
 import { EditWorkLogComponent } from "../../../components/work-log/edit-work-log/edit-work-log.component";
+import { RaiseInvoiceComponent } from "../../../components/raise-invoice/raise-invoice.component";
 
 @NgModule( {
                imports: [
@@ -33,6 +34,7 @@ import { EditWorkLogComponent } from "../../../components/work-log/edit-work-log
                declarations: [ ProjectPage,
                                MemberComponent,
                                WorkLogComponent,
-                               EditWorkLogComponent ]
+                               EditWorkLogComponent,
+                               RaiseInvoiceComponent ]
            } )
 export class ProjectPageModule {}

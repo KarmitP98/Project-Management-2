@@ -60,8 +60,7 @@
                     Week number: {{weeklog.weekNumber}}
                 </mat-panel-title>
                 <mat-panel-description style = 'font-weight: bold;'>
-                    Hours Worked: {{weeklog.billed ?
-                    weeklog.weeklyBilledHours : weeklog.weeklyUnBilledHours}}
+                    Hours Worked: {{getTotalHoursWorked(weeklog)}}
                 </mat-panel-description>
             </mat-expansion-panel-header>
 

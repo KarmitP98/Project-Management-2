@@ -4,11 +4,12 @@ import { DataService } from "../../../services/data.service";
 import { Subscription } from "rxjs";
 import { MemberModel, ProjectModel, UserModel } from "../../../shared/models";
 import { AddMemberComponent } from "../../../components/add-member/add-member.component";
-import { ModalController } from "@ionic/angular";
-import { MEMBER_TYPE } from "../../../shared/constants";
+import { ModalController, PopoverController } from "@ionic/angular";
+import { BILLING_TYPE, MEMBER_TYPE } from "../../../shared/constants";
 import { MemberComponent } from "../../../components/member/member.component";
 import { pushTrigger } from "../../../shared/animations";
 import { WorkLogComponent } from "../../../components/work-log/work-log.component";
+import { RaiseInvoiceComponent } from "../../../components/raise-invoice/raise-invoice.component";
 
 @Component( {
                 selector: "app-project",
@@ -29,13 +30,15 @@ export class ProjectPage implements OnInit, OnDestroy {
     available: UserModel[];
 
     MT = MEMBER_TYPE;
+    BT = BILLING_TYPE;
 
     isUserHost: boolean = false;
 
     constructor( private route: ActivatedRoute,
                  private router: Router,
                  public ds: DataService,
-                 private mc: ModalController ) { }
+                 private mc: ModalController,
+                 private pc: PopoverController ) { }
 
     ngOnInit() {
 
@@ -89,7 +92,7 @@ export class ProjectPage implements OnInit, OnDestroy {
             this.project.pMembers.push( data.member );
             this.available = this.available.filter( value => value.uId !== data.member.mUId );
             this.project.pMemberIds.push( data.member.mUId );
-            this.ds.updateProjects( this.project );
+            this.ds.updateProject( this.project );
         }
     }
 
@@ -102,7 +105,7 @@ export class ProjectPage implements OnInit, OnDestroy {
         this.available.push( this.users.filter( value => value.uId === member.mUId )[0] );
         this.project.pMemberIds.splice( this.project.pMemberIds.indexOf( member.mUId ), 1 );
 
-        this.ds.updateProjects( this.project );
+        this.ds.updateProject( this.project );
     }
 
 
@@ -134,4 +137,72 @@ export class ProjectPage implements OnInit, OnDestroy {
         await modal.present();
     }
 
+    async raiseInvoice( member: MemberModel ) {
+        const popover = await this.pc.create( {
+                                                  component: RaiseInvoiceComponent,
+                                                  translucent: false,
+                                                  componentProps: { member: member }
+                                              } );
+        await popover.present();
+
+        const { data } = await popover.onWillDismiss();
+
+        // Check whether data was saved or not
+        if ( data !== undefined ) {
+            // Check for Billing Type of the Member
+            if ( member.mBillingType === this.BT.one_time ) {
+                // Pay the member
+                member.mEarned += data.amount;
+                // Cut the amount paid from the host
+                if ( member.mUId !== this.project.pHId ) {
+                    this.project.pMembers.filter( value => value.mUId === this.project.pHId )[0].mPaid += data.amount;
+                }
+
+                // Clear ALL Unbilled Hours
+                member.mWeekLog.filter( value => value.weeklyUnBilledHours > 0 ).forEach( value => {
+                    value.weeklyBilledHours += value.weeklyUnBilledHours;
+                    value.weeklyUnBilledHours = 0;
+                } );
+                // Push this to invoices
+                member.mInvoices.push( { iId: member.mId + "-" + member.mInvoices.length, iAmount: data.amount } );
+            } else {
+
+                let amount = data.hours * member.mRate;
+                // Pay the member
+                member.mEarned += amount;
+                // Cut the amount paid from the host
+                if ( member.mUId !== this.project.pHId ) {
+                    this.project.pMembers.filter( value => value.mUId === this.project.pHId )[0].mPaid += amount;
+                }
+                // Clear ALL Unbilled Hours
+                member.mWeekLog.filter( value => value.weeklyUnBilledHours > 0 ).forEach( value => {
+                    value.weeklyBilledHours += value.weeklyUnBilledHours;
+                    value.weeklyUnBilledHours = 0;
+                } );
+                // Push this to invoices
+                member.mInvoices.push(
+                    { iId: member.mId + "-" + member.mInvoices.length, iAmount: amount, iHours: data.hours } );
+            }
+        }
+        this.ds.updateProject( this.project );
+
+    }
+
+    getTotalHoursWorked( member: MemberModel ): number {
+        let hours = 0;
+
+        member.mWeekLog.forEach( value => {
+            hours += value.weeklyUnBilledHours + value.weeklyBilledHours;
+        } );
+
+        return hours;
+    }
+
+    getUnbilledHours( member: MemberModel ): number {
+        let ubh = 0;
+
+        member.mWeekLog.forEach( value => ubh += value.weeklyUnBilledHours );
+
+        return ubh;
+    }
 }
