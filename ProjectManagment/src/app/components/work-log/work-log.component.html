@@ -64,12 +64,11 @@
                 </mat-panel-description>
             </mat-expansion-panel-header>
 
-            <div *ngIf = '!weeklog.billed'
-                 class = 'ion-text-center'>
+            <div class = 'ion-text-center'>
                 <ion-button (click) = 'viewWorkLog(weeklog)'
                             color = 'warning'
                             expand = 'block'>
-                    View
+                    {{weeklog.weeklyUnBilledHours > 0 ? "Edit" : "View"}}
                 </ion-button>
                 <ion-button (click) = 'deleteWorkLog(weeklog)'
                             color = 'danger'

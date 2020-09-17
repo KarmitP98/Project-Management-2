@@ -6,20 +6,30 @@
 
 <div class = 'ion-text-center ion-padding' style = 'height: auto;width: auto;'>
     <div *ngIf = 'member.mBillingType === BT.one_time'>
-        <mat-form-field appearance = 'fill'>
-            <mat-label>Amount</mat-label>
-            <input [(ngModel)] = 'amount' matInput
-                   type = 'number'>
-        </mat-form-field>
+        <form #priceForm = 'ngForm'>
+            <mat-form-field appearance = 'fill'>
+                <mat-label>Amount</mat-label>
+                <input [(ngModel)] = 'amount' [max] = 'member.mRate'
+                       matInput
+                       min = '0'
+                       name = 'amount'
+                       type = 'number'>
+            </mat-form-field>
+        </form>
         <br>
         Amount: $ {{amount}}
     </div>
     <div *ngIf = 'member.mBillingType === BT.hourly'>
-        <mat-form-field appearance = 'fill'>
-            <mat-label>Hours</mat-label>
-            <input [(ngModel)] = 'hours' matInput
-                   type = 'number'>
-        </mat-form-field>
+        <form #hourForm = 'ngForm'>
+            <mat-form-field appearance = 'fill'>
+                <mat-label>Hours</mat-label>
+                <input [(ngModel)] = 'hours' [max] = 'actualHours'
+                       matInput
+                       min = '0'
+                       name = 'hours'
+                       type = 'number'>
+            </mat-form-field>
+        </form>
         <br>
         Amount: $ {{hours * member.mRate}}
     </div>
@@ -31,8 +41,8 @@
                   name = 'close'>
         </ion-icon>
     </ion-tab-button>
-    <ion-tab-button (click) = 'dismiss(member.mBillingType === BT.one_time ?
-    1 : 2)'>
+    <ion-tab-button
+            (click) = 'dismiss(member.mBillingType === BT.one_time ?1 : 2)'>
         <ion-icon color = 'success'
                   name = 'save'>
         </ion-icon>

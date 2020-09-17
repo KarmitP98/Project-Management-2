@@ -86,8 +86,8 @@ export class WorkLogComponent implements OnInit, OnDestroy {
                 week.dailyLog.forEach( day => {
                     if ( day.date === values.wDate.getDate() ) {
                         day.work = values.wWork;
-                        week.weeklyUnBilledHours = week.weeklyUnBilledHours + values.wHours - day.dailyHours;
-                        day.dailyHours = values.wHours;
+                        week.weeklyUnBilledHours += values.wHours;
+                        day.dailyHours += values.wHours;
                         dayFound = true;
                     }
                 } );
@@ -121,6 +121,7 @@ export class WorkLogComponent implements OnInit, OnDestroy {
     }
 
     close(): void {
+        this.ds.updateProject( this.project );
         this.mc.dismiss();
     }
 }

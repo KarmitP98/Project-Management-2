@@ -13,22 +13,25 @@ export class EditWorkLogComponent implements OnInit {
 
     @Input( "workLog" ) worklog: WeeklyWorkLog;
 
+    initialBilledHours: number = 0;
+
     constructor( private mc: ModalController ) { }
 
     ngOnInit() {
+        this.initialBilledHours = this.worklog.weeklyBilledHours;
     }
 
 
     dismiss( save: boolean ) {
-        // if ( save ) {
-        //     let sum = 0;
-        //
-        //     this.worklog.dailyLog.forEach( value => {
-        //         sum += value.dailyHours;
-        //     } );
-        //     this.worklog.weeklyUnBilledHours = sum;
-        //     this.mc.dismiss( this.worklog );
-        // }
+        if ( this.worklog.weeklyUnBilledHours > 0 ) {
+            let sum = 0;
+
+            this.worklog.dailyLog.forEach( value => {
+                sum += value.dailyHours;
+            } );
+
+            this.worklog.weeklyUnBilledHours = sum - this.initialBilledHours;
+        }
         this.mc.dismiss();
     }
 

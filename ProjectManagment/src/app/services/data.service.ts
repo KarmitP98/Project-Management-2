@@ -41,15 +41,19 @@ export class DataService {
         var pro: any;
         switch ( provider ) {
             case "google":
+                // @ts-ignore
                 pro = new firebase.auth.GoogleAuthProvider();
                 break;
             case "github":
+                // @ts-ignore
                 pro = new firebase.auth.GithubAuthProvider();
                 break;
             case "facebook":
+                // @ts-ignore
                 pro = new firebase.auth.FacebookAuthProvider();
                 break;
             default:
+                // @ts-ignore
                 pro = new firebase.auth.EmailAuthProvider();
         }
 
@@ -101,11 +105,6 @@ export class DataService {
                     .catch( err => {
                     } );
             } );
-
-        // this.afa.signOut().then( value => {
-        //     localStorage.removeItem( "userData" );  // Clear local storage
-        //     this.router.navigate( [ "/login" ] ).then( () => console.log( "User has been logged out!" ) );
-        // } ).catch();
     }
 
     fetchUsers( child?, condition?, value? ) {

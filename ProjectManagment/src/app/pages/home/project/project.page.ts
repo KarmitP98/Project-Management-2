@@ -166,7 +166,7 @@ export class ProjectPage implements OnInit, OnDestroy {
                 // Push this to invoices
                 member.mInvoices.push( { iId: member.mId + "-" + member.mInvoices.length, iAmount: data.amount } );
             } else {
-
+                let hoursRem = data.hours;
                 let amount = data.hours * member.mRate;
                 // Pay the member
                 member.mEarned += amount;
@@ -174,10 +174,22 @@ export class ProjectPage implements OnInit, OnDestroy {
                 if ( member.mUId !== this.project.pHId ) {
                     this.project.pMembers.filter( value => value.mUId === this.project.pHId )[0].mPaid += amount;
                 }
+
                 // Clear ALL Unbilled Hours
                 member.mWeekLog.filter( value => value.weeklyUnBilledHours > 0 ).forEach( value => {
-                    value.weeklyBilledHours += value.weeklyUnBilledHours;
-                    value.weeklyUnBilledHours = 0;
+                    if ( hoursRem >= value.weeklyUnBilledHours ) {
+                        value.weeklyBilledHours += value.weeklyUnBilledHours;
+                        hoursRem -= value.weeklyUnBilledHours;
+                        value.weeklyUnBilledHours = 0;
+                    } else {
+                        value.weeklyBilledHours += hoursRem;
+                        value.weeklyUnBilledHours -= hoursRem;
+                        hoursRem = 0;
+                    }
+
+                    if ( hoursRem <= 0 ) {
+                        return;
+                    }
                 } );
                 // Push this to invoices
                 member.mInvoices.push(

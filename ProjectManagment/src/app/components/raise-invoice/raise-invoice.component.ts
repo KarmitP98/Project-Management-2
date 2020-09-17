@@ -1,7 +1,8 @@
-import { Component, Input, OnInit } from "@angular/core";
+import { Component, Input, OnInit, ViewChild } from "@angular/core";
 import { PopoverController } from "@ionic/angular";
 import { MemberModel } from "../../shared/models";
 import { BILLING_TYPE } from "../../shared/constants";
+import { NgForm } from "@angular/forms";
 
 @Component( {
                 selector: "app-raise-invoice",
@@ -15,6 +16,9 @@ export class RaiseInvoiceComponent implements OnInit {
     amount: number = 0;
     hours: number = 0;
     actualHours: number = 0;
+
+    @ViewChild( "priceForm", { static: false } ) priceForm: NgForm;
+    @ViewChild( "hourForm", { static: false } ) hourForm: NgForm;
 
     constructor( private pc: PopoverController ) { }
 
