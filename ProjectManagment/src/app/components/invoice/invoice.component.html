@@ -1,0 +1,48 @@
+<ion-header>
+    <ion-toolbar color = 'primary'>
+        <ion-title *ngIf = 'member'>
+            {{member.mName}}'s Invoices
+        </ion-title>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content *ngIf = 'member' class = 'ion-padding'>
+    <p style = 'margin-top: 2rem;'></p>
+    <mat-accordion>
+        <mat-expansion-panel *ngFor = 'let invoice of member.mInvoices;
+                                let i = index'
+                             hideToggle
+                             style = 'background-color: var(--ion-color-success);
+                                margin-top: 4px;
+                                margin-bottom: 4px;'>
+            <mat-expansion-panel-header>
+                <mat-panel-title>
+                    <b>Invoice #: {{(i + 1)}}</b>
+                </mat-panel-title>
+                <mat-panel-description>
+                    Amount:&nbsp;<b>$&nbsp;{{invoice.iAmount}}</b>
+                </mat-panel-description>
+            </mat-expansion-panel-header>
+            <div>
+                Hours:&nbsp;<b>{{invoice.iHours}}&nbsp;Hrs</b>
+            </div>
+        </mat-expansion-panel>
+    </mat-accordion>
+
+    <ion-fab horizontal = 'start' slot = 'fixed' vertical = 'bottom'>
+        <ion-fab-button (click) = 'dismiss()'
+                        color = 'danger'>
+            <ion-icon name = 'chevron-down'></ion-icon>
+        </ion-fab-button>
+    </ion-fab>
+
+    <ion-fab horizontal = 'end' slot = 'fixed' vertical = 'bottom'>
+        <ion-fab-button [disabled] = 'getUnbilledHours(member) <= 0'
+                        color = 'primary'>
+            <ion-icon (click) = 'raiseInvoice(member)'
+                      name = 'add'>
+            </ion-icon>
+        </ion-fab-button>
+    </ion-fab>
+
+</ion-content>

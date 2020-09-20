@@ -16,7 +16,11 @@ import { MemberComponent } from "../../../components/member/member.component";
 import { WorkLogComponent } from "../../../components/work-log/work-log.component";
 import { MatExpansionModule } from "@angular/material/expansion";
 import { EditWorkLogComponent } from "../../../components/work-log/edit-work-log/edit-work-log.component";
-import { RaiseInvoiceComponent } from "../../../components/raise-invoice/raise-invoice.component";
+import { RaiseInvoiceComponent } from "../../../components/invoice/raise-invoice/raise-invoice.component";
+import { InvoiceComponent } from "../../../components/invoice/invoice.component";
+import { ProjectReportComponent } from "../../../components/project-report/project-report.component";
+import { FusionChartsModule } from "angular-fusioncharts";
+import { ChartsModule } from "ng2-charts";
 
 @NgModule( {
                imports: [
@@ -29,12 +33,16 @@ import { RaiseInvoiceComponent } from "../../../components/raise-invoice/raise-i
                    MatInputModule,
                    MatTableModule,
                    MatButtonModule,
-                   MatExpansionModule
+                   MatExpansionModule,
+                   ChartsModule,
+                   FusionChartsModule
                ],
                declarations: [ ProjectPage,
                                MemberComponent,
                                WorkLogComponent,
                                EditWorkLogComponent,
-                               RaiseInvoiceComponent ]
+                               RaiseInvoiceComponent,
+                               InvoiceComponent,
+                               ProjectReportComponent ]
            } )
 export class ProjectPageModule {}

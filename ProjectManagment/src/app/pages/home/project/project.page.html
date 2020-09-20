@@ -10,6 +10,11 @@
         </ion-card-header>
         <ion-card-content>
             {{project.pDesc}}
+            <br>
+            <ion-button (click) = 'viewReport()' color = 'primary'
+                        expand = 'block'>
+                Project Report
+            </ion-button>
         </ion-card-content>
     </ion-card>
 
@@ -45,10 +50,8 @@
             Amount Earned: <b>$ {{member.mEarned}}</b>
             <br>
             Total Hours Worked: <b>{{getTotalHoursWorked(member)}} Hrs</b>
-            <!--            Amount Paid: <b>$ {{member.mPaid}}</b>-->
             <div class = 'ion-float-right'>
-                <ion-icon (click) = 'raiseInvoice(member)'
-                          *ngIf = 'getUnbilledHours(member)'
+                <ion-icon (click) = 'viewInvoices(member)'
                           color = 'success'
                           name = 'cash'
                           size = 'large'>

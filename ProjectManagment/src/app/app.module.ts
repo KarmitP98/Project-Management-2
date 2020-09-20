@@ -21,6 +21,21 @@ import { MatFormFieldModule } from "@angular/material/form-field";
 import { MatInputModule } from "@angular/material/input";
 import { MatIconModule } from "@angular/material/icon";
 import { MatSelectModule } from "@angular/material/select";
+import { FusionChartsModule } from "angular-fusioncharts";
+
+// Load FusionCharts
+import * as FusionCharts from "fusioncharts";
+// Load Charts module
+import * as Charts from "fusioncharts/fusioncharts.charts";
+// Load themes
+import * as FusionTheme from "fusioncharts/themes/fusioncharts.theme.fusion";
+
+// Import FusionCharts library and chart modules
+FusionChartsModule.fcRoot(
+    FusionCharts,
+    Charts,
+    FusionTheme
+);
 
 @NgModule( {
                declarations: [ AppComponent,
@@ -34,6 +49,7 @@ import { MatSelectModule } from "@angular/material/select";
                           AngularFireModule.initializeApp( environment.firebaseConfig ),
                           FormsModule,
                           HttpClientModule,
+                          FusionChartsModule,
                           MatNativeDateModule, MatFormFieldModule, MatInputModule, MatIconModule, MatSelectModule ],
                providers: [
                    StatusBar,

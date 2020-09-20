@@ -1,7 +1,7 @@
 <ion-header *ngIf = 'member'>
-    <ion-toolbar>
+    <ion-toolbar color = 'primary'>
         <ion-title>
-            {{member.mName}}
+            {{member.mName}}'s Timesheets
         </ion-title>
     </ion-toolbar>
 </ion-header>
@@ -47,13 +47,13 @@
     </form>
 
     <ion-item lines = 'full'></ion-item>
-
-
+    <br>
     <mat-accordion class = 'ion-text-left'>
         <mat-expansion-panel
                 *ngFor = 'let weeklog of member?.mWeekLog'
                 [hideToggle] = 'weeklog.billed || weeklog.approved'
-                [ngClass] = 'weeklog.billed ? "approved-card": "pending-card"'>
+                [ngClass] = 'weeklog.billed ? "approved-card": "pending-card"'
+                style = 'margin-top: 4px; margin-bottom: 4px;'>
 
             <mat-expansion-panel-header>
                 <mat-panel-title>
@@ -82,7 +82,7 @@
     <ion-fab [@push] horizontal = 'start' slot = 'fixed'
              vertical = 'bottom'>
         <ion-fab-button color = 'danger'>
-            <ion-icon (click) = 'close()' name = 'chevron-back'></ion-icon>
+            <ion-icon (click) = 'close()' name = 'chevron-down'></ion-icon>
         </ion-fab-button>
     </ion-fab>
 

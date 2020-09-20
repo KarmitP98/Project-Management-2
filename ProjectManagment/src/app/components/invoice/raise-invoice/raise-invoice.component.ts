@@ -1,7 +1,7 @@
 import { Component, Input, OnInit, ViewChild } from "@angular/core";
 import { PopoverController } from "@ionic/angular";
-import { MemberModel } from "../../shared/models";
-import { BILLING_TYPE } from "../../shared/constants";
+import { MemberModel } from "../../../shared/models";
+import { BILLING_TYPE } from "../../../shared/constants";
 import { NgForm } from "@angular/forms";
 
 @Component( {
@@ -26,8 +26,9 @@ export class RaiseInvoiceComponent implements OnInit {
         if ( this.member.mBillingType === this.BT.hourly ) {
             this.member.mWeekLog.filter( value => value.weeklyUnBilledHours > 0 ).forEach(
                 value => this.hours += value.weeklyUnBilledHours );
+            this.actualHours = this.hours;
         } else {
-            this.amount = this.actualHours = this.member.mRate;
+            this.amount = this.member.mRate;
         }
     }
 

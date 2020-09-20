@@ -8,13 +8,17 @@ import { DashboardPageRoutingModule } from "./dashboard-routing.module";
 
 import { DashboardPage } from "./dashboard.page";
 import { MenuCompComponent } from "../../../components/menu-comp/menu-comp.component";
+import { TooltipsModule } from "ionic4-tooltips";
+import { MatTooltipModule } from "@angular/material/tooltip";
 
 @NgModule( {
                imports: [
                    CommonModule,
                    FormsModule,
                    IonicModule,
-                   DashboardPageRoutingModule
+                   DashboardPageRoutingModule,
+                   TooltipsModule,
+                   MatTooltipModule
                ],
                exports: [
                    MenuCompComponent

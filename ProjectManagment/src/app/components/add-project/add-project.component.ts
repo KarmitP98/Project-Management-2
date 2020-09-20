@@ -101,12 +101,12 @@ export class AddProjectComponent implements OnInit, OnDestroy {
             this.project.pMembers = this.pMembers;
             this.project.pMemberIds = this.pMemberIds;
             this.project.pHId = this.pMemberIds[0];
+
+            this.pClient.pIds.push( this.project.pId );
+
+            this.ds.addNewProject( this.project );
+            this.ds.updateClient( this.pClient );
         }
-
-        this.pClient.pIds.push( this.project.pId );
-
-        this.ds.addNewProject( this.project );
-        this.ds.updateClient( this.pClient );
 
         this.mc.dismiss();
     }

@@ -42,7 +42,9 @@
         </ion-icon>
     </ion-tab-button>
     <ion-tab-button
-            (click) = 'dismiss(member.mBillingType === BT.one_time ?1 : 2)'>
+            (click) = 'dismiss(member.mBillingType === BT.one_time ?1 : 2)'
+            [disabled] = 'member.mBillingType === BT.one_time ? amount > member.mRate:
+    hours > actualHours'>
         <ion-icon color = 'success'
                   name = 'save'>
         </ion-icon>
