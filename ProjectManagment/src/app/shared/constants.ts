@@ -26,6 +26,13 @@ export enum BILLING_TYPE {
     hourly = "Hourly",
 }
 
+export enum REQUEST_TYPE {
+    join,
+    timesheet,
+    invoice,
+    terminate
+}
+
 export function GETWEEKNUMBER( d: Date ): number {
     // Copy date so don't modify original
     // d = new Date( +d );

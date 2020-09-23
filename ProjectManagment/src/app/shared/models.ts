@@ -67,16 +67,22 @@ export class WorkModel {
     public work: string;
 }
 
-export class RequestModel {
-    public to: string;
-    public from: string;
-    public mBillingType: string;
-    public mRate: number;
-    public requestText: string;
-}
+// export class RequestModel {
+//     public to: string;
+//     public from: string;
+//     public mBillingType: string;
+//     public mRate: number;
+//     public requestText: string;
+// }
 
 export class InvoiceModel {
     public iId: string;
     public iAmount: number;
     public iHours?: number;
+}
+
+export class RequestModel {
+    public rId: string;
+    public rType: number;
+    public iId?: string;
 }

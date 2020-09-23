@@ -36,6 +36,7 @@
     "chart.js": "^2.9.3",
     "cordova-android": "^8.1.0",
     "current-week-number": "^1.0.7",
+    "device": "0.3.11",
     "firebase": "^7.19.0",
     "fusioncharts": "^3.15.3",
     "ionic4-tooltips": "^2.0.0",

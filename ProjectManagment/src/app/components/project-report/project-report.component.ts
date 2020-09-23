@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from "@angular/core";
 import { ModalController } from "@ionic/angular";
-import { ProjectModel } from "../../shared/models";
+import { MemberModel, ProjectModel } from "../../shared/models";
 
 @Component( {
                 selector: "app-project-report",
@@ -16,7 +16,6 @@ export class ProjectReportComponent implements OnInit {
     dataFormat = "json";
 
     constructor( private mc: ModalController ) {
-
     }
 
     ngOnInit() {
@@ -52,4 +51,8 @@ export class ProjectReportComponent implements OnInit {
     dismiss(): void {
         this.mc.dismiss();
     };
+
+    expandView( member: MemberModel ): void {
+        console.log( member.mName );
+    }
 }

@@ -3,6 +3,7 @@ import { DataService } from "../../services/data.service";
 import { AngularFireAuth } from "@angular/fire/auth";
 import { pushTrigger } from "../../shared/animations";
 import { NgForm } from "@angular/forms";
+import { Platform } from "@ionic/angular";
 
 @Component( {
                 selector: "app-login",
@@ -17,7 +18,8 @@ export class LoginPage implements OnInit {
     @ViewChild( "loginForm", { static: false } ) loginForm: NgForm;
 
     constructor( public ds: DataService,
-                 private afa: AngularFireAuth ) { }
+                 private afa: AngularFireAuth,
+                 public platform: Platform ) { }
 
     ngOnInit() {
     }

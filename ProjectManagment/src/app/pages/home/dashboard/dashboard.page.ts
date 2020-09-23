@@ -53,14 +53,12 @@ export class DashboardPage implements OnInit, OnDestroy {
 
         const uId = this.route.snapshot.params["uId"];
 
-
         this.userSub = this.ds.fetchUsers( "uId", "==", uId )
                            .subscribe( users => {
                                if ( users ) {
                                    this.user = users[0];
                                }
                            } );
-
 
         this.projectSub = this.ds.fetchProjects( "pMemberIds", "array-contains", uId )
                               .subscribe( projects => {
@@ -93,7 +91,7 @@ export class DashboardPage implements OnInit, OnDestroy {
         const modal = await this.mc
                                 .create( {
                                              component: AddClientComponent,
-                                             mode: "ios",
+                                             mode: "md",
                                              swipeToClose: true,
                                              animated: true,
                                              backdropDismiss: true
@@ -105,7 +103,7 @@ export class DashboardPage implements OnInit, OnDestroy {
         const modal = await this.mc
                                 .create( {
                                              component: AddProjectComponent,
-                                             mode: "ios",
+                                             mode: "md",
                                              swipeToClose: true,
                                              animated: true,
                                              backdropDismiss: true,
