@@ -12,7 +12,6 @@ import { MatDatepickerModule } from "@angular/material/datepicker";
 import { MatInputModule } from "@angular/material/input";
 import { MatTableModule } from "@angular/material/table";
 import { MatButtonModule } from "@angular/material/button";
-import { MemberComponent } from "../../../components/member/member.component";
 import { WorkLogComponent } from "../../../components/work-log/work-log.component";
 import { MatExpansionModule } from "@angular/material/expansion";
 import { EditWorkLogComponent } from "../../../components/work-log/edit-work-log/edit-work-log.component";
@@ -38,7 +37,6 @@ import { ChartsModule } from "ng2-charts";
                    FusionChartsModule
                ],
                declarations: [ ProjectPage,
-                               MemberComponent,
                                WorkLogComponent,
                                EditWorkLogComponent,
                                RaiseInvoiceComponent,

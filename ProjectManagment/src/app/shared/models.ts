@@ -27,6 +27,7 @@ export class ProjectModel {
     public pMembers: MemberModel[];
     public pMemberIds: string[];
     public pHId: string;
+    public pCurrency?: CurrencyModel;
 }
 
 export class MemberModel {
@@ -42,6 +43,7 @@ export class MemberModel {
     public mInvoices: InvoiceModel[];
     public mPaid: number;
     public mEarned: number;
+    public mCurrency?: CurrencyModel;
 }
 
 export class WeeklyWorkLog {
@@ -85,4 +87,11 @@ export class RequestModel {
     public rId: string;
     public rType: number;
     public iId?: string;
+}
+
+export class CurrencyModel {
+    public country: string;
+    public name: string;
+    public ratio: number;
+    // ratio is currency conversion rate to USD
 }

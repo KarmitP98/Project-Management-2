@@ -6,7 +6,6 @@ import { Subscription } from "rxjs";
 import { ModalController, PopoverController } from "@ionic/angular";
 import { AddClientComponent } from "../../../components/add-client/add-client.component";
 import { leftLoadTrigger, opacityLoadTrigger, pushTrigger } from "../../../shared/animations";
-import { TopDropDownComponent } from "../../../components/top-drop-down/top-drop-down.component";
 import { AddProjectComponent } from "../../../components/add-project/add-project.component";
 import { AngularFirestore } from "@angular/fire/firestore";
 
@@ -75,17 +74,17 @@ export class DashboardPage implements OnInit, OnDestroy {
         this.projectSub.unsubscribe();
     }
 
-    async openDropDown( $event: MouseEvent ) {
-        const pop = await this.pc.create( {
-                                              component: TopDropDownComponent,
-                                              event: $event,
-                                              backdropDismiss: true,
-                                              translucent: true,
-                                              animated: true,
-                                              componentProps: { uId: this.user.uId }
-                                          } );
-        await pop.present();
-    }
+    // async openDropDown( $event: MouseEvent ) {
+    //     const pop = await this.pc.create( {
+    //                                           component: TopDropDownComponent,
+    //                                           event: $event,
+    //                                           backdropDismiss: true,
+    //                                           translucent: true,
+    //                                           animated: true,
+    //                                           componentProps: { uId: this.user.uId }
+    //                                       } );
+    //     await pop.present();
+    // }
 
     async addNewClient() {
         const modal = await this.mc

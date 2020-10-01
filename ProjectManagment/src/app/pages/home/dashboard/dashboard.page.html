@@ -49,13 +49,14 @@
             <ion-icon name = 'albums'></ion-icon>
         </ion-fab-button>
         <ion-fab-list side = 'top'>
-            <ion-fab-button #mTT = 'matTooltip' (click) = 'addNewClient()'
+            <!--            </ion-item>-->
+            <ion-fab-button (click) = 'addNewClient()'
                             color = 'secondary'
                             matTooltip = 'New Client'
                             matTooltipPosition = 'left'>
                 <ion-icon name = 'person-add'></ion-icon>
             </ion-fab-button>
-            <ion-fab-button #pTT = 'matTooltip' (click) = 'addNewProject()'
+            <ion-fab-button (click) = 'addNewProject()'
                             color = 'warning'
                             matTooltip = 'New Project'
                             matTooltipPosition = 'left'>

@@ -1,12 +1,11 @@
 import { Injectable } from "@angular/core";
 import { AngularFirestore } from "@angular/fire/firestore";
 import { ClientModel, ProjectModel, UserModel } from "../shared/models";
-import { Platform, ToastController } from "@ionic/angular";
+import { NavController, ToastController } from "@ionic/angular";
 import { AngularFireAuth } from "@angular/fire/auth";
 import { Router } from "@angular/router";
-import { BehaviorSubject } from "rxjs";
+import { BehaviorSubject, Observable } from "rxjs";
 import * as firebase from "firebase";
-import { GooglePlus } from "@ionic-native/google-plus/ngx";
 
 @Injectable( {
                  providedIn: "root"
@@ -20,8 +19,7 @@ export class DataService {
                  private tc: ToastController,
                  private afa: AngularFireAuth,
                  private router: Router,
-                 private gplus: GooglePlus,
-                 private platform: Platform ) { }
+                 private navCtrl: NavController ) { }
 
 
     loginWithEmailandPassword( email, password ) {
@@ -41,48 +39,43 @@ export class DataService {
     }
 
     loginWithProvider( provider: string ) {
-
-        if ( this.platform.is( "cordova" ) ) {
-            this.nativeGoogleLogin();
-        } else {
-            var pro: any;
-            switch ( provider ) {
-                case "google":
-                    // @ts-ignore
-                    pro = new firebase.auth.GoogleAuthProvider();
-                    break;
-                case "github":
-                    // @ts-ignore
-                    pro = new firebase.auth.GithubAuthProvider();
-                    break;
-                case "facebook":
-                    // @ts-ignore
-                    pro = new firebase.auth.FacebookAuthProvider();
-                    break;
-                default:
-                    // @ts-ignore
-                    pro = new firebase.auth.EmailAuthProvider();
-            }
-
-            this.afa.signInWithPopup( pro )
-                .then( value => {
-
-                    if ( value.additionalUserInfo.isNewUser ) {
-                        this.addNewUser(
-                            { uId: value.user.uid, uName: value.user.displayName, uEmail: value.user.email, uPassword: "protected" } );
-                    }
-
-                    localStorage.setItem( "userData", JSON.stringify( value.user.uid ) );
-                    this.router.navigate( [ "/" + value.user.uid ] );
-                    this.loadingSubject.next( false );
-
-                } )
-                .catch( reason => {
-                    console.log( reason.errorCode );
-                    console.log( reason.message );
-                } );
-
+        var pro: any;
+        switch ( provider ) {
+            case "google":
+                // @ts-ignore
+                pro = new firebase.auth.GoogleAuthProvider();
+                break;
+            case "github":
+                // @ts-ignore
+                pro = new firebase.auth.GithubAuthProvider();
+                break;
+            case "facebook":
+                // @ts-ignore
+                pro = new firebase.auth.FacebookAuthProvider();
+                break;
+            default:
+                // @ts-ignore
+                pro = new firebase.auth.EmailAuthProvider();
         }
+
+        this.afa.signInWithPopup( pro )
+            .then( value => {
+
+                if ( value.additionalUserInfo.isNewUser ) {
+                    this.addNewUser(
+                        { uId: value.user.uid, uName: value.user.displayName, uEmail: value.user.email, uPassword: "protected" } );
+                }
+
+                localStorage.setItem( "userData", JSON.stringify( value.user.uid ) );
+                this.router.navigate( [ "/" + value.user.uid ] );
+                this.loadingSubject.next( false );
+
+            } )
+            .catch( reason => {
+                console.log( reason.errorCode );
+                console.log( reason.message );
+            } );
+
     }
 
     signUpWithEmail( user: UserModel ) {
@@ -103,22 +96,18 @@ export class DataService {
 
     logOut() {
 
-        this.router.navigate( [ "/login" ] )
+        this.afa.signOut()
             .then( () => {
                 localStorage.removeItem( "userData" );
-                this.afa.signOut()
-                    .then( value => {
-                    } )
-                    .catch( err => {
-                    } );
-
-                if ( this.platform.is( "cordova" ) ) {
-                    this.gplus.logout();
-                }
+                this.router.navigate( [ "" ] );
+            } )
+            .catch( err => {
+                console.log( err.message );
+                console.log( err.errorCode );
             } );
     }
 
-    fetchUsers( child?, condition?, value? ) {
+    fetchUsers( child?, condition?, value? ): Observable<UserModel[]> {
         if ( child ) {
             return this.afs
                        .collection<UserModel>( "users", ref => ref.where( child, condition, value ) )
@@ -154,7 +143,7 @@ export class DataService {
             .set( client );
     }
 
-    fetchClients( child?, condition?, value? ) {
+    fetchClients( child?, condition?, value? ): Observable<ClientModel[]> {
         if ( child ) {
             return this.afs.collection<ClientModel>( "clients", ref => ref.where( child, condition, value ) )
                        .valueChanges();
@@ -181,7 +170,7 @@ export class DataService {
             } );
     }
 
-    fetchProjects( child?, condition?, value? ) {
+    fetchProjects( child?, condition?, value? ): Observable<ProjectModel[]> {
         if ( child ) {
             return this.afs
                        .collection<ProjectModel>( "projects", ref => ref.where( child, condition, value ) )
@@ -208,21 +197,4 @@ export class DataService {
         await toast.present();
     }
 
-    async nativeGoogleLogin(): Promise<firebase.auth.UserCredential> {
-        try {
-            const gplusUser = await this
-                .gplus
-                .login( {
-                            "webClientId": "966004184266-ddrb8eg75cvp3a45n9u1t57fun4u65hi.apps.googleusercontent.com",
-                            "offline": true,
-                            "scopes": "profile email"
-                        } );
-            return await this.afa.signInWithCredential(
-                firebase.auth.GoogleAuthProvider.credential( gplusUser.idToken )
-            );
-
-        } catch ( e ) {
-
-        }
-    }
 }

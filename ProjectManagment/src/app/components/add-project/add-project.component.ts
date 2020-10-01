@@ -150,8 +150,7 @@ export class AddProjectComponent implements OnInit, OnDestroy {
         this.available.splice( this.available.indexOf( this.members.filter( value => value.uId === mUId )[0] ), 1 );
         this.pMemberIds.push( mUId );
         this.pMembers[i].mName = this.members.filter( value => value.uId === mUId )[0].uName;
-        this.pMembers[i].mId = this.pMembers[i].mId + mUId;
-
+        this.pMembers[i].mId += mUId;
     }
 
     removeMember( member: MemberModel

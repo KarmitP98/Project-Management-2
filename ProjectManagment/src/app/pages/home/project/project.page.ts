@@ -6,7 +6,6 @@ import { MemberModel, ProjectModel, UserModel } from "../../../shared/models";
 import { AddMemberComponent } from "../../../components/add-member/add-member.component";
 import { ModalController, PopoverController } from "@ionic/angular";
 import { BILLING_TYPE, MEMBER_TYPE } from "../../../shared/constants";
-import { MemberComponent } from "../../../components/member/member.component";
 import { pushTrigger } from "../../../shared/animations";
 import { WorkLogComponent } from "../../../components/work-log/work-log.component";
 import { InvoiceComponent } from "../../../components/invoice/invoice.component";
@@ -110,19 +109,19 @@ export class ProjectPage implements OnInit, OnDestroy {
     }
 
 
-    async expandView( member: MemberModel ) {
-        const inputData = { uId: this.user.uId, memberId: member.mUId, projectId: this.project.pId };
-        const modal = await this.mc
-                                .create( {
-                                             component: MemberComponent,
-                                             mode: "ios",
-                                             swipeToClose: true,
-                                             animated: true,
-                                             backdropDismiss: true,
-                                             componentProps: { inputData: inputData }
-                                         } );
-        await modal.present();
-    }
+    // async expandView( member: MemberModel ) {
+    //     const inputData = { uId: this.user.uId, memberId: member.mUId, projectId: this.project.pId };
+    //     const modal = await this.mc
+    //                             .create( {
+    //                                          component: MemberComponent,
+    //                                          mode: "ios",
+    //                                          swipeToClose: true,
+    //                                          animated: true,
+    //                                          backdropDismiss: true,
+    //                                          componentProps: { inputData: inputData }
+    //                                      } );
+    //     await modal.present();
+    // }
 
     async viewWorkLog( member: MemberModel ) {
         const inputData = { pId: this.project.pId, isHost: this.user.uId === this.project.pHId, mUId: member.mUId };
@@ -153,69 +152,6 @@ export class ProjectPage implements OnInit, OnDestroy {
                                               } );
         await popover.present();
     }
-
-    // async raiseInvoice( member: MemberModel ) {
-    //     const popover = await this.pc.create( {
-    //                                               component: RaiseInvoiceComponent,
-    //                                               translucent: false,
-    //                                               componentProps: { member: member }
-    //                                           } );
-    //     await popover.present();
-    //
-    //     const { data } = await popover.onWillDismiss();
-    //
-    //     // Check whether data was saved or not
-    //     if ( data !== undefined ) {
-    //         // Check for Billing Type of the Member
-    //         if ( member.mBillingType === this.BT.one_time ) {
-    //             // Pay the member
-    //             member.mEarned += data.amount;
-    //             // Cut the amount paid from the host
-    //             if ( member.mUId !== this.project.pHId ) {
-    //                 this.project.pMembers.filter( value => value.mUId === this.project.pHId )[0].mPaid += data.amount;
-    //             }
-    //
-    //             // Clear ALL Unbilled Hours
-    //             member.mWeekLog.filter( value => value.weeklyUnBilledHours > 0 ).forEach( value => {
-    //                 value.weeklyBilledHours += value.weeklyUnBilledHours;
-    //                 value.weeklyUnBilledHours = 0;
-    //             } );
-    //             // Push this to invoices
-    //             member.mInvoices.push( { iId: member.mId + "-" + member.mInvoices.length, iAmount: data.amount } );
-    //         } else {
-    //             let hoursRem = data.hours;
-    //             let amount = data.hours * member.mRate;
-    //             // Pay the member
-    //             member.mEarned += amount;
-    //             // Cut the amount paid from the host
-    //             if ( member.mUId !== this.project.pHId ) {
-    //                 this.project.pMembers.filter( value => value.mUId === this.project.pHId )[0].mPaid += amount;
-    //             }
-    //
-    //             // Clear ALL Unbilled Hours
-    //             member.mWeekLog.filter( value => value.weeklyUnBilledHours > 0 ).forEach( value => {
-    //                 if ( hoursRem >= value.weeklyUnBilledHours ) {
-    //                     value.weeklyBilledHours += value.weeklyUnBilledHours;
-    //                     hoursRem -= value.weeklyUnBilledHours;
-    //                     value.weeklyUnBilledHours = 0;
-    //                 } else {
-    //                     value.weeklyBilledHours += hoursRem;
-    //                     value.weeklyUnBilledHours -= hoursRem;
-    //                     hoursRem = 0;
-    //                 }
-    //
-    //                 if ( hoursRem <= 0 ) {
-    //                     return;
-    //                 }
-    //             } );
-    //             // Push this to invoices
-    //             member.mInvoices.push(
-    //                 { iId: member.mId + "-" + member.mInvoices.length, iAmount: amount, iHours: data.hours } );
-    //         }
-    //     }
-    //     this.ds.updateProject( this.project );
-    //
-    // }
 
     getTotalHoursWorked( member: MemberModel ): number {
         let hours = 0;

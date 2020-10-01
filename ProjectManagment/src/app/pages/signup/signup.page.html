@@ -74,9 +74,15 @@
     </ion-fab>
 
     <ion-fab horizontal = 'end' vertical = 'bottom'>
-        <ion-fab-button (click) = 'signUp()' *ngIf = 'signForm.valid' [@push]>
+        <ion-fab-button (click) = 'signUp()' [@push]
+                        [disabled] = '!signForm.valid'>
             <ion-icon name = 'person-add'></ion-icon>
         </ion-fab-button>
+    </ion-fab>
+
+    <ion-fab horizontal = 'center' vertical = 'center'>
+        <ion-spinner *ngIf = 'ds.loadingSubject | async'
+                     color = 'warning'></ion-spinner>
     </ion-fab>
 
 </ion-content>

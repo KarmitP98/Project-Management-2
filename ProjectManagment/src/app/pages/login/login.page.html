@@ -46,7 +46,6 @@
             OR
         </p>
         <ion-button (click) = 'loginWithProvider("google")'
-                    *ngIf = '!platform.is("cordova")'
                     color = 'danger'>
             <ion-icon name = 'logo-google'></ion-icon>
         </ion-button>
@@ -67,7 +66,7 @@
         &nbsp;
 
         <ion-fab horizontal = 'end' vertical = 'bottom'>
-            <ion-fab-button *ngIf = 'loginForm.valid' [@push]
+            <ion-fab-button [@push] [disabled] = 'loginForm.invalid'
                             type = 'submit'>
                 <ion-icon (click) = 'login()' name = 'log-in-outline'
                           size = 'large'></ion-icon>

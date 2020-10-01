@@ -2,6 +2,7 @@ import { Component, Input, OnInit, ViewChild } from "@angular/core";
 import { DataService } from "../../services/data.service";
 import { Router } from "@angular/router";
 import { IonMenu } from "@ionic/angular";
+import { DashboardPage } from "../../pages/home/dashboard/dashboard.page";
 
 @Component( {
                 selector: "app-menu-comp",
@@ -14,8 +15,9 @@ export class MenuCompComponent implements OnInit {
 
     @ViewChild( "menu", { static: false } ) menu: IonMenu;
 
-    constructor( public ds: DataService,
-                 public router: Router ) { }
+    constructor( private ds: DataService,
+                 private router: Router,
+                 private dashboard: DashboardPage ) { }
 
     ngOnInit() {}
 
@@ -25,6 +27,7 @@ export class MenuCompComponent implements OnInit {
     }
 
     logOut(): void {
+        this.dashboard.ngOnDestroy();
         this.ds.logOut();
     }
 }

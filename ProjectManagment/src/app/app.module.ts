@@ -29,6 +29,7 @@ import * as FusionCharts from "fusioncharts";
 import * as Charts from "fusioncharts/fusioncharts.charts";
 // Load themes
 import * as FusionTheme from "fusioncharts/themes/fusioncharts.theme.fusion";
+import { GooglePlus } from "@ionic-native/google-plus/ngx";
 
 // Import FusionCharts library and chart modules
 FusionChartsModule.fcRoot(
@@ -55,7 +56,8 @@ FusionChartsModule.fcRoot(
                    StatusBar,
                    SplashScreen,
                    { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
-                   AngularFirestore
+                   AngularFirestore,
+                   GooglePlus
                ],
                bootstrap: [ AppComponent ]
            } )
