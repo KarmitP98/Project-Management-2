@@ -7,7 +7,6 @@ import { IonicModule } from "@ionic/angular";
 import { DashboardPageRoutingModule } from "./dashboard-routing.module";
 
 import { DashboardPage } from "./dashboard.page";
-import { MenuCompComponent } from "../../../components/menu-comp/menu-comp.component";
 import { TooltipsModule } from "ionic4-tooltips";
 import { MatTooltipModule } from "@angular/material/tooltip";
 
@@ -20,9 +19,6 @@ import { MatTooltipModule } from "@angular/material/tooltip";
                    TooltipsModule,
                    MatTooltipModule
                ],
-               exports: [
-                   MenuCompComponent
-               ],
-               declarations: [ DashboardPage, MenuCompComponent ]
+               declarations: [ DashboardPage ]
            } )
 export class DashboardPageModule {}

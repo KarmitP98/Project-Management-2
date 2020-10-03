@@ -84,7 +84,7 @@ export class WorkLogComponent implements OnInit, OnDestroy {
             if ( week.weekNumber === weekNum ) {
                 //Check if this week already has a daily log with date = wDate
                 week.dailyLog.forEach( day => {
-                    if ( day.date === values.wDate.getDate() ) {
+                    if ( day.date.toDate().toString() === values.wDate.toString() ) {
                         day.work = values.wWork;
                         week.weeklyUnBilledHours += values.wHours;
                         day.dailyHours += values.wHours;

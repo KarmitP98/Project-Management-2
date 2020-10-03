@@ -41,7 +41,8 @@ FusionChartsModule.fcRoot(
 @NgModule( {
                declarations: [ AppComponent,
                                AddClientComponent,
-                               TopDropDownComponent ],
+                               TopDropDownComponent
+               ],
                entryComponents: [],
                imports: [ BrowserModule,
                           BrowserAnimationsModule,

@@ -72,8 +72,10 @@
         </mat-form-field>
     </form>
 
-    <ion-fab *ngIf = 'memForm.valid' horizontal = 'end' vertical = 'bottom'>
-        <ion-fab-button (click) = 'dismiss(true)' [@push] color = 'warning'>
+    <ion-fab horizontal = 'end' vertical = 'bottom'>
+        <ion-fab-button (click) = 'dismiss(true)' [@push]
+                        [disabled] = 'memForm.invalid'
+                        color = 'warning'>
             <ion-icon name = 'add-outline'></ion-icon>
         </ion-fab-button>
     </ion-fab>

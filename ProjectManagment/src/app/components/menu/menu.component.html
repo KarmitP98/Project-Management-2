@@ -1,0 +1,32 @@
+<ion-content>
+    <ion-list lines = 'full'>
+        <ion-item
+                [routerLink] = '["/dashboard"]'
+                button>
+            <ion-icon color = 'primary' name = 'tablet-landscape'
+                      slot = 'start'></ion-icon>
+            <ion-label>Dashboard</ion-label>
+        </ion-item>
+        <ion-item
+                [routerLink] = '["/clients"]'
+                button>
+            <ion-icon color = 'secondary' name = 'people'
+                      slot = 'start'></ion-icon>
+            <ion-label>Clients</ion-label>
+        </ion-item>
+        <ion-item
+                [routerLink] = '["/dashboard"]'
+                button>
+            <ion-icon color = 'tertiary' name = 'settings'
+                      slot = 'start'></ion-icon>
+            <ion-label>Settings</ion-label>
+        </ion-item>
+        <ion-item (click) = 'dismiss()'
+                  button>
+            <ion-icon color = 'danger'
+                      name = 'power'
+                      slot = 'start'></ion-icon>
+            <ion-label>Log Out</ion-label>
+        </ion-item>
+    </ion-list>
+</ion-content>

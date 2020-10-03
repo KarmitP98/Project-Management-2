@@ -1,13 +1,18 @@
 <ion-header *ngIf = 'user'>
     <ion-toolbar color = 'primary'>
-        <ion-buttons slot = 'start'>
-            <ion-menu-button></ion-menu-button>
+        <ion-buttons slot = 'end'>
+            <ion-button
+                    (click) = 'openMenu($event)'>
+                <ion-icon name = 'ellipsis-vertical'>
+                </ion-icon>
+            </ion-button>
         </ion-buttons>
         <ion-title>{{user.uName}}</ion-title>
+
     </ion-toolbar>
 </ion-header>
 
-<app-menu-comp [uId] = 'user?.uId'></app-menu-comp>
+<!--<app-menu-comp [uId] = 'user?.uId'></app-menu-comp>-->
 
 <ion-content *ngIf = 'user' class = 'ion-text-center ion-padding'>
 

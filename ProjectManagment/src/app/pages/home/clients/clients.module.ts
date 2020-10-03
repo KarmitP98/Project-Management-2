@@ -7,17 +7,14 @@ import { IonicModule } from "@ionic/angular";
 import { ClientsPageRoutingModule } from "./clients-routing.module";
 
 import { ClientsPage } from "./clients.page";
-import { MenuCompComponent } from "../../../components/menu-comp/menu-comp.component";
-import { DashboardPageModule } from "../dashboard/dashboard.module";
 
 @NgModule( {
                imports: [
                    CommonModule,
                    FormsModule,
                    IonicModule,
-                   ClientsPageRoutingModule,
-                   DashboardPageModule
+                   ClientsPageRoutingModule
                ],
-               declarations: [ ClientsPage, MenuCompComponent ]
+               declarations: [ ClientsPage ]
            } )
 export class ClientsPageModule {}

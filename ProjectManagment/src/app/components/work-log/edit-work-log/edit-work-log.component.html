@@ -8,7 +8,8 @@
 
     <ion-card *ngFor = 'let log of worklog.dailyLog' [@push]>
         <ion-card-header>
-            <ion-card-title>Date: {{log.date}}</ion-card-title>
+            <ion-card-title>Date:
+                {{log.date.toDate() | date:'MM-dd-yyyy'}}</ion-card-title>
             <ion-card-subtitle>
                 Hours Worked:&nbsp;<b>{{log.dailyHours}}</b>
                 <br>

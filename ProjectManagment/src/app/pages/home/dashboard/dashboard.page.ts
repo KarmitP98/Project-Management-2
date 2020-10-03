@@ -7,7 +7,7 @@ import { ModalController, PopoverController } from "@ionic/angular";
 import { AddClientComponent } from "../../../components/add-client/add-client.component";
 import { leftLoadTrigger, opacityLoadTrigger, pushTrigger } from "../../../shared/animations";
 import { AddProjectComponent } from "../../../components/add-project/add-project.component";
-import { AngularFirestore } from "@angular/fire/firestore";
+import { MenuComponent } from "../../../components/menu/menu.component";
 
 interface sampleProject {
     pName: string,
@@ -37,16 +37,15 @@ export class DashboardPage implements OnInit, OnDestroy {
     sample: boolean = true;
 
     projects: ProjectModel[] = [];
-    currentP: ProjectModel[] = [];
-    pastP: ProjectModel[] = [];
+    // currentP: ProjectModel[] = [];
+    // pastP: ProjectModel[] = [];
 
 
     constructor( public ds: DataService,
                  public route: ActivatedRoute,
                  private router: Router,
                  private mc: ModalController,
-                 private pc: PopoverController,
-                 private afs: AngularFirestore ) { }
+                 private pc: PopoverController ) { }
 
     ngOnInit() {
 
@@ -126,32 +125,46 @@ export class DashboardPage implements OnInit, OnDestroy {
         return earned - paid;
     }
 
-    private makeSampleCards(): void {
+    // private makeSampleCards(): void {
+    //
+    //     let i = 1;
+    //     for ( i = 1; i <= 6; i++ ) {
+    //         const status = Math.random() > 0.5;
+    //         if ( status ) {
+    //             this.currentSampleCards
+    //                 .push( {
+    //                            pName: "Project " + i,
+    //                            pStartDate: new Date(),
+    //                            pDesc: "This is the description of Project " + i,
+    //                            pDeadline: new Date(),
+    //                            pTotalMembers: Math.round( Math.random() * 6 + 1 ),
+    //                            pStatus: status
+    //                        } );
+    //         } else {
+    //             this.finishedSampleCards
+    //                 .push( {
+    //                            pName: "Project " + i,
+    //                            pStartDate: new Date(),
+    //                            pDesc: "This is the description of Project " + i,
+    //                            pDeadline: new Date(),
+    //                            pTotalMembers: Math.round( Math.random() * 6 + 1 ),
+    //                            pStatus: status
+    //                        } );
+    //         }
+    //     }
+    // }
 
-        let i = 1;
-        for ( i = 1; i <= 6; i++ ) {
-            const status = Math.random() > 0.5;
-            if ( status ) {
-                this.currentSampleCards
-                    .push( {
-                               pName: "Project " + i,
-                               pStartDate: new Date(),
-                               pDesc: "This is the description of Project " + i,
-                               pDeadline: new Date(),
-                               pTotalMembers: Math.round( Math.random() * 6 + 1 ),
-                               pStatus: status
-                           } );
-            } else {
-                this.finishedSampleCards
-                    .push( {
-                               pName: "Project " + i,
-                               pStartDate: new Date(),
-                               pDesc: "This is the description of Project " + i,
-                               pDeadline: new Date(),
-                               pTotalMembers: Math.round( Math.random() * 6 + 1 ),
-                               pStatus: status
-                           } );
-            }
-        }
+    async openMenu( $event: MouseEvent ) {
+        const pop = await this.pc
+                              .create( {
+                                           component: MenuComponent,
+                                           event: $event,
+                                           animated: true,
+                                           mode: "md",
+                                           keyboardClose: true,
+                                           backdropDismiss: true,
+                                           componentProps: { uId: this.user.uId }
+                                       } );
+        await pop.present();
     }
 }

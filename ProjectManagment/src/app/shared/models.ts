@@ -1,3 +1,6 @@
+import Timestamp = firebase.firestore.Timestamp;
+import * as firebase from "firebase";
+
 export class UserModel {
     public uId: string;
     public uName: string;
@@ -57,7 +60,7 @@ export class WeeklyWorkLog {
 }
 
 export class DailyWorkLog {
-    public date: Date;
+    public date: Timestamp;
     public work: string;
     public dailyHours: number;
 }

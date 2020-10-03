@@ -198,10 +198,10 @@
         </ion-card-content>
     </ion-card>
 
-    <ion-fab *ngIf = 'nameForm.valid &&
-     (pMembers.length + available.length) === members.length'
-             horizontal = 'end' slot = 'fixed' vertical = 'bottom'>
+    <ion-fab horizontal = 'end' slot = 'fixed' vertical = 'bottom'>
         <ion-fab-button (click) = 'dismiss(true)' [@push]
+                        [disabled] = 'nameForm.invalid ||
+     (pMembers.length + available.length) !== members.length'
                         color = 'success'>
             <ion-icon name = 'folder-open-outline'></ion-icon>
         </ion-fab-button>
