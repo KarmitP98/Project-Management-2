@@ -1,27 +1,30 @@
 <ion-content>
     <ion-list lines = 'full'>
         <ion-item
-                [routerLink] = '["/dashboard"]'
+                (click) = 'navigate("dashboard")'
+                routerDirection = 'front'
                 button>
             <ion-icon color = 'primary' name = 'tablet-landscape'
                       slot = 'start'></ion-icon>
             <ion-label>Dashboard</ion-label>
         </ion-item>
         <ion-item
-                [routerLink] = '["/clients"]'
+                (click) = 'navigate("clients")'
+                routerDirection = 'front'
                 button>
             <ion-icon color = 'secondary' name = 'people'
                       slot = 'start'></ion-icon>
             <ion-label>Clients</ion-label>
         </ion-item>
         <ion-item
-                [routerLink] = '["/dashboard"]'
+                (click) = 'navigate("settings")'
+                routerDirection = 'front'
                 button>
             <ion-icon color = 'tertiary' name = 'settings'
                       slot = 'start'></ion-icon>
             <ion-label>Settings</ion-label>
         </ion-item>
-        <ion-item (click) = 'dismiss()'
+        <ion-item (click) = 'logOut()'
                   button>
             <ion-icon color = 'danger'
                       name = 'power'

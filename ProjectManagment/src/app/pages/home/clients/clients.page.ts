@@ -6,6 +6,7 @@ import { TopDropDownComponent } from "../../../components/top-drop-down/top-drop
 import { ModalController, PopoverController } from "@ionic/angular";
 import { AddClientComponent } from "../../../components/add-client/add-client.component";
 import { Subscription } from "rxjs";
+import { MenuComponent } from "../../../components/menu/menu.component";
 
 @Component( {
                 selector: "app-clients",
@@ -17,7 +18,6 @@ export class ClientsPage implements OnInit, OnDestroy {
     projects: ProjectModel[] = [];
     uId: "";
     clientSub: Subscription;
-    projectSub: Subscription;
 
     constructor( public ds: DataService,
                  public route: ActivatedRoute,
@@ -63,5 +63,20 @@ export class ClientsPage implements OnInit, OnDestroy {
                                              backdropDismiss: true
                                          } );
         await modal.present();
+    }
+
+    async openMenu( $event: MouseEvent ) {
+        this.ngOnDestroy();
+        const pop = await this.pc
+                              .create( {
+                                           component: MenuComponent,
+                                           event: $event,
+                                           animated: true,
+                                           mode: "md",
+                                           keyboardClose: true,
+                                           backdropDismiss: true,
+                                           componentProps: { uId: this.uId }
+                                       } );
+        await pop.present();
     }
 }

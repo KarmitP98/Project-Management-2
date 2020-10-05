@@ -1,6 +1,6 @@
 {
   "name": "ProjectManagment",
-  "version": "0.0.1",
+  "version": "3.0.0",
   "author": "Ionic Framework",
   "homepage": "https://ionicframework.com/",
   "scripts": {
@@ -10,7 +10,8 @@
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "ion4200": "ionic serve --port=4200"
+    "ion4200": "ionic serve --port=4200",
+    "cordova_build": "ionic cordova run android -release"
   },
   "private": true,
   "dependencies": {

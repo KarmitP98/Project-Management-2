@@ -68,7 +68,7 @@
         <ion-fab horizontal = 'end' vertical = 'bottom'>
             <ion-fab-button [@push] [disabled] = 'loginForm.invalid'
                             type = 'submit'>
-                <ion-icon (click) = 'login()' name = 'log-in-outline'
+                <ion-icon (click) = 'login()' name = 'log-in'
                           size = 'large'></ion-icon>
             </ion-fab-button>
         </ion-fab>
@@ -79,9 +79,19 @@
            style = 'color: var(--ion-color-primary)'>Sign up.</b>
     </p>
 
+
+    <ion-fab horizontal = 'start' vertical = 'bottom'>
+        <ion-fab-button [@push] color = 'warning' routerDirection = 'back'
+                        routerLink = ''>
+            <ion-icon name = 'chevron-back'
+                      size = 'large'></ion-icon>
+        </ion-fab-button>
+    </ion-fab>
+
     <ion-fab horizontal = 'center' vertical = 'center'>
         <ion-spinner *ngIf = 'ds.loadingSubject | async'
                      color = 'warning'></ion-spinner>
     </ion-fab>
+
 
 </ion-content>

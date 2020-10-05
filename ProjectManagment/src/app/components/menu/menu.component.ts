@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from "@angular/core";
 import { PopoverController } from "@ionic/angular";
 import { DataService } from "../../services/data.service";
+import { Router } from "@angular/router";
 
 @Component( {
                 selector: "app-menu",
@@ -9,15 +10,27 @@ import { DataService } from "../../services/data.service";
             } )
 export class MenuComponent implements OnInit {
 
-    @Input() uId: string;
+    @Input( "uId" ) uId: string;
 
     constructor( private pc: PopoverController,
-                 private ds: DataService ) { }
+                 private ds: DataService,
+                 private router: Router ) {
+    }
 
-    ngOnInit() {}
+    ngOnInit() {
+    }
 
     dismiss(): void {
-        this.ds.logOut();
         this.pc.dismiss();
+    }
+
+    navigate( root: string ): void {
+        this.router.navigate( [ "/", this.uId, root ] );
+        this.pc.dismiss();
+    }
+
+    logOut() {
+        this.ds.logOut();
+        this.dismiss();
     }
 }

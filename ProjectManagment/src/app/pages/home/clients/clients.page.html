@@ -1,13 +1,16 @@
 <ion-header>
     <ion-toolbar color = 'secondary'>
-        <ion-buttons slot = 'start'>
-            <ion-menu-button></ion-menu-button>
+        <ion-buttons slot = 'end'>
+            <ion-button
+                    (click) = 'openMenu($event)'>
+                <ion-icon name = 'ellipsis-vertical'>
+                </ion-icon>
+            </ion-button>
         </ion-buttons>
         <ion-title>List of Clients</ion-title>
     </ion-toolbar>
 </ion-header>
 
-<app-menu-comp [uId] = 'uId'></app-menu-comp>
 
 <ion-content *ngIf = 'clients.length > 0'>
     <br>
@@ -21,4 +24,11 @@
             <h5>Contact Information: {{client.cEmail}}</h5>
         </ion-card-content>
     </ion-card>
+
+    <ion-fab horizontal = 'end' vertical = 'bottom'>
+        <ion-fab-button (click) = 'addNewClient()'
+                        color = 'secondary'>
+            <ion-icon name = 'add'></ion-icon>
+        </ion-fab-button>
+    </ion-fab>
 </ion-content>

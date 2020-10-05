@@ -155,6 +155,7 @@ export class DashboardPage implements OnInit, OnDestroy {
     // }
 
     async openMenu( $event: MouseEvent ) {
+        this.ngOnDestroy();
         const pop = await this.pc
                               .create( {
                                            component: MenuComponent,

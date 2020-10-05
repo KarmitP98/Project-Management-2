@@ -7,7 +7,7 @@ import { LoginGuard } from "./guards/login-guard.guard";
 const routes: Routes = [
     {
         path: "",
-        redirectTo: "login",
+        redirectTo: "logout",
         pathMatch: "full"
     },
     {
@@ -18,6 +18,11 @@ const routes: Routes = [
     {
         path: "signup",
         loadChildren: () => import("./pages/signup/signup.module").then( m => m.SignupPageModule ),
+        canActivate: [ LoginGuard ]
+    },
+    {
+        path: "logout",
+        loadChildren: () => import("./pages/logout/logout.module").then( m => m.LogoutPageModule ),
         canActivate: [ LoginGuard ]
     },
     {
