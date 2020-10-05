@@ -9,12 +9,12 @@ import { LogoutPageRoutingModule } from "./logout-routing.module";
 import { LogoutPage } from "./logout.page";
 
 @NgModule( {
-             imports: [
-               CommonModule,
-               FormsModule,
-               IonicModule,
-               LogoutPageRoutingModule
-             ],
-             declarations: [ LogoutPage ]
+               imports: [
+                   CommonModule,
+                   FormsModule,
+                   IonicModule,
+                   LogoutPageRoutingModule
+               ],
+               declarations: [ LogoutPage ]
            } )
 export class LogoutPageModule {}

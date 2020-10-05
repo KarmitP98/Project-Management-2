@@ -41,10 +41,6 @@ export class WorkLogComponent implements OnInit, OnDestroy {
         this.pSub.unsubscribe();
     }
 
-    deleteWorkLog( weeklog: any ): void {
-
-    }
-
     async viewWorkLog( weeklog: any ) {
         const modal = await this.mc
                                 .create( {
@@ -55,6 +51,16 @@ export class WorkLogComponent implements OnInit, OnDestroy {
                                          } );
 
         await modal.present();
+
+        this.member.mWeekLog.forEach( worklog => {
+            if ( this.getTotalHoursWorked( worklog ) === 0 ) {
+                this.deleteWorkLog( worklog );
+            }
+        } );
+    }
+
+    deleteWorkLog( worklog: WeeklyWorkLog ) {
+        this.member.mWeekLog.splice( this.member.mWeekLog.indexOf( worklog ), 1 );
     }
 
     getTotalHoursWorked( week: WeeklyWorkLog ): number {
@@ -79,12 +85,14 @@ export class WorkLogComponent implements OnInit, OnDestroy {
         let weekFound = false;
         let dayFound = false;
 
+        console.log( values.wDate );
+
         //Check if weekly work log with that week number = weekNum exists
         this.member.mWeekLog.forEach( week => {
             if ( week.weekNumber === weekNum ) {
                 //Check if this week already has a daily log with date = wDate
                 week.dailyLog.forEach( day => {
-                    if ( day.date.toDate().toString() === values.wDate.toString() ) {
+                    if ( day.date.toDate().getTime() === values.wDate.getTime() ) {
                         day.work = values.wWork;
                         week.weeklyUnBilledHours += values.wHours;
                         day.dailyHours += values.wHours;

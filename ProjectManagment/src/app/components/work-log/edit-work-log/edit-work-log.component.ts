@@ -20,9 +20,13 @@ export class EditWorkLogComponent implements OnInit {
     ngOnInit() {
         this.initialBilledHours = this.worklog.weeklyBilledHours;
 
-        this.worklog.dailyLog.forEach( value => {
-            console.log( value.date );
-        } );
+        // this.worklog.dailyLog.forEach( value => {
+        //     console.log( value.date.toDate() );
+        // } );
+        //
+        // console.log("Today:");
+        // console.log(new Date());
+        // console.log(Timestamp.now().toDate());
 
     }
 

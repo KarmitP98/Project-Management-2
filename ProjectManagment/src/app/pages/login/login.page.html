@@ -46,20 +46,21 @@
             OR
         </p>
         <ion-button (click) = 'loginWithProvider("google")'
+                    *ngIf = '!platform.is("cordova")'
                     color = 'danger'>
             <ion-icon name = 'logo-google'></ion-icon>
         </ion-button>
         &nbsp;
         <ion-button (click) = 'loginWithProvider("github")'
-                    color = 'dark'
                     *ngIf = '!platform.is("cordova")'
+                    color = 'dark'
         >
             <ion-icon name = 'logo-github'></ion-icon>
         </ion-button>
         &nbsp;
         <ion-button (click) = 'loginWithProvider("facebook")'
-                    color = 'primary'
                     *ngIf = '!platform.is("cordova")'
+                    color = 'primary'
         >
             <ion-icon name = 'logo-facebook'></ion-icon>
         </ion-button>

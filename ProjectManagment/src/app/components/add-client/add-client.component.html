@@ -66,8 +66,8 @@
 
         <ion-fab horizontal = 'end' vertical = 'bottom'>
             <ion-fab-button (click) = 'dismiss(true)'
-                            [disabled] = 'clientForm.invalid'
                             [@push]
+                            [disabled] = 'clientForm.invalid'
                             color = 'success'
                             type = 'submit'>
                 <ion-icon name = 'save'></ion-icon>

@@ -30,6 +30,7 @@ import * as Charts from "fusioncharts/fusioncharts.charts";
 // Load themes
 import * as FusionTheme from "fusioncharts/themes/fusioncharts.theme.fusion";
 import { GooglePlus } from "@ionic-native/google-plus/ngx";
+import { MenuComponent } from "./components/menu/menu.component";
 
 // Import FusionCharts library and chart modules
 FusionChartsModule.fcRoot(
@@ -41,7 +42,8 @@ FusionChartsModule.fcRoot(
 @NgModule( {
                declarations: [ AppComponent,
                                AddClientComponent,
-                               TopDropDownComponent
+                               TopDropDownComponent,
+                               MenuComponent
                ],
                entryComponents: [],
                imports: [ BrowserModule,
