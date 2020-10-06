@@ -58,10 +58,22 @@ export class ProjectPage implements OnInit, OnDestroy {
                               .subscribe( projects => {
                                   if ( projects && this.users?.length > 0 ) {
                                       this.project = projects[0];
+
+                                      if ( !this.project.pCurrency ) {
+                                          this.project.pCurrency = { country: "USA", name: "USD", ratio: 1, sign: "$" };
+                                          this.ds.updateProject( this.project );
+                                      }
+
+
                                       this.project.pMemberIds.forEach( mId => {
                                           this.available = this.available.filter( user => user.uId !== mId );
                                       } );
+
                                       this.project.pMembers.forEach( member => {
+                                          if ( !member.mCurrency ) {
+                                              member.mCurrency = { country: "USA", name: "USD", ratio: 1, sign: "$" };
+                                              this.ds.updateProject( this.project );
+                                          }
                                           if ( member.mUId === uId && member.mType === this.MT.host ) {
                                               this.isUserHost = true;
                                           }
@@ -80,7 +92,7 @@ export class ProjectPage implements OnInit, OnDestroy {
         const modal = await this.mc
                                 .create( {
                                              component: AddMemberComponent,
-                                             mode: "ios",
+                                             mode: "md",
                                              swipeToClose: true,
                                              animated: true,
                                              backdropDismiss: true,
@@ -107,21 +119,6 @@ export class ProjectPage implements OnInit, OnDestroy {
 
         this.ds.updateProject( this.project );
     }
-
-
-    // async expandView( member: MemberModel ) {
-    //     const inputData = { uId: this.user.uId, memberId: member.mUId, projectId: this.project.pId };
-    //     const modal = await this.mc
-    //                             .create( {
-    //                                          component: MemberComponent,
-    //                                          mode: "ios",
-    //                                          swipeToClose: true,
-    //                                          animated: true,
-    //                                          backdropDismiss: true,
-    //                                          componentProps: { inputData: inputData }
-    //                                      } );
-    //     await modal.present();
-    // }
 
     async viewWorkLog( member: MemberModel ) {
         const inputData = { pId: this.project.pId, isHost: this.user.uId === this.project.pHId, mUId: member.mUId };

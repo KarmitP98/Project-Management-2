@@ -6,7 +6,7 @@ import { ClientModel, MemberModel, ProjectModel, UserModel } from "../../shared/
 import { Subscription } from "rxjs";
 import { AddClientComponent } from "../add-client/add-client.component";
 import { pushTrigger } from "../../shared/animations";
-import { BILLING_TYPE, MEMBER_ROLE, MEMBER_TYPE, PROJECT_STATUS } from "../../shared/constants";
+import { BILLING_TYPE, CURRENCY, MEMBER_ROLE, MEMBER_TYPE, PROJECT_STATUS } from "../../shared/constants";
 import { NgForm } from "@angular/forms";
 
 @Component( {
@@ -38,6 +38,7 @@ export class AddProjectComponent implements OnInit, OnDestroy {
     BT = BILLING_TYPE;
     MT = MEMBER_TYPE;
     MR = MEMBER_ROLE;
+    CU = CURRENCY;
 
     @ViewChild( "slide" ) slides: IonSlides;
 
@@ -76,7 +77,8 @@ export class AddProjectComponent implements OnInit, OnDestroy {
                                        mType: this.MT.host,
                                        mEarned: 0,
                                        mPaid: 0,
-                                       mInvoices: []
+                                       mInvoices: [],
+                                       mCurrency: this.CU.usd
                                    } ];
                                }
                            } );
@@ -138,7 +140,8 @@ export class AddProjectComponent implements OnInit, OnDestroy {
                 mType: this.MT.member,
                 mEarned: 0,
                 mPaid: 0,
-                mInvoices: []
+                mInvoices: [],
+                mCurrency: this.CU.usd
             };
 
         this.pMembers.push( tempMember );

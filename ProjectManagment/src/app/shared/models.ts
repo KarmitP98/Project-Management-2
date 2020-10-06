@@ -72,14 +72,6 @@ export class WorkModel {
     public work: string;
 }
 
-// export class RequestModel {
-//     public to: string;
-//     public from: string;
-//     public mBillingType: string;
-//     public mRate: number;
-//     public requestText: string;
-// }
-
 export class InvoiceModel {
     public iId: string;
     public iAmount: number;
@@ -93,6 +85,7 @@ export class RequestModel {
 }
 
 export class CurrencyModel {
+    public sign: string;
     public country: string;
     public name: string;
     public ratio: number;

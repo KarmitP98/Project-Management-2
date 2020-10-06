@@ -44,10 +44,12 @@
         === user.uId'>
             Billing Type&nbsp;:&nbsp;<b>{{member.mBillingType}}</b>
             <br>
-            {{member.mBillingType === "One Time" ? "Price : $" :
-            "Rate : $"}}<b>{{member.mRate}}</b>
+            <b>{{member.mBillingType === "One Time" ?
+                "Price : " + member.mCurrency.sign :
+                "Rate : " + member.mCurrency.sign}}{{member.mRate}}</b>
             <br>
-            Amount Earned: <b>$ {{member.mEarned}}</b>
+            Amount Earned:
+            <b> {{member.mCurrency.sign + " " + member.mEarned}}</b>
             <br>
             Total Hours Worked: <b>{{getTotalHoursWorked(member)}} Hrs</b>
             <div class = 'ion-float-right'>

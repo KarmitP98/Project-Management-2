@@ -1,8 +1,8 @@
 import { Component, Input, OnInit } from "@angular/core";
 import { ModalController } from "@ionic/angular";
-import { MemberModel, UserModel } from "../../shared/models";
+import { CurrencyModel, MemberModel, UserModel } from "../../shared/models";
 import { pushTrigger } from "../../shared/animations";
-import { BILLING_TYPE, MEMBER_ROLE, MEMBER_TYPE } from "../../shared/constants";
+import { BILLING_TYPE, CURRENCY, MEMBER_ROLE, MEMBER_TYPE } from "../../shared/constants";
 
 @Component( {
                 selector: "app-add-member",
@@ -23,6 +23,8 @@ export class AddMemberComponent implements OnInit {
     mRate: number;
     mRole: string;
     mType: string;
+    mCurrency: CurrencyModel;
+    CU = CURRENCY;
 
     constructor( private mc: ModalController ) { }
 
@@ -43,7 +45,8 @@ export class AddMemberComponent implements OnInit {
                 mRequests: [],
                 mPaid: 0,
                 mEarned: 0,
-                mInvoices: []
+                mInvoices: [],
+                mCurrency: this.CU.usd
             };
             this.mc.dismiss( { member: member } );
         } else {

@@ -42,8 +42,8 @@
             <b>{{project.pMemberIds.length}}</b>
             <br>
             <b [style] = 'moneyEarned(project) >= 0 ?
-            "color: green" : "color: red"'> Money Earned:
-                                            $ {{moneyEarned(project)}}</b>
+            "color: green" : "color: red"'> Money Earned: {{getSign(project)}}
+                {{moneyEarned(project)}}</b>
         </ion-card-content>
     </ion-card>
     <br>
@@ -56,14 +56,12 @@
             <!--            </ion-item>-->
             <ion-fab-button (click) = 'addNewClient()'
                             color = 'secondary'
-                            matTooltip = 'New Client'
-                            matTooltipPosition = 'left'>
+                            data-desc = 'Add Client'>
                 <ion-icon name = 'person-add'></ion-icon>
             </ion-fab-button>
             <ion-fab-button (click) = 'addNewProject()'
                             color = 'warning'
-                            matTooltip = 'New Project'
-                            matTooltipPosition = 'left'>
+                            data-desc = 'Add Project'>
                 <ion-icon name = 'duplicate'></ion-icon>
             </ion-fab-button>
         </ion-fab-list>

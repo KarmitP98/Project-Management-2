@@ -122,7 +122,18 @@ export class DashboardPage implements OnInit, OnDestroy {
             }
         } );
 
-        return earned - paid;
+        return (earned - paid);
+    }
+
+    getSign( project: ProjectModel ) {
+        let currency = "";
+        project.pMembers.forEach( value => {
+            if ( value.mUId === this.user.uId ) {
+                currency = value.mCurrency.sign;
+            }
+        } );
+        return currency;
+
     }
 
     // private makeSampleCards(): void {

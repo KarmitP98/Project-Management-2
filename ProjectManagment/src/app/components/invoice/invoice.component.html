@@ -20,7 +20,8 @@
                     <b>Invoice #: {{(i + 1)}}</b>
                 </mat-panel-title>
                 <mat-panel-description>
-                    Amount:&nbsp;<b>$&nbsp;{{invoice.iAmount}}</b>
+                    Amount:&nbsp;<b>{{member.mCurrency.sign}}&nbsp;
+                    {{invoice.iAmount}}</b>
                 </mat-panel-description>
             </mat-expansion-panel-header>
             <div>

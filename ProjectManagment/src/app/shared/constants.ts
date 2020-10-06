@@ -33,6 +33,12 @@ export enum REQUEST_TYPE {
     terminate
 }
 
+export const CURRENCY = {
+    usd: { country: "USA", name: "USD", sign: "$", ratio: 1 },
+    inr: { country: "India", name: "INR", sign: "₹", ratio: 70 }
+};
+
+
 export function GETWEEKNUMBER( d: Date ): number {
     var tdt = new Date( d.valueOf() );
     var dayn = (d.getDay() + 6) % 7;

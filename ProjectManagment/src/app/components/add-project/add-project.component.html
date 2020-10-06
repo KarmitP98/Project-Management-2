@@ -86,6 +86,23 @@
 
         <br>
 
+        <mat-form-field appearance = 'fill'>
+            <mat-label>
+                Currency
+            </mat-label>
+            <mat-select [(ngModel)] = 'project.pCurrency'
+                        [disabled] = '!project.pBillingType'
+                        name = 'pCurrency'
+                        placeholder = 'Select the currency'>
+                <mat-option
+                        [value] = 'CU.usd'>{{CU.usd.name}}</mat-option>
+                <mat-option
+                        [value] = 'CU.inr'>{{CU.inr.name}}</mat-option>
+            </mat-select>
+        </mat-form-field>
+
+        <br>
+
         <mat-form-field appearance = 'fill' color = 'warn'>
             <mat-label>
                 Project Timeline
@@ -93,8 +110,7 @@
             <mat-date-range-input [rangePicker] = 'picker'>
                 <input [(ngModel)] = 'project.pStartDate'
                        matStartDate
-                       name = 'startDate'
-                       required>
+                       name = 'startDate'>
                 <input [(ngModel)] = 'project.pDeadline'
                        matEndDate
                        name = 'endDate'
@@ -167,6 +183,21 @@
                        matInput
                        required
                        type = 'number'>
+            </mat-form-field>
+
+            <br>
+
+            <mat-form-field appearance = 'fill'>
+                <mat-label>
+                    Currency
+                </mat-label>
+                <mat-select [(ngModel)] = 'pMembers[i].mCurrency'
+                            [disabled] = '!pMembers[i].mUId'>
+                    <mat-option
+                            [value] = 'CU.usd'>{{CU.usd.name}}</mat-option>
+                    <mat-option
+                            [value] = 'CU.inr'>{{CU.inr.name}}</mat-option>
+                </mat-select>
             </mat-form-field>
 
             <br>
