@@ -20,11 +20,14 @@
                 <ion-card-title class = 'ion-text-center'>
                     {{project.pName}}
                 </ion-card-title>
+
+                <!--                        [color] = 'project.pStatus === "Active" ?-->
+                <!--                            "warning": "success"'-->
+                <!--                        [name] = "project.pStatus === 'Active' ?-->
+                <!--                              'folder-open' : 'folder'"-->
                 <ion-icon
-                        [color] = 'project.pStatus === "Active" ?
-                            "warning": "success"'
-                        [name] = "project.pStatus === 'Active' ?
-                              'folder-open' : 'folder'"
+                        color = 'warning'
+                        name = 'folder-open'
                         [routerLink] = '["/"+user.uId,project.pId]'
                         routerDirection = 'forward'
                         slot = 'end'>

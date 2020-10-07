@@ -2,7 +2,6 @@ import { Component, OnDestroy, OnInit } from "@angular/core";
 import { ClientModel, ProjectModel } from "../../../shared/models";
 import { DataService } from "../../../services/data.service";
 import { ActivatedRoute } from "@angular/router";
-import { TopDropDownComponent } from "../../../components/top-drop-down/top-drop-down.component";
 import { ModalController, PopoverController } from "@ionic/angular";
 import { AddClientComponent } from "../../../components/add-client/add-client.component";
 import { Subscription } from "rxjs";
@@ -39,18 +38,6 @@ export class ClientsPage implements OnInit, OnDestroy {
 
     ngOnDestroy(): void {
         this.clientSub.unsubscribe();
-    }
-
-    async openDropDown( $event: MouseEvent ) {
-        const pop = await this.pc.create( {
-                                              component: TopDropDownComponent,
-                                              event: $event,
-                                              backdropDismiss: true,
-                                              translucent: true,
-                                              animated: true,
-                                              componentProps: { uId: this.uId }
-                                          } );
-        await pop.present();
     }
 
     async addNewClient() {

@@ -15,7 +15,6 @@ import { AddClientComponent } from "./components/add-client/add-client.component
 import { FormsModule } from "@angular/forms";
 import { HttpClientModule } from "@angular/common/http";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
-import { TopDropDownComponent } from "./components/top-drop-down/top-drop-down.component";
 import { MatNativeDateModule } from "@angular/material/core";
 import { MatFormFieldModule } from "@angular/material/form-field";
 import { MatInputModule } from "@angular/material/input";
@@ -42,7 +41,6 @@ FusionChartsModule.fcRoot(
 @NgModule( {
                declarations: [ AppComponent,
                                AddClientComponent,
-                               TopDropDownComponent,
                                MenuComponent
                ],
                entryComponents: [],
