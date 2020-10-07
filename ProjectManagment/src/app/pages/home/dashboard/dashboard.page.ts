@@ -37,9 +37,6 @@ export class DashboardPage implements OnInit, OnDestroy {
     sample: boolean = true;
 
     projects: ProjectModel[] = [];
-    // currentP: ProjectModel[] = [];
-    // pastP: ProjectModel[] = [];
-
 
     constructor( public ds: DataService,
                  public route: ActivatedRoute,
@@ -72,18 +69,6 @@ export class DashboardPage implements OnInit, OnDestroy {
         this.userSub.unsubscribe();
         this.projectSub.unsubscribe();
     }
-
-    // async openDropDown( $event: MouseEvent ) {
-    //     const pop = await this.pc.create( {
-    //                                           component: TopDropDownComponent,
-    //                                           event: $event,
-    //                                           backdropDismiss: true,
-    //                                           translucent: true,
-    //                                           animated: true,
-    //                                           componentProps: { uId: this.user.uId }
-    //                                       } );
-    //     await pop.present();
-    // }
 
     async addNewClient() {
         const modal = await this.mc
@@ -135,35 +120,6 @@ export class DashboardPage implements OnInit, OnDestroy {
         return currency;
 
     }
-
-    // private makeSampleCards(): void {
-    //
-    //     let i = 1;
-    //     for ( i = 1; i <= 6; i++ ) {
-    //         const status = Math.random() > 0.5;
-    //         if ( status ) {
-    //             this.currentSampleCards
-    //                 .push( {
-    //                            pName: "Project " + i,
-    //                            pStartDate: new Date(),
-    //                            pDesc: "This is the description of Project " + i,
-    //                            pDeadline: new Date(),
-    //                            pTotalMembers: Math.round( Math.random() * 6 + 1 ),
-    //                            pStatus: status
-    //                        } );
-    //         } else {
-    //             this.finishedSampleCards
-    //                 .push( {
-    //                            pName: "Project " + i,
-    //                            pStartDate: new Date(),
-    //                            pDesc: "This is the description of Project " + i,
-    //                            pDeadline: new Date(),
-    //                            pTotalMembers: Math.round( Math.random() * 6 + 1 ),
-    //                            pStatus: status
-    //                        } );
-    //         }
-    //     }
-    // }
 
     async openMenu( $event: MouseEvent ) {
         this.ngOnDestroy();

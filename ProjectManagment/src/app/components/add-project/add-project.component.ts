@@ -118,7 +118,7 @@ export class AddProjectComponent implements OnInit, OnDestroy {
         const modal = await this.mc
                                 .create( {
                                              component: AddClientComponent,
-                                             mode: "ios",
+                                             mode: "md",
                                              swipeToClose: true,
                                              animated: true,
                                              backdropDismiss: true

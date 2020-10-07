@@ -14,22 +14,19 @@
 
 <ion-content *ngIf = 'user' class = 'ion-text-center ion-padding'>
 
-    <ion-card *ngFor = 'let project of projects' class = 'ion-text-left'>
+    <ion-card *ngFor = 'let project of projects'
+              [routerLink] = '["/"+user.uId,project.pId]'
+              button
+              class = 'ion-text-left'
+              routerDirection = 'forward'>
         <ion-card-header>
             <ion-item lines = 'full'>
                 <ion-card-title class = 'ion-text-center'>
                     {{project.pName}}
                 </ion-card-title>
-
-                <!--                        [color] = 'project.pStatus === "Active" ?-->
-                <!--                            "warning": "success"'-->
-                <!--                        [name] = "project.pStatus === 'Active' ?-->
-                <!--                              'folder-open' : 'folder'"-->
                 <ion-icon
                         color = 'warning'
                         name = 'folder-open'
-                        [routerLink] = '["/"+user.uId,project.pId]'
-                        routerDirection = 'forward'
                         slot = 'end'>
                 </ion-icon>
             </ion-item>
